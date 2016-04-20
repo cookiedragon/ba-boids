@@ -1,6 +1,6 @@
 "use strict"
 
-function initSwarm(num) {
+function init_boids(num) {
     var swarm = []
     for (var i = 0; i < num; i++) {
         const genotype = initGenotype()
@@ -106,8 +106,8 @@ function update(swarm) {
     return next
 }
 
-function init_swarm_with_movement(num) {
-    return initSwarm(num).map(boid => ({
+function init_swarm(num) {
+    return init_boids(num).map(boid => ({
         boid,
         movement: rand_movement()
     }))
@@ -115,12 +115,12 @@ function init_swarm_with_movement(num) {
 
 function rand_movement() {
     return {
-        position: {
-            x: between(-50, 50),
-            y: between(-50, 50),
-            z: between(-50, 50)
-        },
-        velocity: between(1, 2)
+        position: [
+            between(-100, 100),
+            between(-100, 100),
+            between(-100, 100)
+        ],
+        velocity: between(-2, 2)
     }
 }
 
