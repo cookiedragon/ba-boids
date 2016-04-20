@@ -19,12 +19,20 @@
 <body>
 	<script src="lib/three.min.js"></script>
 	<script src="lib/stats.min.js"></script>
+	<script src="src/helper.js"></script>
+	<script src="src/boids.js"></script>
 	<script src="src/renderer.js"></script>
-	<script src="src/simple.js"></script>
 	<script>
-		var boids = flock(20);
-		init(boids);
-		renderWorld();
+		"use strict"
+
+		let stats = new Stats()
+		stats.showPanel(0) // 0: fps, 1: ms
+		document.body.appendChild(stats.dom)
+
+		const boids = init_swarm_with_movement(20)
+
+		init(boids)
+		renderWorld()
 	</script>
 </body>
 
