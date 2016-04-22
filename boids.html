@@ -34,8 +34,8 @@
 		document.body.appendChild(stats.dom)
 
 		arrows()
-		const boids = init_swarm(200)
-		// boids.forEach(b => console.log(b.movement.velocity))
+		let boids = init_swarm(50)
+		// boids.forEach(b => console.log(b.position))
 		init(boids)
 		renderWorld()
 	</script>

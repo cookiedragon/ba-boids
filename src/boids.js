@@ -15,7 +15,8 @@ function initGenotype() {
         lifespan: [between(15, 25) * 1000 * 60, between(15, 25) * 1000 * 60],
         max_stamina: [between(50, 100), between(50, 100)],
         food_capacity: [between(30, 50), between(30, 50)],
-        max_speed: [between(30, 40), between(30, 40)],
+        max_force: [0.05, 0.05],
+        max_speed: [3, 3],
         gender: ['X', 'X'],
         of_age_at: [between(5, 10) * 1000 * 60, between(5, 10) * 1000 * 60]
     }
@@ -27,6 +28,7 @@ function calcPhenotype(genotype) {
         lifespan: genotype.lifespan[rand(2)],
         max_stamina: genotype.max_stamina[rand(2)],
         food_capacity: genotype.food_capacity[rand(2)],
+        max_force: genotype.max_force[rand(2)],
         max_speed: genotype.max_speed[rand(2)],
         gender: genotype.gender[0] == genotype.gender[1] ? "female" : "male",
         of_age_at: genotype.of_age_at[rand(2)]
@@ -77,68 +79,110 @@ function gen_splicer(mum_gen, dad_gen) {
     }
 }
 
-function update(swarm) {
-    let next = []
-    swarm.forEach(bird => {
-        const neighbours = find_neighbours(bird, swarm)
-        const l = neighbours.length
-        let x = 0
-        let y = 0
-        let z = 0
-        let velocity = 0
-        neighbours.forEach(neighbour => {
-            velocity += neighbour.velocity
-            x += neighbour.x
-            y += neighbour.y
-            z += neighbour.z
-        })
-        velocity = velocity / l
-        x = x / l * velocity
-        y = y / l * velocity
-        z = z / l * velocity
-        next.push({
-            x: x,
-            y: y,
-            z: z,
-            velocity: velocity
-        })
+function update(boids) {
+    let list = []
+    boids.forEach(boid => {
+        list.push(updateSingle(boid))
     })
-    return next
+    return list
+}
+
+function updateSingle(boid) {
+
+    let acceleration = new THREE.Vector3()
+    const maxspeed = 3
+    const maxforce = 0.5
+    const r = 100
+
+    let sep = new THREE.Vector3()
+    let ali = new THREE.Vector3()
+    let coh = new THREE.Vector3()
+
+    const desiredseparation = 25.0
+    let ssteer = new THREE.Vector3()
+    let scount = 0
+    const neighbordist = 50
+    let asum = new THREE.Vector3()
+    let acount = 0
+    let csum = new THREE.Vector3()
+    let ccount = 0
+
+    let position = boid.position.clone()
+    let velocity = boid.velocity.clone()
+    const len = boids.length
+
+    for (let i = 0; i < len; i++) {
+        let other = boids[i].position.clone()
+        let d = position.distanceTo(other)
+        if ((d > 0) && (d < desiredseparation)) {
+            let diff = other.sub(position)
+            diff.normalize()
+            diff.divideScalar(d)
+            ssteer.add(diff)
+            scount++
+        }
+        if ((d > 0) && (d < neighbordist)) {
+            asum.add(boids[i].velocity)
+            acount++
+            csum.add(boids[i].position)
+            ccount++
+        }
+    }
+
+    if (scount > 0) {
+        ssteer.divideScalar(scount)
+    }
+    if (ssteer.length() > 0) {
+        ssteer.normalize()
+        ssteer.multiplyScalar(maxspeed)
+        ssteer.sub(velocity)
+        ssteer = velocity.sub(ssteer)
+        ssteer.clampLength(0, maxforce)
+    }
+    sep = ssteer
+
+    if (acount > 0) {
+        asum.divideScalar(acount)
+        asum.normalize()
+        asum.multiplyScalar(maxspeed)
+        let steer = asum.sub(velocity)
+        steer.clampLength(0, maxforce)
+        ali = steer
+    }
+
+    if (ccount > 0) {
+        csum.divideScalar(ccount)
+        let desired = csum.sub(position)
+        desired.normalize()
+        desired.multiplyScalar(maxspeed)
+        let steer = desired.sub(velocity)
+        steer.clampLength(0, maxforce)
+        coh = steer
+    }
+
+    sep.multiplyScalar(1.5)
+    ali.multiplyScalar(1.0)
+    coh.multiplyScalar(1.0)
+    acceleration.add(sep)
+    acceleration.add(ali)
+    acceleration.add(coh)
+
+    velocity.add(acceleration)
+    velocity.clampLength(0, 3)
+    position.add(velocity)
+    position.clamp(new THREE.Vector3(-r, -r, -r), new THREE.Vector3(r, r, r))
+
+    return {
+        boid: boid.boid,
+        position: position,
+        velocity: velocity
+    }
 }
 
 function init_swarm(num) {
     return init_boids(num).map(boid => ({
-        boid,
-        movement: rand_movement()
+        boid: boid,
+        position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
+        velocity: new THREE.Vector3(betweenF(-1, 1), betweenF(-1, 1), betweenF(-1, 1))
     }))
-}
-
-function rand_movement() {
-    return {
-        position: [
-            between(-100, 100),
-            between(-100, 100),
-            between(-100, 100)
-        ],
-        velocity: between(-2, 2)
-    }
-}
-
-function find_neighbours(boid, swarm) {
-    const dist = 50
-    const x1 = boid.x - dist
-    const x2 = boid.x + dist
-    const y1 = boid.y - dist
-    const y2 = boid.y + dist
-    const z1 = boid.z - dist
-    const z2 = boid.z + dist
-    let neighbours = []
-    swarm.forEach((bird2) => {
-        if (bird2.x > x1 && bird2.x < x2 && bird2.y > y1 && bird2.y < y2 && bird2.z > z1 && bird2.z < z2) {
-            if (bird != bird2) {
-                neighbours.push(bird2)
-            }
-        }
-    })
-    return neighbours
 }
