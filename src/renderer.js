@@ -48,6 +48,7 @@ function renderWorld() {
     let i = -1
     boids.forEach(boid => {
         balls[i += 1].position.set(...boid.position.toArray())
+        // scene.add(new THREE.ArrowHelper(boid.velocity, boid.position, 10, 0xffff00))
     })
     renderer.render(scene, camera)
     stats.end()
