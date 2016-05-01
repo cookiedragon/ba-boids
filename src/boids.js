@@ -169,13 +169,20 @@ function updateSingle(boid) {
 
     velocity.add(acceleration)
     velocity.clampLength(0, 3)
+
+    let velocities = boid.velocities.slice()
+    velocities.pop()
+    velocities.forEach(velo => velocity.lerp(velo, 0.5))
+    velocities.unshift(velocity)
+
     position.add(velocity)
     position.clamp(new THREE.Vector3(-r, -r, -r), new THREE.Vector3(r, r, r))
 
     return {
         boid: boid.boid,
         position: position,
-        velocity: velocity
+        velocity: velocity,
+        velocities: velocities
     }
 }
 
@@ -183,6 +190,7 @@ function init_swarm(num) {
     return init_boids(num).map(boid => ({
         boid: boid,
         position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
-        velocity: new THREE.Vector3(betweenF(-1, 1), betweenF(-1, 1), betweenF(-1, 1))
+        velocity: rand_velocity(),
+        velocities: [rand_velocity(), rand_velocity(), rand_velocity()]
     }))
 }
