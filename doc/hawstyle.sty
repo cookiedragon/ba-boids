@@ -222,7 +222,7 @@
       \settowidth{\haw@tw}{Fakult\"at Technik und Informatik}
       \parbox[t]{\haw@tw}{%
         \normalfont\itshape%
-        Fakultät Technik und Informatik\\
+        FakultÃ¤t Technik und Informatik\\
         Studiendepartment Informatik
       }\hfill
       \settowidth{\haw@tw}{Faculty of Engineering and Computer Science}
@@ -256,19 +256,19 @@
     \theHAWThesisType\ eingereicht im Rahmen der \theHAWExaminationType\\ \par
     im Studiengang \theHAWDegreeProgramme\\
     am Department Informatik\\
-    der Fakultät Technik und Informatik\\
-    der Hochschule für Angewandte Wissenschaften Hamburg\par
+    der FakultÃ¤t Technik und Informatik\\
+    der Hochschule fÃ¼r Angewandte Wissenschaften Hamburg\par
   \bigskip}
 
   \@tempcnta=0
   \def\and{\strut\\
     \advance\@tempcnta by 1
-    \ifcase\@tempcnta Betreuender Prüfer:\ \ignorespaces
+    \ifcase\@tempcnta Betreuender PrÃ¼fer:\ \ignorespaces
     \or Zweitgutachter:\ \ignorespaces 
     \fi
   }%
   \ifthenelse{\not\equal{\theHAWExperts}{}}{%
-    Betreuender Prüfer:\ \ignorespaces\theHAWExperts\par \bigskip} \par
+    Betreuender PrÃ¼fer:\ \ignorespaces\theHAWExperts\par \bigskip} \par
   Eingereicht am: \theHAWReleaseDate
   \endgroup
 }

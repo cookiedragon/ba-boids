@@ -5,6 +5,8 @@
               ,headsepline
               ,BCOR10mm
               ,DIV11
+              ,bibtotoc
+              ,liststotoc
               ]{scrbook}
 \usepackage[ngerman,english]{babel}
 %% see http://www.tex.ac.uk/cgi-bin/texfaq2html?label=uselmfonts
@@ -57,7 +59,9 @@
   captionpos=b,
   fontadjust=true
 }
-\lstset{escapeinside={(*@}{@*)}, morekeywords={uint32_t, int32_t}}
+\lstset{escapeinside={(*@}{@*)}, % used to enter latex code inside listings
+        morekeywords={uint32_t, int32_t}
+}
 \ifpdfoutput{
   \hypersetup{bookmarksopen=false,bookmarksnumbered,linktocpage}
 }{}
@@ -98,7 +102,7 @@
 \frontmatter
 
 %% output title page
-%%\maketitle
+\maketitle
 
 \onehalfspacing
 
@@ -106,11 +110,11 @@
 %% note: this is one command on multiple lines
 \HAWAbstractPage
 %% German abstract
-{Boids, Künstliches Leben, Schwarmverhalten, Computergrafik}%
-{Dieses Dokument \ldots}
+{Schwarmverhalten, Boids, Künstliches Leben}%
+{Etwas Abstraktes ...}
 %% English abstract
-{boids, artificial life, swarming behaviour, computer graphics}%
-{This document \ldots}
+{swarming behaviour, boids, artificial life}%
+{Something abstract}
 
 \newpage
 \singlespacing
@@ -131,7 +135,6 @@
 %%\include{chapter1}
 
 %%%%
-%% add some text to generate a sample document
 \chapter{Einleitung}
 \section{Motivation}
 \section{Problemstellung}
@@ -190,7 +193,7 @@
 \typeout{===== Section: literature}
 %% read the documentation for customizing the style
 \bibliographystyle{dinat}
-\bibliography{boids}
+\bibliography{sample}
 
 \typeout{===== Section: nomenclature}
 %% uncomment if a TOC entry is needed
