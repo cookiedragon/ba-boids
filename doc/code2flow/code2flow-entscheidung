@@ -1,0 +1,27 @@
+Start;
+if(Gefahr?) {
+  if(am Boden?) {
+    nicht bewegen;
+  } else {
+    flieg weg;
+  }
+} else {
+  if (Hunger?) {
+    suche Futter;
+  } else if (Müde?) {
+    suche Ruheplatz;
+  } else if (Erwachsen?) {
+    if (Paarungszeit?) {
+      if (Partner gefunden?) {
+        brüte;
+      } else {
+        suche Partner;
+      }
+    } else {
+      schwärme;
+    }
+  } else {
+    schwärme;
+  }
+}
+
