@@ -15,3 +15,7 @@ function between(lower, upper) {
 function betweenF(lower, upper) {
     return Math.random() * (upper - lower + 1) + lower
 }
+
+function rand_velocity() {
+    return new THREE.Vector3(betweenF(-1, 1), betweenF(-1, 1), betweenF(-1, 1))
+}
