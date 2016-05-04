@@ -1,6 +1,6 @@
 "use strict"
 
-function init_boids(num) {
+let init_boids = (num) => {
     var swarm = []
     for (var i = 0; i < num; i++) {
         const genotype = initGenotype()
@@ -10,19 +10,19 @@ function init_boids(num) {
     return swarm
 }
 
-function initGenotype() {
+let initGenotype = () => {
     return {
         lifespan: [between(15, 25) * 1000 * 60, between(15, 25) * 1000 * 60],
         max_stamina: [between(50, 100), between(50, 100)],
         food_capacity: [between(30, 50), between(30, 50)],
-        max_force: [0.05, 0.05],
-        max_speed: [3, 3],
+        max_force: [0.4, 0.6],
+        max_speed: [2.5, 3.5],
         gender: ['X', 'X'],
         of_age_at: [between(5, 10) * 1000 * 60, between(5, 10) * 1000 * 60]
     }
 }
 
-function calcPhenotype(genotype) {
+let calcPhenotype = (genotype) => {
     return {
         birthday: Date.now(),
         lifespan: genotype.lifespan[rand(2)],
@@ -35,7 +35,7 @@ function calcPhenotype(genotype) {
     }
 }
 
-function boid(genotype, phenotype) {
+let boid = (genotype, phenotype) => {
     return {
         genotype: genotype,
         phenotype: phenotype,
@@ -56,19 +56,19 @@ function boid(genotype, phenotype) {
     }
 }
 
-function rest(boid, energy) {
+let rest = (boid, energy) => {
     let new_boid = boid(boid.genotype, boid.phenotype)
     new_boid.stamina += energy
     return new_boid
 }
 
-function feed(boid, energy) {
+let feed = (boid, energy) => {
     let new_boid = boid(boid.genotype, boid.phenotype)
     new_boid.food_level += energy
     return new_boid
 }
 
-function gen_splicer(mum_gen, dad_gen) {
+let gen_splicer = (mum_gen, dad_gen) => {
     return {
         lifespan: [mum_gen.lifespan[rand(2)], dad_gen.lifespan[rand(2)]],
         max_stamina: [mum_gen.max_stamina[rand(2)], dad_gen.max_stamina[rand(2)]],
@@ -79,7 +79,7 @@ function gen_splicer(mum_gen, dad_gen) {
     }
 }
 
-function update(boids) {
+let update = (boids) => {
     let list = []
     boids.forEach(boid => {
         list.push(updateSingle(boid))
@@ -87,11 +87,11 @@ function update(boids) {
     return list
 }
 
-function updateSingle(boid) {
-
+let updateSingle = (boid) => {
+    
     let acceleration = new THREE.Vector3()
-    const maxspeed = 3
-    const maxforce = 0.5
+    const maxspeed = boid.boid.phenotype.max_speed
+    const maxforce = boid.boid.phenotype.max_force
     const r = 100
 
     let sep = new THREE.Vector3()
@@ -109,25 +109,24 @@ function updateSingle(boid) {
 
     let position = boid.position.clone()
     let velocity = boid.velocity.clone()
-    const len = boids.length
 
-    for (let i = 0; i < len; i++) {
-        let other = boids[i].position.clone()
-        let d = position.distanceTo(other)
+    boids.forEach(other => {
+        let other_pos = other.position.clone()
+        let d = position.distanceTo(other_pos)
         if ((d > 0) && (d < desiredseparation)) {
-            let diff = other.sub(position)
+            let diff = other_pos.sub(position)
             diff.normalize()
             diff.divideScalar(d)
             ssteer.add(diff)
             scount++
         }
         if ((d > 0) && (d < neighbordist)) {
-            asum.add(boids[i].velocity)
+            asum.add(other.velocity)
             acount++
-            csum.add(boids[i].position)
+            csum.add(other_pos)
             ccount++
         }
-    }
+    })
 
     if (scount > 0) {
         ssteer.divideScalar(scount)
@@ -186,7 +185,7 @@ function updateSingle(boid) {
     }
 }
 
-function init_swarm(num) {
+let init_swarm = (num) => {
     return init_boids(num).map(boid => ({
         boid: boid,
         position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),

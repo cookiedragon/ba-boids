@@ -1,21 +1,15 @@
 "use strict"
 
-function rand(num) {
-    return Math.floor(Math.random() * num)
+let rand = (num) => {
+    const rand = Math.random() * num
+    return Number.isInteger(num) ? Math.floor(rand) : rand
 }
 
-function randF(num) {
-    return Math.random() * num
+let between = (lower, upper) => {
+    const rand = Math.random() * (upper - lower + 1) + lower
+    return (Number.isInteger(lower) && Number.isInteger(upper)) ? Math.floor(rand) : rand
 }
 
-function between(lower, upper) {
-    return Math.floor(Math.random() * (upper - lower + 1)) + lower
-}
-
-function betweenF(lower, upper) {
-    return Math.random() * (upper - lower + 1) + lower
-}
-
-function rand_velocity() {
-    return new THREE.Vector3(betweenF(-1, 1), betweenF(-1, 1), betweenF(-1, 1))
+let rand_velocity = () => {
+    return new THREE.Vector3(between(-1, 1), between(-1, 1), between(-1, 1))
 }
