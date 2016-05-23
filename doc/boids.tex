@@ -135,19 +135,41 @@
 %%\include{chapter1}
 
 %%%%
-\chapter{Einleitung}
+\chapter{Einleitung}\label{einleitung}
 \section{Motivation}
-\section{Problemstellung}
-\section{Zielsetzung}
-\section{Aufbau der Arbeit}
+In der Computergrafik können schon viele Naturphänomene simuliert werden. So auch das Schwarmverhalten von Schwarmtieren, wie Vögel und Fische.
+Solche Simulationen wurden schon vielfach in Filmen und Animationen verwendet. Es gibt mittlerweile einige Modelle, einige performanter, andere dafür realistischer, die für solche Animationen eingesetzt werden. Eines der bekanntesten ist das Boids-Modell. In diesem Modell entscheidet jedes Tier anhand von festgelegten Regeln, wohin es sich bewegt. Doch dieses Modell, obwohl so einfach und naturnah, simuliert nur das pure Schwärmen. Eine ganzheitliche Sicht auf die Schwarmpopulation und den Lebenszyklus der Tiere ist bis jetzt nicht beachtet worden. In kurzen Filmsequenzen mag dies nicht weiter auffallen. Aber werden Schwarmsimulationen nach dem Boids-Modell in offenen Welten eingesetzt, in denen man nicht nur Zeit zum Erkunden, sondern auch zum Verweilen und Beobachten hat, so fällt schnell auf, dass die Tiere nur ein sehr limitiertes Verhaltensmuster zeigen.
+Wenn in solchen Situationen Populationen von Schwarmtieren simuliert werden sollen, so ist ein ganzheitlicheres Modell von Nöten.
 
-\chapter{Stand der Technik}
+\section{Zielsetzung}
+Ziel in dieser Arbeit ist die Modellierung und Visualisierung einer Population von Boids.
+
+Dabei soll im ersten Schritt das Modell der Boids um typische weitere Verhaltensweisen von Schwarmtieren erweitert werden: Ausruhen, Partnersuche und Brüten, Futtersuche und Fliehen vor Fressfeinden.
+Desweiteren beinhaltet die Modellierung der Population Genetik und Lebensphasen der Boids.
+
+Im zweiten Schritt soll für das Modell ein Prototyp entworfen werden, der eine Population von Boids mit allen Erweiterungen geeignet visualisiert. 
+Dieser Prototyp beschränkt sich auf die korrekte Umsetzung des Modells und einer ansprechenden Visualisierung. Es erhebt keinen Anspruch auf physikalische Korrektheit. Und obwohl das Modell sich stärker von der Natur inspirieren lässt, so haben die Boids nicht den Anspruch eine wirklich existierende Tierart zu simulieren.
+
+\section{Aufbau der Arbeit}
+Einen Einstieg in die Thematik und die Aufgabenstellung befindet sich im Kapitel \ref{einleitung}.
+\newline
+Einen Überblick über das natürliche Schwarmverhalten von Tieren wird in Kapitel \ref{stand} beschrieben. Außerdem werden hier die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren gegenüber gestellt. Einen ersten Überblick über das Modell der Boids findet sich auch hier.
+\newline
+In Kapitel \ref{modell} wird das Modell für die prototypische Umsetzung entworfen. Nach einer genaueren Beschreibung der Einzelheiten des Boids-Modells wird dieses um Verhaltensweisen der einzelnen Tiere erweitert. Außerdem wird erläutert, wie die Evolution und die Entscheidungsfindung in dem Modell aussehen.
+\newline
+Das Kapitel \ref{umsetzung} behandelt anschließend die Umsetzung eines Prototypen des Modells. Hier werden unter anderem die Architektur der Umsetzung, die Datenstrukturen und die Algorithmen der Umsetzung beschrieben.
+\newline
+Anschließend erfolgt in Kapitel \ref{eval} die Evaluation des Prototypen auf die Reälitätsnahe und Performanz.
+\newline
+Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmöglichkeiten werden abschließend in Kapitel \ref{fazit} beschrieben.
+
+\chapter{Stand der Technik}\label{stand}
 \section{Schwarmverhalten in der Natur}
 \section{Partikelsysteme}
 \section{Multi Agenten Systeme}
 \section{Boids nach Reynolds}
 
-\chapter{Entwurf des Populations-Modells}
+\chapter{Entwurf des Populations-Modells}\label{modell}
 \section{Boids Modell}
 \subsection{Separation}
 \subsection{Alignment}
@@ -165,17 +187,33 @@
 
 \section{Entscheidungsfindung}
 
-\chapter{Umsetzung}
-\section{Evaluation und Auswahl der Programmiersprache}
+\chapter{Umsetzung}\label{umsetzung}
+\section{Architektur des Prototypen}
+\section{Datenstruktur des Schwarms}
+\subsection{Sichtbarkeit}
+\subsection{Performanz}
+\subsection{Dynamischer Octree}
+\section{Algorithmen}
+\subsection{Berechnung des Schwärmens}
+\subsection{Fliehen und Verfolgen}
+\subsection{Partnersuche}
+\section{Parametrisierung der Genetik}
+\subsection{Genotyp}
+\subsection{Phenotyp}
+\subsection{Mutation}
 \section{Visualisierung}
-\subsection{Evaluation und Auswahl der Grafik Library}
+\subsection{Szenario}
 \subsection{3D Modelle der Boids}
+\subsection{Darstellung der Szene}
+\subsection{Animation des Fressfeindes}
+\subsection{Begrenzung der Szene}
+\subsection{Hindernisse}
 
-\chapter{Evaluation}
+\chapter{Evaluation}\label{eval}
 \section{Biologische Relevanz}
 \section{Performanz}
 
-\chapter{Fazit}
+\chapter{Fazit}\label{fazit}
 \section{Zusammenfassung}
 \section{Ausblick}
 
