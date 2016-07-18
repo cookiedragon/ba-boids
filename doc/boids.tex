@@ -165,11 +165,28 @@ Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmö
 
 \chapter{Stand der Technik}\label{stand}
 \section{Schwarmverhalten in der Natur}
+Schwärme sieht man bei Vögeln, z.B. Flamingos. Fischen, Walschulen. Herden von Schafen, etc. Generelle Übersicht über Schwarmverhalten. Biologische Relevanz verschiedener Tierarten. Beschreiben von einer Vogelart, die schwärmt, komplexeres Verhalten. Flamingos schwärmen in der Luft, Brüten gemeinsam zur Brutzeit. Fliegen morgens teilweise mehr als 100km zur Futterquelle. Kommen erst am nächsten Tag zurück.
+Generelle Vogelschwärme, wechseln des "Anführers" ad hoc, Sichtbarkeit bei Flamingos nicht mehr als 7 unterscheidbar, Sichtbarkeit orientiert sich an den Nachbarn zu den Seiten, da Augen der Vögel an den Seiten. 
+Schwärme machen es Greifvögeln schwer, sich ein Opfer herauszupicken und gezielt zu verfolgen, verwirren den Angreifer. 
 \section{Partikelsysteme}
+Partikelsysteme können Schwärme nur sehr begrenzt darstellen. Sie werden von einer Punktquelle gespawned. Können sehr performant sein, aber nicht sehr realistisch.
 \section{Multi Agenten Systeme}
+Multi-Agenten-Systeme modellieren eine Gruppe von selbstständig agierenden Einheiten, genannt Agenten. Diese Agenten haben bestimmte Ziele oder ein spezifisches Problem zu lösen. Wie z.B. der Ant Colony Optimization Algorithmus. Hier wird das Verhalten der Ameisen nachgeahmt, um den kürzesten Weg zwischen zwei Punkten zu suchen. Ein Phänomen der Natur stellt hier einen geschickten Optimierungs-Algorithmus zur Verfügung. 
+Vielfach werden die Agenten als homogene Masse modelliert, d.h. alle Agenten sich gleichberechtigt und haben die gleichen Möglichkeiten. In einigen Agenten-Systemen werden die Agenten hierarchisch modelliert. Das Optimieren wird häufig durch die Kombination mit einem genetischen Algorithmus erreicht. 
 \section{Boids nach Reynolds}
+Das Modell der Boids von Reynolds ist anders als die vorherigen. Zwar ähneln die einzelnen Einheiten den Agenten, aber im Gegensatz zu diesen haben die Boids kein spezifisches Ziel, welches es zu lösen gilt. Ein Multi-Agenten-System ist zweckgebunden, optimiert eine Lösung für ein Problem, welches aus einer ganz anderen Domäne stammt. Z.B. Ant Colony Optimization Algorithmus für die günstigste Straßenplanung. 
+Das Modell der Boids jedoch bezweckt die Simulation von einem Naturphänomen. Der Ansatz stammt aus dem Bereich Artificial Life und Behavioural Animation. 
+Außerdem stellt dieses Modell auch den Beweis einer verhaltensbiologischen Theorie dar: Es wurde in der Natur beobachtet, dass und wie sich (Vogel-)Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Vögel mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel.
+Die drei Grungregeln des Boids-Modells sind die folgenden:
+1. Bleibe dicht bei deinen Artgenossen.
+2. Passe dich in Geschwindigkeit und Ausrichtung an deine Artgenossen an.
+3. Versuche dich in den Mittelpunkt des Schwarms zu bewegen.
+Eine Erweiterung des Modells (Not Bumping into Things) beinhaltet die Regel, einen Mindestabstand zu den Artgenossen einzuhalten.
+Diese wenigen Regeln bestimmen ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen völlig ausreicht.
+Bei einer hohen Anzahl an Boids gibt es jedoch ein Performanz-Problem: Nach dem ursprünglichen Algorithmus fragt jeder Boid jeden anderen nach Position, Geschwindigkeit, usw. Es ist also O(n²). 
 
 \chapter{Entwurf des Populations-Modells}\label{modell}
+Nachdem im vorherigen Kapitel schon eine kurze Einführung zu dem Boids-Modell zu finden war, wird dieses in diesem Kapitel detaillierter beschrieben. Außerdem wird aufgeführt, wie das Modell erweitert wird, um die Population als solche zu beschreiben. Dazu gehören zusätzliche Bedürfnisse der einzelnen Boids, wie z.B. Hunger, aber auch eine Modellierung der Genetik und des Lebenszyklus der Boids. Da sich daraus für den Boid mehrere mögliche Handlungen zu einem jeden Zeitpunkt ergeben, wird im Nachhinein die Priorisierung und Entscheidungsfindung erläutert.
 \section{Boids Modell}
 \subsection{Separation}
 \subsection{Alignment}
@@ -188,6 +205,7 @@ Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmö
 \section{Entscheidungsfindung}
 
 \chapter{Umsetzung}\label{umsetzung}
+In diesem Kapitel wird die Umsetzung eines Prototypen beschrieben, der versucht, das im vorherigen Kapitel entworfene Modell umzusetzen.
 \section{Architektur des Prototypen}
 \section{Datenstruktur des Schwarms}
 \subsection{Sichtbarkeit}
@@ -210,6 +228,7 @@ Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmö
 \subsection{Hindernisse}
 
 \chapter{Evaluation}\label{eval}
+In diesem Kapitel wird das in Kapitel \ref{modell} entworfene Modell und der nach diesem Modell entwickelte Prototyp (beschrieben in Kapitel \ref{umsetzung}) evaluiert.
 \section{Biologische Relevanz}
 \section{Performanz}
 
