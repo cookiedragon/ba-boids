@@ -11,9 +11,60 @@ scene.add(directional_light)
 const ambient_light = new THREE.AmbientLight(0x404040)
 scene.add(ambient_light)
 
-let renderer = new THREE.WebGLRenderer()
+let renderer = new THREE.WebGLRenderer({
+    alpha: true
+})
+renderer.setClearColor(0xffffff, 0);
+renderer.autoClear = false
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
+
+// make pretty background
+let loader = new THREE.TextureLoader()
+let texture = loader.load('assets/palmtrees.jpg')
+let backgroundMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(1024, 1024),
+    new THREE.MeshBasicMaterial({
+        map: texture
+    }))
+backgroundMesh.material.depthTest = false
+backgroundMesh.material.depthWrite = false
+scene.add(backgroundMesh)
+
+// build the floor
+let plane_geometry = new THREE.PlaneGeometry(800, 800)
+let plane_material = new THREE.MeshBasicMaterial({
+    color: 0x006600,
+    side: THREE.DoubleSide,
+    map: texture
+})
+let plane = new THREE.Mesh(plane_geometry, plane_material)
+    //scene.add(plane)
+    //plane.rotation.x -= 90
+    //plane.position.y -= 120
+
+// load flamingo
+let mixers = [];
+let clock = new THREE.Clock();
+
+let jsonLoader = new THREE.JSONLoader()
+let flamingoMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    morphTargets: true,
+    vertexColors: THREE.FaceColors,
+    shading: THREE.FlatShading
+})
+let flamingoGeometry = {}
+jsonLoader.load("src/flamingo.js", function(geometry) {
+    flamingoGeometry = geometry
+    console.log('flamingo geometry: ', flamingoGeometry)
+    let mesh = new THREE.Mesh(flamingoGeometry, flamingoMaterial)
+    mesh.scale.set(0.3, 0.3, 0.3)
+    scene.add(mesh)
+    let mixer = new THREE.AnimationMixer(mesh)
+    mixer.clipAction(flamingoGeometry.animations[0]).setDuration(1).play()
+    mixers.push(mixer)
+})
 
 window.addEventListener('resize', function() {
     camera.aspect = window.innerWidth / window.innerHeight
@@ -26,30 +77,44 @@ let arrows = () => {
     scene.add(axisHelper)
 }
 
-let balls = []
+let octree = new THREE.Octree({
+    //scene: scene
+})
 
-let init = (boids) => {
-    let geometry = new THREE.SphereGeometry(1, 32, 32)
-    boids.forEach(boid => {
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
-            color: Math.random() * 0xffffff
-        }));
-        mesh.position.set(...boid.position.toArray())
-        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 5 + 2
-        balls.push(mesh)
-        scene.add(mesh)
-    })
+let balls = []
+let id = 0
+THREE.Mesh.prototype.velocity = new THREE.Vector3()
+let geometry = new THREE.SphereGeometry(1, 32, 32)
+
+let addBoidToSzene = (boid) => {
+    console.log('flamingo geometry: ', flamingoGeometry)
+    let mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
+        color: Math.random() * 0xffffff
+    }));
+    //let mesh = new THREE.Mesh(flamingoGeometry, flamingoMaterial)
+    //let mixer = new THREE.AnimationMixer(mesh)
+    //mixer.clipAction(flamingoGeometry.animations[0]).setDuration(1).play()
+    //mixers.push(mixer)
+    mesh.position.set(...boid.position.toArray())
+    mesh.velocity = boid.velocity
+        //mesh.scale.set(0.3, 0.3, 0.3)
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 5 + 2
+    balls.push(mesh)
+    scene.add(mesh)
+    octree.add(mesh)
 }
 
 let renderWorld = () => {
     stats.begin()
-    boids = update(boids)
-    let i = -1
-    boids.forEach(boid => {
-        balls[i += 1].position.set(...boid.position.toArray())
-            // scene.add(new THREE.ArrowHelper(boid.velocity, boid.position, 10, 0xffff00))
-    })
+    updateWorld()
+    let delta = clock.getDelta();
+    for (let i = 0; i < mixers.length; i++) {
+        mixers[i].update(delta);
+    }
+    renderer.clear()
     renderer.render(scene, camera)
+    octree.update()
+        //octree.rebuild()
     stats.end()
     requestAnimationFrame(renderWorld)
 }

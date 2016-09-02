@@ -3,11 +3,22 @@
 let init_boids = (num) => {
     var swarm = []
     for (var i = 0; i < num; i++) {
-        const genotype = initGenotype()
-        const phenotype = calcPhenotype(genotype)
-        swarm.push(boid(genotype, phenotype))
+        swarm.push(addRandomBoid())
     }
     return swarm
+}
+
+let addRandomBoid = () => {
+    const genotype = initGenotype()
+    const phenotype = calcPhenotype(genotype)
+    let boid = {
+        boid: makeBoid(genotype, phenotype),
+        position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
+        velocity: rand_velocity(),
+        velocities: [rand_velocity(), rand_velocity(), rand_velocity()]
+    }
+    addBoidToSzene(boid)
+    return boid
 }
 
 let initGenotype = () => {
@@ -35,7 +46,7 @@ let calcPhenotype = (genotype) => {
     }
 }
 
-let boid = (genotype, phenotype) => {
+let makeBoid = (genotype, phenotype) => {
     return {
         genotype: genotype,
         phenotype: phenotype,
@@ -57,13 +68,13 @@ let boid = (genotype, phenotype) => {
 }
 
 let rest = (boid, energy) => {
-    let new_boid = boid(boid.genotype, boid.phenotype)
+    let new_boid = makeBoid(boid.genotype, boid.phenotype)
     new_boid.stamina += energy
     return new_boid
 }
 
 let feed = (boid, energy) => {
-    let new_boid = boid(boid.genotype, boid.phenotype)
+    let new_boid = makeBoid(boid.genotype, boid.phenotype)
     new_boid.food_level += energy
     return new_boid
 }
@@ -79,16 +90,86 @@ let gen_splicer = (mum_gen, dad_gen) => {
     }
 }
 
-let update = (boids) => {
+let popCounter = 5
+
+let updateWorld = () => {
+    if (popCounter > 0) {
+        popCounter--
+    } else {
+        //boids = random_updatePopulation(boids)
+        boids = updatePopulation(boids)
+        popCounter = 5
+    }
+    boids = updateSwarming(boids)
+    let i = -1
+    boids.forEach(boid => {
+        balls[i += 1].position.set(...boid.position.toArray())
+    })
+}
+
+let updatePopulation = (boids) => {
+    return boids
+}
+
+let gone = false
+
+let random_updatePopulation = (boids) => {
+    if (boids.length == 0) {
+        gone = true
+    } else if (boids.length > 50) {
+        gone = false
+    }
+    if (gone) {
+        let boid = addRandomBoid()
+        boids.push(boid)
+    } else {
+        boids.shift()
+        let boid = balls.shift()
+        scene.remove(boid)
+        octree.remove(boid)
+    }
+    return boids
+}
+
+let updateSwarming = (boids) => {
     let list = []
     boids.forEach(boid => {
-        list.push(updateSingle(boid))
+        list.push(updateSwarmingSingle(boid))
     })
     return list
 }
 
-let updateSingle = (boid) => {
-    
+let findClosest = (position) => {
+    let radius = 20
+    let closest = []
+    closest = octree.search(position, radius)
+        //console.log(closest.length)
+    return closest
+}
+
+let checkForEnemy = () => {
+    return false
+}
+
+let paarungszeit = () => {
+    return false
+}
+
+let updateSwarmingSingle = (boid) => {
+
+    if (checkForEnemy()) {
+
+    }
+    if (boid.boid.is_hungry()) {
+        // suche futter
+    }
+    if (boid.boid.is_tired()) {
+        // suche rastplatz
+    }
+    if (paarungszeit() && boid.boid.is_adult()) {
+        // mache babies
+    }
+
     let acceleration = new THREE.Vector3()
     const maxspeed = boid.boid.phenotype.max_speed
     const maxforce = boid.boid.phenotype.max_force
@@ -110,6 +191,10 @@ let updateSingle = (boid) => {
     let position = boid.position.clone()
     let velocity = boid.velocity.clone()
 
+    let closest = findClosest(boid)
+    if (closest[0] == undefined) {
+        return boid
+    }
     boids.forEach(other => {
         let other_pos = other.position.clone()
         let d = position.distanceTo(other_pos)
@@ -183,13 +268,4 @@ let updateSingle = (boid) => {
         velocity: velocity,
         velocities: velocities
     }
-}
-
-let init_swarm = (num) => {
-    return init_boids(num).map(boid => ({
-        boid: boid,
-        position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
-        velocity: rand_velocity(),
-        velocities: [rand_velocity(), rand_velocity(), rand_velocity()]
-    }))
 }
