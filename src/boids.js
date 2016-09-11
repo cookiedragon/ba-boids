@@ -23,7 +23,7 @@ let addRandomBoid = () => {
 
 let initGenotype = () => {
     return {
-        lifespan: [between(15, 25) * 1000 * 60, between(15, 25) * 1000 * 60],
+        lifespan: [between(15, 25) * 10 * 60, between(15, 25) * 10 * 60],
         max_stamina: [between(50, 100), between(50, 100)],
         food_capacity: [between(30, 50), between(30, 50)],
         max_force: [0.4, 0.6],
@@ -68,9 +68,7 @@ let makeBoid = (genotype, phenotype) => {
 }
 
 let rest = (boid, energy) => {
-    let new_boid = makeBoid(boid.genotype, boid.phenotype)
-    new_boid.stamina += energy
-    return new_boid
+    boid.boid.stamina += energy
 }
 
 let feed = (boid, energy) => {
@@ -101,14 +99,24 @@ let updateWorld = () => {
         popCounter = 5
     }
     boids = updateSwarming(boids)
-    let i = -1
-    boids.forEach(boid => {
-        balls[i += 1].position.set(...boid.position.toArray())
-    })
 }
 
 let updatePopulation = (boids) => {
-    return boids
+    // reduce energy or increase
+    let weedOutTheOld = []
+    boids.forEach(boid => {
+        if (boid.boid.age() > 0) {
+            if (on_ground(boid)) {
+                rest(boid, 5)
+            } else {
+              rest(boid, -5)
+            }
+            weedOutTheOld.push(boid)
+        } else {
+            removeBoidFromSzene(boid)
+        }
+    })
+    return weedOutTheOld
 }
 
 let gone = false
@@ -134,7 +142,11 @@ let random_updatePopulation = (boids) => {
 let updateSwarming = (boids) => {
     let list = []
     boids.forEach(boid => {
-        list.push(updateSwarmingSingle(boid))
+        list.push(updateSingle(boid))
+    })
+    let i = -1
+    list.forEach(boid => {
+        balls[i += 1].position.set(...boid.position.toArray())
     })
     return list
 }
@@ -155,20 +167,27 @@ let paarungszeit = () => {
     return false
 }
 
-let updateSwarmingSingle = (boid) => {
+let on_ground = (boid) => {
+    return false
+}
 
-    if (checkForEnemy()) {
+let updateSingle = (boid) => {
 
-    }
     if (boid.boid.is_hungry()) {
         // suche futter
-    }
-    if (boid.boid.is_tired()) {
+    } else if (boid.boid.is_tired()) {
         // suche rastplatz
+    } else if (boid.boid.is_adult()) {
+        if (paarungszeit()) {
+            // mache babies
+        } else {
+            return updateSwarmingSingle(boid)
+        }
     }
-    if (paarungszeit() && boid.boid.is_adult()) {
-        // mache babies
-    }
+    return updateSwarmingSingle(boid)
+}
+
+let updateSwarmingSingle = (boid) => {
 
     let acceleration = new THREE.Vector3()
     const maxspeed = boid.boid.phenotype.max_speed

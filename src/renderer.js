@@ -43,29 +43,6 @@ let plane = new THREE.Mesh(plane_geometry, plane_material)
     //plane.rotation.x -= 90
     //plane.position.y -= 120
 
-// load flamingo
-let mixers = [];
-let clock = new THREE.Clock();
-
-let jsonLoader = new THREE.JSONLoader()
-let flamingoMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    morphTargets: true,
-    vertexColors: THREE.FaceColors,
-    shading: THREE.FlatShading
-})
-let flamingoGeometry = {}
-jsonLoader.load("src/flamingo.js", function(geometry) {
-    flamingoGeometry = geometry
-    console.log('flamingo geometry: ', flamingoGeometry)
-    let mesh = new THREE.Mesh(flamingoGeometry, flamingoMaterial)
-    mesh.scale.set(0.3, 0.3, 0.3)
-    scene.add(mesh)
-    let mixer = new THREE.AnimationMixer(mesh)
-    mixer.clipAction(flamingoGeometry.animations[0]).setDuration(1).play()
-    mixers.push(mixer)
-})
-
 window.addEventListener('resize', function() {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
@@ -84,10 +61,10 @@ let octree = new THREE.Octree({
 let balls = []
 let id = 0
 THREE.Mesh.prototype.velocity = new THREE.Vector3()
+THREE.Mesh.prototype.birthday = 0
 let geometry = new THREE.SphereGeometry(1, 32, 32)
 
 let addBoidToSzene = (boid) => {
-    console.log('flamingo geometry: ', flamingoGeometry)
     let mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
         color: Math.random() * 0xffffff
     }));
@@ -97,11 +74,22 @@ let addBoidToSzene = (boid) => {
     //mixers.push(mixer)
     mesh.position.set(...boid.position.toArray())
     mesh.velocity = boid.velocity
+    mesh.birthday = boid.boid.genotype.birthday
         //mesh.scale.set(0.3, 0.3, 0.3)
     mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 5 + 2
     balls.push(mesh)
     scene.add(mesh)
     octree.add(mesh)
+}
+
+let removeBoidFromSzene = (boid) => {
+    let toBeRemoved = balls.filter(ball => ball.birthday == boid.boid.genotype.birthday)[0]
+    let index = balls.indexOf(toBeRemoved);
+    if (index > -1) {
+        balls.splice(index, 1);
+    }
+    scene.remove(toBeRemoved)
+    octree.remove(toBeRemoved)
 }
 
 let renderWorld = () => {
