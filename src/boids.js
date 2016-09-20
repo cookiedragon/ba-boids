@@ -24,7 +24,7 @@ let addRandomBoid = () => {
 let initGenotype = () => {
     return {
         lifespan: [between(15, 25) * 10 * 60, between(15, 25) * 10 * 60],
-        max_stamina: [between(50, 100), between(50, 100)],
+        max_stamina: [between(5, 1), between(5, 1)],
         food_capacity: [between(30, 50), between(30, 50)],
         max_force: [0.4, 0.6],
         max_speed: [2.5, 3.5],
@@ -52,6 +52,7 @@ let makeBoid = (genotype, phenotype) => {
         phenotype: phenotype,
         food_level: phenotype.food_capacity,
         stamina: phenotype.max_stamina,
+        status: 'SWARMING',
         age() {
             return this.phenotype.lifespan - (Date.now() - this.phenotype.birthday)
         },
@@ -62,19 +63,9 @@ let makeBoid = (genotype, phenotype) => {
             return ((this.food_level / this.phenotype.food_capacity * 100) < 10 ? true : false)
         },
         is_tired() {
-            return ((this.stamina / this.phenotype.max_stamina * 100) < 10 ? true : false)
+            return ((this.stamina / this.phenotype.max_stamina * 10) < 10 ? true : false)
         }
     }
-}
-
-let rest = (boid, energy) => {
-    boid.boid.stamina += energy
-}
-
-let feed = (boid, energy) => {
-    let new_boid = makeBoid(boid.genotype, boid.phenotype)
-    new_boid.food_level += energy
-    return new_boid
 }
 
 let gen_splicer = (mum_gen, dad_gen) => {
@@ -88,28 +79,26 @@ let gen_splicer = (mum_gen, dad_gen) => {
     }
 }
 
-let popCounter = 5
-
 let updateWorld = () => {
-    if (popCounter > 0) {
-        popCounter--
-    } else {
-        //boids = random_updatePopulation(boids)
-        boids = updatePopulation(boids)
-        popCounter = 5
-    }
-    boids = updateSwarming(boids)
+    //boids = weedOutTheOld(boids)
+    let newBoids = []
+    let i = -1
+    boids.forEach(boid => {
+        newBoids.push(updateSingle(boid))
+        balls[i += 1].position.set(...boid.position.toArray())
+    })
+    boids = newBoids
 }
 
-let updatePopulation = (boids) => {
+let weedOutTheOld = (boids) => {
     // reduce energy or increase
     let weedOutTheOld = []
     boids.forEach(boid => {
         if (boid.boid.age() > 0) {
             if (on_ground(boid)) {
-                rest(boid, 5)
+                boid.boid.stamina += 5
             } else {
-              rest(boid, -5)
+                boid.boid.stamina -= 5
             }
             weedOutTheOld.push(boid)
         } else {
@@ -119,72 +108,41 @@ let updatePopulation = (boids) => {
     return weedOutTheOld
 }
 
-let gone = false
-
-let random_updatePopulation = (boids) => {
-    if (boids.length == 0) {
-        gone = true
-    } else if (boids.length > 50) {
-        gone = false
-    }
-    if (gone) {
-        let boid = addRandomBoid()
-        boids.push(boid)
-    } else {
-        boids.shift()
-        let boid = balls.shift()
-        scene.remove(boid)
-        octree.remove(boid)
-    }
-    return boids
-}
-
-let updateSwarming = (boids) => {
-    let list = []
-    boids.forEach(boid => {
-        list.push(updateSingle(boid))
-    })
-    let i = -1
-    list.forEach(boid => {
-        balls[i += 1].position.set(...boid.position.toArray())
-    })
-    return list
-}
-
 let findClosest = (position) => {
     let radius = 20
     let closest = []
     closest = octree.search(position, radius)
-        //console.log(closest.length)
     return closest
 }
 
-let checkForEnemy = () => {
-    return false
-}
-
-let paarungszeit = () => {
-    return false
-}
-
 let on_ground = (boid) => {
-    return false
+    return (boid.boid.status === 'ONGROUND')
+}
+
+let is_swarming = (boid) => {
+    return (boid.boid.status === 'SWARMING')
+}
+
+let is_searching_the_ground = (boid) => {
+    return (boid.boid.status === 'SEARCHINGGROUND')
 }
 
 let updateSingle = (boid) => {
-
-    if (boid.boid.is_hungry()) {
-        // suche futter
-    } else if (boid.boid.is_tired()) {
-        // suche rastplatz
-    } else if (boid.boid.is_adult()) {
-        if (paarungszeit()) {
-            // mache babies
-        } else {
-            return updateSwarmingSingle(boid)
-        }
+    if (boid.boid.is_tired() && !on_ground(boid)) {
+        boid.boid.status = 'SEARCHINGGROUND'
+        return swarmToGround(boid)
     }
     return updateSwarmingSingle(boid)
+}
+
+let swarmToGround = (boid) => {
+    console.log('swarm to ground')
+    return {
+        boid: boid.boid,
+        position: position,
+        velocity: velocity,
+        velocities: velocities
+    }
 }
 
 let updateSwarmingSingle = (boid) => {

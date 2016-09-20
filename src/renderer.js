@@ -95,10 +95,10 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
-    let delta = clock.getDelta();
-    for (let i = 0; i < mixers.length; i++) {
-        mixers[i].update(delta);
-    }
+    //let delta = clock.getDelta();
+    //for (let i = 0; i < mixers.length; i++) {
+    //    mixers[i].update(delta);
+    //}
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()
