@@ -23,8 +23,8 @@ let addRandomBoid = () => {
 
 let initGenotype = () => {
     return {
-        lifespan: [between(15, 25) * 10 * 60, between(15, 25) * 10 * 60],
-        max_stamina: [between(5, 1), between(5, 1)],
+        lifespan: [between(100, 200) * 10 * 60, between(100, 200) * 10 * 60],
+        max_stamina: [between(100, 200), between(100, 200)],
         food_capacity: [between(30, 50), between(30, 50)],
         max_force: [0.4, 0.6],
         max_speed: [2.5, 3.5],
@@ -63,7 +63,10 @@ let makeBoid = (genotype, phenotype) => {
             return ((this.food_level / this.phenotype.food_capacity * 100) < 10 ? true : false)
         },
         is_tired() {
-            return ((this.stamina / this.phenotype.max_stamina * 10) < 10 ? true : false)
+            return ((this.stamina / this.phenotype.max_stamina * 100) < 2 ? true : false)
+        },
+        is_fully_recovered() {
+            return ((this.stamina / this.phenotype.max_stamina * 100) > 99 ? true : false)
         }
     }
 }
@@ -79,33 +82,33 @@ let gen_splicer = (mum_gen, dad_gen) => {
     }
 }
 
+let updateTimer = 3
+
 let updateWorld = () => {
-    //boids = weedOutTheOld(boids)
+    updateTimer -= 1
+    if (updateTimer < 0) {
+        updateTimer = 3
+        boids = updatePopulationStatus()
+    }
     let newBoids = []
     let i = -1
     boids.forEach(boid => {
-        newBoids.push(updateSingle(boid))
+        newBoids.push(updateSwarmingSingle(boid))
         balls[i += 1].position.set(...boid.position.toArray())
     })
     boids = newBoids
 }
 
-let weedOutTheOld = (boids) => {
-    // reduce energy or increase
-    let weedOutTheOld = []
-    boids.forEach(boid => {
-        if (boid.boid.age() > 0) {
-            if (on_ground(boid)) {
-                boid.boid.stamina += 5
-            } else {
-                boid.boid.stamina -= 5
-            }
-            weedOutTheOld.push(boid)
-        } else {
-            removeBoidFromSzene(boid)
-        }
-    })
-    return weedOutTheOld
+let updatePopulationStatus = () => {
+  let newPopulation = []
+  boids.forEach(boid => {
+      if (boid.boid.age() > 0) {
+          newPopulation.push(updateSingle(boid))
+      } else {
+          removeBoidFromSzene(boid)
+      }
+  })
+  return newPopulation
 }
 
 let findClosest = (position) => {
@@ -116,6 +119,10 @@ let findClosest = (position) => {
 }
 
 let on_ground = (boid) => {
+    if (boid.position.y < -99) {
+        boid.boid.status = 'ONGROUND'
+        boid.velocity = new THREE.Vector3()
+    }
     return (boid.boid.status === 'ONGROUND')
 }
 
@@ -128,25 +135,23 @@ let is_searching_the_ground = (boid) => {
 }
 
 let updateSingle = (boid) => {
-    if (boid.boid.is_tired() && !on_ground(boid)) {
-        boid.boid.status = 'SEARCHINGGROUND'
-        return swarmToGround(boid)
+    if (on_ground(boid)) {
+        if (boid.boid.is_fully_recovered()) {
+            boid.boid.status = 'SWARMING'
+            boid.velocity = rand_velocity()
+        } else {
+            boid.boid.stamina += 10
+        }
+    } else {
+        boid.boid.stamina -= 1
+        if (boid.boid.is_tired()) {
+            boid.boid.status = 'SEARCHINGGROUND'
+        }
     }
-    return updateSwarmingSingle(boid)
-}
-
-let swarmToGround = (boid) => {
-    console.log('swarm to ground')
-    return {
-        boid: boid.boid,
-        position: position,
-        velocity: velocity,
-        velocities: velocities
-    }
+    return boid
 }
 
 let updateSwarmingSingle = (boid) => {
-
     let acceleration = new THREE.Vector3()
     const maxspeed = boid.boid.phenotype.max_speed
     const maxforce = boid.boid.phenotype.max_force
@@ -156,7 +161,7 @@ let updateSwarmingSingle = (boid) => {
     let ali = new THREE.Vector3()
     let coh = new THREE.Vector3()
 
-    const desiredseparation = 25.0
+    const desiredseparation = 10.0
     let ssteer = new THREE.Vector3()
     let scount = 0
     const neighbordist = 50
@@ -182,7 +187,7 @@ let updateSwarmingSingle = (boid) => {
             ssteer.add(diff)
             scount++
         }
-        if ((d > 0) && (d < neighbordist)) {
+        if ((d > 0) && (d < neighbordist) && is_swarming(boid) && is_swarming(other)) {
             asum.add(other.velocity)
             acount++
             csum.add(other_pos)
@@ -202,23 +207,27 @@ let updateSwarmingSingle = (boid) => {
     }
     sep = ssteer
 
-    if (acount > 0) {
-        asum.divideScalar(acount)
-        asum.normalize()
-        asum.multiplyScalar(maxspeed)
-        let steer = asum.sub(velocity)
-        steer.clampLength(0, maxforce)
-        ali = steer
-    }
+    if (is_swarming(boid)) {
+        if (acount > 0) {
+            asum.divideScalar(acount)
+            asum.normalize()
+            asum.multiplyScalar(maxspeed)
+            let steer = asum.sub(velocity)
+            steer.clampLength(0, maxforce)
+            ali = steer
+        }
 
-    if (ccount > 0) {
-        csum.divideScalar(ccount)
-        let desired = csum.sub(position)
-        desired.normalize()
-        desired.multiplyScalar(maxspeed)
-        let steer = desired.sub(velocity)
-        steer.clampLength(0, maxforce)
-        coh = steer
+        if (ccount > 0) {
+            csum.divideScalar(ccount)
+            let desired = csum.sub(position)
+            desired.normalize()
+            desired.multiplyScalar(maxspeed)
+            let steer = desired.sub(velocity)
+            steer.clampLength(0, maxforce)
+            coh = steer
+        }
+    } else if (is_searching_the_ground(boid)) {
+        coh = new THREE.Vector3(0, -1, 0)
     }
 
     sep.multiplyScalar(1.5)

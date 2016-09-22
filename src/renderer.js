@@ -1,12 +1,12 @@
 "use strict"
 
 let scene = new THREE.Scene()
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+let camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 1000)
 scene.add(camera)
 camera.position.set(15, 10, 150)
 
 const directional_light = new THREE.DirectionalLight(0xffffff, 1)
-directional_light.position.set(1, 1, 1).normalize()
+directional_light.position.set(1, 1, 1)
 scene.add(directional_light)
 const ambient_light = new THREE.AmbientLight(0x404040)
 scene.add(ambient_light)
@@ -39,9 +39,9 @@ let plane_material = new THREE.MeshBasicMaterial({
     map: texture
 })
 let plane = new THREE.Mesh(plane_geometry, plane_material)
-    //scene.add(plane)
-    //plane.rotation.x -= 90
-    //plane.position.y -= 120
+//scene.add(plane)
+//plane.rotation.x -= 90
+//plane.position.y -= 120
 
 window.addEventListener('resize', function() {
     camera.aspect = window.innerWidth / window.innerHeight
@@ -66,8 +66,9 @@ let geometry = new THREE.SphereGeometry(1, 32, 32)
 
 let addBoidToSzene = (boid) => {
     let mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff
-    }));
+        //color: Math.random() * 0xffffff
+        color: 0xdc143c
+    }))
     //let mesh = new THREE.Mesh(flamingoGeometry, flamingoMaterial)
     //let mixer = new THREE.AnimationMixer(mesh)
     //mixer.clipAction(flamingoGeometry.animations[0]).setDuration(1).play()
@@ -75,8 +76,8 @@ let addBoidToSzene = (boid) => {
     mesh.position.set(...boid.position.toArray())
     mesh.velocity = boid.velocity
     mesh.birthday = boid.boid.genotype.birthday
-        //mesh.scale.set(0.3, 0.3, 0.3)
-    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 5 + 2
+        //mesh.scale.set(0.5, 0.5, 0.5)
+    //mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 5 + 2
     balls.push(mesh)
     scene.add(mesh)
     octree.add(mesh)
@@ -95,10 +96,10 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
-    //let delta = clock.getDelta();
-    //for (let i = 0; i < mixers.length; i++) {
-    //    mixers[i].update(delta);
-    //}
+        //let delta = clock.getDelta();
+        //for (let i = 0; i < mixers.length; i++) {
+        //    mixers[i].update(delta);
+        //}
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()
