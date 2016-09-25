@@ -54,4 +54,11 @@ describe('helper stuff', function() {
             expect(velo.z).not.toBeGreaterThan(1)
         })
     })
+    describe('random gender', function() {
+        it('get a random gender, either MALE or FEMALE', function() {
+            const gender = rand_gender()
+            expect(gender).toEqual(jasmine.any(String))
+            expect(gender === "MALE" || gender === "FEMALE").toBeTruthy()
+        })
+    })
 })

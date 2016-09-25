@@ -21,6 +21,20 @@ let addRandomBoid = () => {
     return boid
 }
 
+let make_new_baby_boid = (mum, dad) => {
+    const genotype = gen_splicer(mum.boid.genotype, dad.boid.genotype)
+    const phenotype = calcPhenotype(genotype)
+    let boid = {
+        boid: makeBoid(genotype, phenotype),
+        position: baby_position(mum, dad),
+        //position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
+        velocity: rand_velocity(),
+        velocities: [rand_velocity(), rand_velocity(), rand_velocity()]
+    }
+    addBoidToSzene(boid)
+    return boid
+}
+
 let initGenotype = () => {
     return {
         lifespan: [between(100, 200) * 10 * 60, between(100, 200) * 10 * 60],
@@ -28,8 +42,8 @@ let initGenotype = () => {
         food_capacity: [between(30, 50), between(30, 50)],
         max_force: [0.4, 0.6],
         max_speed: [2.5, 3.5],
-        gender: ['X', 'X'],
-        of_age_at: [between(5, 10) * 1000 * 60, between(5, 10) * 1000 * 60]
+        gender: rand_gender(),
+        of_age_at: [between(3, 5) * 1 * 60, between(3, 5) * 1 * 60]
     }
 }
 
@@ -41,7 +55,7 @@ let calcPhenotype = (genotype) => {
         food_capacity: genotype.food_capacity[rand(2)],
         max_force: genotype.max_force[rand(2)],
         max_speed: genotype.max_speed[rand(2)],
-        gender: genotype.gender[0] == genotype.gender[1] ? "female" : "male",
+        gender: genotype.gender,
         of_age_at: genotype.of_age_at[rand(2)]
     }
 }
@@ -54,10 +68,13 @@ let makeBoid = (genotype, phenotype) => {
         stamina: phenotype.max_stamina,
         status: 'SWARMING',
         age() {
-            return this.phenotype.lifespan - (Date.now() - this.phenotype.birthday)
+            return (Date.now() - this.phenotype.birthday)
+        },
+        ready_to_die_of_old_age() {
+            return ((this.phenotype.lifespan - this.age()) < 0) ? true : false
         },
         is_adult() {
-            return (this.age > this.phenotype.of_age_at ? true : false)
+            return (this.age() > this.phenotype.of_age_at ? true : false)
         },
         is_hungry() {
             return ((this.food_level / this.phenotype.food_capacity * 100) < 10 ? true : false)
@@ -76,18 +93,18 @@ let gen_splicer = (mum_gen, dad_gen) => {
         lifespan: [mum_gen.lifespan[rand(2)], dad_gen.lifespan[rand(2)]],
         max_stamina: [mum_gen.max_stamina[rand(2)], dad_gen.max_stamina[rand(2)]],
         food_capacity: [mum_gen.food_capacity[rand(2)], dad_gen.food_capacity[rand(2)]],
+        max_force: [mum_gen.max_force[rand(2)], dad_gen.max_force[rand(2)]],
         max_speed: [mum_gen.max_speed[rand(2)], dad_gen.max_speed[rand(2)]],
-        gender: [mum_gen.gender[rand(2)], dad_gen.gender[rand(2)]],
+        gender: rand_gender(),
         of_age_at: [mum_gen.of_age_at[rand(2)], dad_gen.of_age_at[rand(2)]]
     }
 }
 
-let updateTimer = 3
-
 let updateWorld = () => {
-    updateTimer -= 1
-    if (updateTimer < 0) {
-        updateTimer = 3
+    countdown_update_timer()
+    countdown_breeding_timer()
+    if (is_update_timer_up()) {
+        resetUpdateTimer()
         boids = updatePopulationStatus()
     }
     let newBoids = []
@@ -100,15 +117,25 @@ let updateWorld = () => {
 }
 
 let updatePopulationStatus = () => {
-  let newPopulation = []
-  boids.forEach(boid => {
-      if (boid.boid.age() > 0) {
-          newPopulation.push(updateSingle(boid))
-      } else {
-          removeBoidFromSzene(boid)
-      }
-  })
-  return newPopulation
+    let newPopulation = []
+    boids.forEach(boid => {
+        if (boid.boid.ready_to_die_of_old_age()) {
+            removeBoidFromSzene(boid)
+        } else {
+            newPopulation.push(updateSingle(boid))
+        }
+    })
+    if (is_breeding_time()) {
+        let eligible = boids.filter((boid) => (on_ground(boid) && boid.boid.is_adult()))
+        let females = eligible.filter(is_female)
+        let males = eligible.filter(is_male)
+        females.forEach(female => {
+            let randomMale = rand_male(eligible)
+            let baby = make_new_baby_boid(female, randomMale)
+            newPopulation.push(baby)
+        })
+    }
+    return newPopulation
 }
 
 let findClosest = (position) => {
@@ -136,7 +163,7 @@ let is_searching_the_ground = (boid) => {
 
 let updateSingle = (boid) => {
     if (on_ground(boid)) {
-        if (boid.boid.is_fully_recovered()) {
+        if (boid.boid.is_fully_recovered() && !is_breeding_time()) {
             boid.boid.status = 'SWARMING'
             boid.velocity = rand_velocity()
         } else {
@@ -144,7 +171,9 @@ let updateSingle = (boid) => {
         }
     } else {
         boid.boid.stamina -= 1
-        if (boid.boid.is_tired()) {
+        if (boid.boid.is_tired() || boid.boid.is_hungry()) {
+            boid.boid.status = 'SEARCHINGGROUND'
+        } else if (is_breeding_time() && boid.boid.is_adult()) {
             boid.boid.status = 'SEARCHINGGROUND'
         }
     }
