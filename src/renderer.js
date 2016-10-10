@@ -70,26 +70,26 @@ window.addEventListener('resize', function() {
     renderer.setSize(window.innerWidth, window.innerHeight)
 }, false)
 
-let octree = new THREE.Octree()
+let boid_geometry = new THREE.SphereGeometry(1, 32, 32)
+let boid_material = new THREE.MeshPhongMaterial({
+    color: 0xdc143c,
+    shininess: 300,
+    specular: 0x33AA33,
+    shading: THREE.SmoothShading
+})
 
+let octree = new THREE.Octree()
 let balls = []
 let id = 0
-THREE.Mesh.prototype.velocity = new THREE.Vector3()
-THREE.Mesh.prototype.birthday = 0
-let boid_geometry = new THREE.SphereGeometry(1, 32, 32)
 
 let addBoidToSzene = (boid) => {
-    let mesh = new THREE.Mesh(boid_geometry, new THREE.MeshPhongMaterial({
-        color: 0xdc143c,
-        shininess: 300,
-        specular: 0x33AA33,
-        shading: THREE.SmoothShading
-    }))
+    let mesh = new THREE.Mesh(boid_geometry, boid_material)
     mesh.castShadow = true
     mesh.receiveShadow = false
     mesh.position.set(...boid.position.toArray())
     mesh.velocity = boid.velocity
-    mesh.birthday = boid.boid.genotype.birthday
+    mesh.birthday = boid.boid.phenotype.birthday
+    mesh.boid = boid
     let scale_factor = 3
     mesh.scale.set(scale_factor, scale_factor, scale_factor)
     balls.push(mesh)
@@ -98,7 +98,7 @@ let addBoidToSzene = (boid) => {
 }
 
 let removeBoidFromSzene = (boid) => {
-    let toBeRemoved = balls.filter(ball => ball.birthday == boid.boid.genotype.birthday)[0]
+    let toBeRemoved = balls.filter(ball => ball.birthday == boid.boid.phenotype.birthday)[0]
     let index = balls.indexOf(toBeRemoved);
     if (index > -1) {
         balls.splice(index, 1);
@@ -110,10 +110,11 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
+    updateEnemy()
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()
-        //octree.rebuild()
+    octree.rebuild() // keep track of moving objects
     stats.end()
     requestAnimationFrame(renderWorld)
 }

@@ -89,14 +89,14 @@
 %%%%%
 %% customize (see readme.pdf for supported values)
 \HAWThesisProperties{Author={Corinna Klaukin}
-                    ,Title={Modellierung und Visualisierung einer Population von Boids}
-                    ,EnglishTitle={Modelling and Visualization of a Population of Boids}
-                    ,ThesisType={Bachelorarbeit}
-                    ,ExaminationType={Bachelorprüfung}
-                    ,DegreeProgramme={Bachelor of Science Angewandte Informatik}
-                    ,ThesisExperts={Prof. Dr. Philipp Jenke \and Prof. Dr. Stefan Sarstedt}
-                    ,ReleaseDate={21. Juli 2016}
-                  }
+	,Title={Modellierung und Visualisierung einer Population von Boids}
+	,EnglishTitle={Modelling and Visualization of a Population of Boids}
+	,ThesisType={Bachelorarbeit}
+	,ExaminationType={Bachelorprüfung}
+	,DegreeProgramme={Bachelor of Science Angewandte Informatik}
+	,ThesisExperts={Prof. Dr. Philipp Jenke \and Prof. Dr. Stefan Sarstedt}
+	,ReleaseDate={21. Juli 2016}
+}
 
 %% title
 \frontmatter
@@ -137,95 +137,164 @@
 %%%%
 \chapter{Einleitung}\label{einleitung}
 \section{Motivation}
-In der Computergrafik können schon viele Naturphänomene simuliert werden. So auch das Schwarmverhalten von Schwarmtieren, wie Vögel und Fische.
+In der Computergrafik können bereits viele Naturphänomene simuliert werden, so auch das Schwarmverhalten von Schwarmtieren, wie Vögel und Fische.
 Solche Simulationen wurden schon vielfach in Filmen und Animationen verwendet. Es gibt mittlerweile einige Modelle, einige performanter, andere dafür realistischer, die für solche Animationen eingesetzt werden. Eines der bekanntesten ist das Boids-Modell. In diesem Modell entscheidet jedes Tier anhand von festgelegten Regeln, wohin es sich bewegt. Doch dieses Modell, obwohl so einfach und naturnah, simuliert nur das pure Schwärmen. Eine ganzheitliche Sicht auf die Schwarmpopulation und den Lebenszyklus der Tiere ist bis jetzt nicht beachtet worden. In kurzen Filmsequenzen mag dies nicht weiter auffallen. Aber werden Schwarmsimulationen nach dem Boids-Modell in offenen Welten eingesetzt, in denen man nicht nur Zeit zum Erkunden, sondern auch zum Verweilen und Beobachten hat, so fällt schnell auf, dass die Tiere nur ein sehr limitiertes Verhaltensmuster zeigen.
-Wenn in solchen Situationen Populationen von Schwarmtieren simuliert werden sollen, so ist ein ganzheitlicheres Modell von Nöten.
+Wenn in solchen Situationen Populationen von Schwarmtieren simuliert werden sollen, so ist ein ganzheitlicheres Modell vonnöten.
 
 \section{Zielsetzung}
-Ziel in dieser Arbeit ist die Modellierung und Visualisierung einer Population von Boids.
+Ziel dieser Arbeit ist die Modellierung und Visualisierung einer Population von Boids.
 
 Dabei soll im ersten Schritt das Modell der Boids um typische weitere Verhaltensweisen von Schwarmtieren erweitert werden: Ausruhen, Partnersuche und Brüten, Futtersuche und Fliehen vor Fressfeinden.
-Desweiteren beinhaltet die Modellierung der Population Genetik und Lebensphasen der Boids.
+Des Weiteren beinhaltet die Modellierung der Population Genetik und Lebensphasen der Boids.
 
-Im zweiten Schritt soll für das Modell ein Prototyp entworfen werden, der eine Population von Boids mit allen Erweiterungen geeignet visualisiert. 
-Dieser Prototyp beschränkt sich auf die korrekte Umsetzung des Modells und einer ansprechenden Visualisierung. Es erhebt keinen Anspruch auf physikalische Korrektheit. Und obwohl das Modell sich stärker von der Natur inspirieren lässt, so haben die Boids nicht den Anspruch eine wirklich existierende Tierart zu simulieren.
+Im zweiten Schritt soll für das Modell ein Prototyp entworfen werden, der eine Population von Boids mit einigen Erweiterungen geeignet visualisiert.
+Dieser Prototyp beschränkt sich auf die korrekte Umsetzung des Modells und einer ansprechenden Visualisierung. Weder das Modell noch der Prototyp erheben Anspruch auf physikalische Korrektheit. Und obwohl das Modell sich stärker von der Natur inspirieren lässt, so haben die Boids nicht den Anspruch, eine wirklich existierende Tierart zu simulieren.
 
 \section{Aufbau der Arbeit}
-Einen Einstieg in die Thematik und die Aufgabenstellung befindet sich im Kapitel \ref{einleitung}.
+Ein Einstieg in die Thematik und die Aufgabenstellung befindet sich im Kapitel \ref{einleitung}.
 \newline
-Einen Überblick über das natürliche Schwarmverhalten von Tieren wird in Kapitel \ref{stand} beschrieben. Außerdem werden hier die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren gegenüber gestellt. Einen ersten Überblick über das Modell der Boids findet sich auch hier.
+Ein Überblick über das natürliche Schwarmverhalten von Tieren wird in Kapitel \ref{stand} beschrieben. Außerdem werden hier die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren gegenübergestellt. Ein Überblick über das originale Modell der Boids findet sich ebenfalls hier.
 \newline
 In Kapitel \ref{modell} wird das Modell für die prototypische Umsetzung entworfen. Nach einer genaueren Beschreibung der Einzelheiten des Boids-Modells wird dieses um Verhaltensweisen der einzelnen Tiere erweitert. Außerdem wird erläutert, wie die Evolution und die Entscheidungsfindung in dem Modell aussehen.
 \newline
 Das Kapitel \ref{umsetzung} behandelt anschließend die Umsetzung eines Prototypen des Modells. Hier werden unter anderem die Architektur der Umsetzung, die Datenstrukturen und die Algorithmen der Umsetzung beschrieben.
 \newline
-Anschließend erfolgt in Kapitel \ref{eval} die Evaluation des Prototypen auf die Reälitätsnahe und Performanz.
+Anschließend erfolgt in Kapitel \ref{eval} die Evaluation des Prototypen auf die Realitätsnähe und Performanz.
 \newline
 Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmöglichkeiten werden abschließend in Kapitel \ref{fazit} beschrieben.
 
 \chapter{Stand der Technik}\label{stand}
+Versuche, Schwarmverhalten mithilfe eines Computers darzustellen, gab es schon einige. In diesem Kapitel werden die wichtigsten zur Übersicht und zum Vergleich vorgestellt. Auch eine Übersicht des grundlegenden Modells der Boids befindet sich in diesem Kapitel. Der erste Abschnitt beschreibt verschiedene Beispiele von Schwarmverhalten in der Natur.
 \section{Schwarmverhalten in der Natur}
-Schwärme sieht man bei Vögeln, z.B. Flamingos. Fischen, Walschulen. Herden von Schafen, etc. Generelle Übersicht über Schwarmverhalten. Biologische Relevanz verschiedener Tierarten. Beschreiben von einer Vogelart, die schwärmt, komplexeres Verhalten. Flamingos schwärmen in der Luft, Brüten gemeinsam zur Brutzeit. Fliegen morgens teilweise mehr als 100km zur Futterquelle. Kommen erst am nächsten Tag zurück.
-Generelle Vogelschwärme, wechseln des "Anführers" ad hoc, Sichtbarkeit bei Flamingos nicht mehr als 7 unterscheidbar, Sichtbarkeit orientiert sich an den Nachbarn zu den Seiten, da Augen der Vögel an den Seiten. 
-Schwärme machen es Greifvögeln schwer, sich ein Opfer herauszupicken und gezielt zu verfolgen, verwirren den Angreifer. 
+Schwarmverhalten wird in der Natur bei ganz unterschiedlichen Tierarten beobachtet. Ob es nun Vögel, Bienen, Schafe, Heuschrecken oder Heringe sind, Schwarmverhalten scheint für viele Tierarten von lebenswichtigem Nutzen zu sein.
+Gemeinsam haben alle diese Tierarten, dass sie in großen Zahlen auftreten, wie z.B. die Heuschrecken, die teilweise bis zu 300 Milliarden Tiere in ihrem Schwarm vereinen, oder auch Flamingos, die mit bis zu 1 Millionen Tieren zusammen schwärmen.
+In dieser großen Anzahl fliegen bzw. schwimmen bzw. bewegen sie sich fort, dicht an dicht, alle in einer gemeinsamen Geschwindigkeit und gleicher Richtung. Trotz der hohen Dichte sind Kollisionen dabei eher selten.
+
+Bei einigen Schwarmtieren ist kein Anführer erkennbar. Flamingos z.B. richten sich dabei nur nach ihren direkten Schwarmnachbarn. Sie können bis zu sieben unterschiedliche Artgenossen erkennen und unterscheiden.
+
+Andere Schwarmtiere haben Anführer, wie z.B. die Ameisen und die Bienen. Durch die Pheromone, die z.B. die Bienenkönigin aussendet, wissen die anderen Bienen im Bienenstock, was sie als Nächstes zu tun haben und welche Rolle sie im Bienenschwarm übernehmen sollen. Wenn es Zeit zur Futtersuche ist, so ziehen ein paar Kundschafterbienen morgens aus, um die Gegend zu erkunden. Sie sollen dabei nicht selber Futter sammeln, sondern nur die nächstliegende bzw. beste Futterstelle ausfindig machen. Wo diese Futterstelle liegt, vermitteln die Kundschafterbienen nach ihrer Rückkehr durch den sogenannten Bienentanz den Arbeiterbienen, die sich dann auf den Weg machen und das Futter sammeln. Die Bienen agieren zwar individuell, d.h. sie finden alleine (mit der Beschreibung der Kundschafterbienen) den Weg, werden aber trotzdem kontrolliert durch die Pheromone der Bienenkönigin.
+Nur wenn es für die Königin Zeit wird auszuziehen, zeigen Bienenschärme ein echtes Schwarmverhalten, wie den Flug der Flamingos. Alle Bienen, die der Königin folgen, suchen die Nähe zu dieser und bilden so eine dichte Masse an Bienen. In großen Trauben hängen sie z.B. von Bäumen und warten, bis die Kundschafterbienen einen geeigneten Ort für das neue Zuhause gefunden haben. Sobald dies der Fall ist, fliegt der gesamte Schwarm dicht an dicht in einer Einheit zu dem neuen Platz.
+
+Ein weiteres Merkmal von Schwarmtieren ist das homogene Erscheinungsbild. Heringe wissen zwar nicht, wie sie selber aussehen, sind aber seit ihrer Geburt auf das Erscheinungsbild ihrer Schwarmkollegen geprägt und suchen instinktiv Schutz in einem homogenen Schwarm. Dadurch, dass die anderen Heringe des Schwarms diesen Hering seinerseits auch als homogenen Schwarmnachbarn erkennen, wird er gut in dem Schwarm integriert. Ein Clownfisch dagegen würde auch instinktiv den Schutz eines homogenen Schwarms in den Heringen erkennen und suchen, würde von den Heringen aber als artfremd erkannt und daraufhin ausgegrenzt werden. Der Clownfisch wäre in einem solchen artfremden Schwarm sehr leicht zu erkennen und hätte hier kaum Lebenschancen.
+
+Das gesamte Leben spielt sich im Schwarm gemeinsam ab. Heuschrecken ziehen gemeinsam von einem Futterplatz zum nächsten. Flamingos brüten zur selben Zeit an einem gemeinsamen Ort. Besonders in einer so bedrohlichen Situation wie das Brüten am Boden, bietet das Auftreten im Schwarm die größten Überlebenschancen für den Schwarm. Durch die schier unendliche Anzahl der gleichzeitig brütenden Tiere bleiben trotz Fressfeinden noch genügend Tiere übrig, die den Schwarm überleben lassen. Beobachtet wurde hierbei auch, dass Flamingos bis zu 100 km von ihrer Futterstelle entfernt brüten. Elterntiere ziehen dabei morgens zu der Futterstelle los, sammeln Futter und fliegen nicht selten erst am nächsten Tag wieder zu der Brutstelle zurück. Dabei findet dieser Flug, wie alle anderen Tätigkeiten auch, in großer Anzahl als Schwarm statt.
 \section{Partikelsysteme}
-Partikelsysteme können Schwärme nur sehr begrenzt darstellen. Sie werden von einer Punktquelle gespawned. Können sehr performant sein, aber nicht sehr realistisch.
+Als einer der frühesten Versuche, Schwarmtiere mit einem Computer darzustellen, wurde ein Partikelsystem bemüht. Partikelsysteme besitzen eine Punktquelle, von der die Partikel ausgesendet werden. Diese Partikelsysteme können sehr performant sein, haben aber den Nachteil, dass realistische Schwärme nicht möglich sind. Partikel haben nur eine begrenzte Lebensdauer und auch ein sehr begrenztes Flugverhalten. Partikelsysteme eignen sich somit lediglich für eine sehr reduzierte Darstellung von Schwärmen, die keinen Anspruch an naturnahe Realität erheben.
 \section{Multi Agenten Systeme}
-Multi-Agenten-Systeme modellieren eine Gruppe von selbstständig agierenden Einheiten, genannt Agenten. Diese Agenten haben bestimmte Ziele oder ein spezifisches Problem zu lösen. Wie z.B. der Ant Colony Optimization Algorithmus. Hier wird das Verhalten der Ameisen nachgeahmt, um den kürzesten Weg zwischen zwei Punkten zu suchen. Ein Phänomen der Natur stellt hier einen geschickten Optimierungs-Algorithmus zur Verfügung. 
-Vielfach werden die Agenten als homogene Masse modelliert, d.h. alle Agenten sich gleichberechtigt und haben die gleichen Möglichkeiten. In einigen Agenten-Systemen werden die Agenten hierarchisch modelliert. Das Optimieren wird häufig durch die Kombination mit einem genetischen Algorithmus erreicht. 
+Multi-Agenten-Systeme modellieren eine Gruppe von selbstständig agierenden Einheiten, genannt Agenten. Diese Agenten haben bestimmte Ziele oder ein spezifisches Problem zu lösen. Vielfach werden die Agenten als homogene Masse modelliert, d.h. alle Agenten sind gleichberechtigt und haben die gleichen Möglichkeiten. In einigen Agenten-Systemen werden die Agenten hierarchisch modelliert. Das Optimieren wird häufig durch die Kombination mit einem genetischen Algorithmus erreicht.
+Ein Beispiel ist hier der Ant Colony Optimization Algorithmus. Hier wird das Verhalten der Ameisen nachgeahmt, um den kürzesten Weg zwischen zwei Punkten zu suchen. Ein Phänomen der Natur stellt hier einen geschickten Optimierungs-Algorithmus zur Verfügung. Ameisen, die auf der Suche nach Futter sind, hinterlassen eine Duftspur, anhand derer sie selber und andere Ameisen die Futterquelle wiederfinden können. Je mehr Ameisen einem bestimmten Weg folgen, desto stärker wird die Duftspur. Je stärker die Duftspur, desto vielversprechender erscheint der Weg, so dass immer mehr Ameisen diesen Weg wählen und somit die Duftspur immer weiter verstärken. Trotzdem entscheiden sich einige vereinzelte Ameisen immer wieder in unregelmäßigen Abständen ohne erkennbaren Grund, einen anderen oder völlig neuen Weg einzuschlagen. Die Hoffnung, eine noch ergiebigere Futterquelle oder einen kürzeren, schnelleren oder einfacheren Weg zu einer bereits bekannten Futterquelle zu finden, treibt diese abweichende Handlung voran. Der Ant Colony Optimization Algorithmus ist dabei diesen letzteren, explorierenden Ameisen nachempfunden. Entgegen der Natur wird dieser Algorithmus hierbei aber sehr verkürzt. Eine Population von zufällig generierten Agenten (Ameisen) wird gestartet, die alle zufällig neue Wege erkunden. Nach einem bestimmten Zeitraum wird der Erfolg eines jeden Agenten ausgewertet. Bei einem weiteren Zyklus des Algorithmus werden Kopien der im vorherigen Zyklus erfolgreichsten Agenten generiert, die ihrerseits wieder die Gegend erkunden. Nach einigen Durchläufen kann mithilfe dieses Algorithmus eine gute Approximation für einen kürzesten Weg gefunden werden.
+
+Dieser Algorithmus wird gerne bei der Planung von Straßen eingesetzt. Multi-Agenten-Systeme sind zwar durch das Naturphänomen der Schwarmtiere inspiriert, sind aber in erster Linie darauf beschränkt, mit ausgewählten Verhaltensweisen (Ameisen suchen einen kürzeren Weg.) ein nur periphär ähnliches Problem (Straßenverbindung zwischen zwei Städten) zu lösen. Die genetischen Algorithmen betrachten nur für das Problem wichtige Parameter, während der getaktete Lebenszyklus der Population der Agenten völlig unrealistisch ist. Für die Darstellung eines Schwarmes allein um des Schwärmens Willen eignet sich dieser Ansatz also keinesfalls, obwohl die genetischen Algorithmen Ansätze bieten.
+\section{Artificial Life und Behavioural Animation}
+Der Bereich Artificial Life versucht, möglicht realistisch und lebensecht wirkende digitale Einheiten zu schaffen, die scheinbar eigenständig und ungesteuert ein eigenes Leben führen. Hierbei wird nicht selten die Natur als Vorbild genommen und versucht, diese nachzubilden, wie z.B. die Simulation eines Aquariums, in dem Fische zufällig und in nicht erkennbaren Zyklen das digitale Aquarium erkunden. Ein komplexeres Beispiel ist das Computerspiel Creatures. In der künstlichen Welt Albia leben u.A. die Norns, die eigenständig die Welt erkunden, Hunger, Schmerz und Einsamkeit empfinden, mit Artgenossen kommunizieren und sich fortpflanzen. Besonders bemerkenswert ist hier die Komplexität der Norn-DNS.
+
+Der Bereich Behavioural Animation nutzt Ansätze des Artificial Life, um möglichst echt wirkende Animationen zu erstellen. Die Jagd eines gefährlichen Haies auf den Wassermann Duffy wurde auf diese Weise generiert. Sowohl Duffy als auch der Hai besaßen vorprogrammierte Verhaltensvorschriften und Bedürfnisse. Die genauen Einzelheiten der Jagd waren aber ungescriptet und sind durch Zufall entstanden.
+Eine Simulation eines Schwarms in einem erweiterbaren Szenario im Hinsicht auf realitätsnahe Lebenszyklen im Populationsgedanken ist sicherlich hier denkbar.
 \section{Boids nach Reynolds}
-Das Modell der Boids von Reynolds ist anders als die vorherigen. Zwar ähneln die einzelnen Einheiten den Agenten, aber im Gegensatz zu diesen haben die Boids kein spezifisches Ziel, welches es zu lösen gilt. Ein Multi-Agenten-System ist zweckgebunden, optimiert eine Lösung für ein Problem, welches aus einer ganz anderen Domäne stammt. Z.B. Ant Colony Optimization Algorithmus für die günstigste Straßenplanung. 
-Das Modell der Boids jedoch bezweckt die Simulation von einem Naturphänomen. Der Ansatz stammt aus dem Bereich Artificial Life und Behavioural Animation. 
-Außerdem stellt dieses Modell auch den Beweis einer verhaltensbiologischen Theorie dar: Es wurde in der Natur beobachtet, dass und wie sich (Vogel-)Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Vögel mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel.
-Die drei Grungregeln des Boids-Modells sind die folgenden:
-1. Bleibe dicht bei deinen Artgenossen.
-2. Passe dich in Geschwindigkeit und Ausrichtung an deine Artgenossen an.
-3. Versuche dich in den Mittelpunkt des Schwarms zu bewegen.
+Der Erfinder der Boids, Craig Reynolds, hat sich intensiv mit Artificial Life und Behavioural Animation beschäftigt und dort auch seine Inspiration für die Boids geholt.
+Das Modell der Boids bezweckt die Simulation von einem Naturphänomen und folgt einer verhaltensbiologischen Theorie: Es wurde in der Natur beobachtet, dass und wie sich Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Einheiten mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel.
+Die Grundregeln des Boids-Modells sind die folgenden: Bleibe dicht bei deinen Artgenossen, passe dich in Geschwindigkeit und Ausrichtung an deine Artgenossen an und versuche dich in den Mittelpunkt des Schwarms zu bewegen.
 Eine Erweiterung des Modells (Not Bumping into Things) beinhaltet die Regel, einen Mindestabstand zu den Artgenossen einzuhalten.
-Diese wenigen Regeln bestimmen ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen völlig ausreicht.
-Bei einer hohen Anzahl an Boids gibt es jedoch ein Performanz-Problem: Nach dem ursprünglichen Algorithmus fragt jeder Boid jeden anderen nach Position, Geschwindigkeit, usw. Es ist also O(n²). 
+Diese wenigen Regeln bestimmen ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen, in denen es genügt, den Schwarm endlos in der Luft fliegen zu lassen, völlig ausreicht. Dieses Grundregelwerk lässt sich sowohl im 2D- als auch im 3D-Raum durch einfache Vektorrechnung verwirklichen. Die bestimmenden Einflüsse auf die nächste Handlung eines Boids wird im Folgenden genauer beschrieben.
+\subsection{Kohäsion}
+Die Kohäsion ist die erste und wichtigste Regel, die für den Zusammenhalt eines Schwarms verantwortlich ist. Kohäsion bedeutet, dass alle Boids das Bedürfnis haben, dicht bei ihrem Schwarm zu bleiben. Der sicherste Platz in einem Schwarm ist dabei der Mittelpunkt, da Gefahren, wie z.B. ein Fressfeind, von den weiter außen fliegenden Boids abgeschirmt werden. Deshalb hat natürlich jeder Boid das Bedürfnis, möglichst in die Mitte des Schwarms zu gelangen.
+\subsection{Anpassen der Geschwindigkeit und Ausrichtung}
+Damit der Schwarm den Zusammenhalt und gemeinsame Flugmanöver gewährleisten kann, müssen sich die Boids an Geschwindigkeit und Ausrichtung der Schwarmnachbarn anpassen. Je schneller die Boids auf Änderungen reagieren, desto besser ist der Zusammenhalt. Reagieren die einzelnen Tiere nicht schnell genug oder passen sich nicht an, würde der Schwarm aufbrechen und fragmentieren. Ein einzelner Boid behält dabei seine dichtesten Schwarmnachbarn im Blickfeld und passt sich an diese an. Ändern sich die Nachbarn, bzw. gibt es Verschiebungen, die dazu führen, dass Nachbarn sich zum Vorteil anderer entfernen, so erkennt der Boid nun diese neuen, dichteren Boids als die nächsten Nachbarn an.
+\subsection{Mindestabstand}
+Um nicht während des Schwärmens zu kollidieren und bei einer Richtungs- bzw. Geschwindigkeitsänderung der Schwarmnachbarn genügend Zeit und Raum zu haben, um auf die Änderungen zu reagieren, muss ein gewisser Mindestabstand gewährleistet werden. Dieser Mindestabstand darf aber nicht zu groß sein. Je dichter die Schwarmtiere zusammen fliegen, desto schwieriger ist es für einen Außenstehenden, wie z.B. einen Fressfeind, einzelne Boids zu erkennen und zu verfolgen.
 
 \chapter{Entwurf des Populations-Modells}\label{modell}
-Nachdem im vorherigen Kapitel schon eine kurze Einführung zu dem Boids-Modell zu finden war, wird dieses in diesem Kapitel detaillierter beschrieben. Außerdem wird aufgeführt, wie das Modell erweitert wird, um die Population als solche zu beschreiben. Dazu gehören zusätzliche Bedürfnisse der einzelnen Boids, wie z.B. Hunger, aber auch eine Modellierung der Genetik und des Lebenszyklus der Boids. Da sich daraus für den Boid mehrere mögliche Handlungen zu einem jeden Zeitpunkt ergeben, wird im Nachhinein die Priorisierung und Entscheidungsfindung erläutert.
-\section{Boids Modell}
-\subsection{Separation}
-\subsection{Alignment}
-\subsection{Cohesion}
-
+Nachdem im vorherigen Kapitel eine Beschreibung des Boids-Modell zu finden war, wird in diesem Kapitel beschrieben, welche Anforderungen der Populations-Gedanke an ein erweitertes Modell hat. Dazu gehören zusätzliche Bedürfnisse der einzelnen Boids, wie z.B. Hunger, aber auch eine Modellierung der Genetik und des Lebenszyklus der Boids. Da sich daraus für den Boid mehrere mögliche Handlungen zu einem jeden Zeitpunkt ergeben, wird im Nachhinein die Priorisierung und Entscheidungsfindung erläutert.
+\section{Das pure Schwärmen}
+Das Boids-Modell in seiner ursprünglichen Version, wird in seinen Grundzügen für das reine Schwärmen übernommen. Die einzelnen Boids orientieren sich an ihren direkten Nachbarn und passen sich in Geschwindigkeit und Richtung an, wahren einen Mindestabstand und suchen die Mitte des Schwarms.
 \section{Erweiterung der Verhaltensweisen}
-\subsection{Futtersuche}
-\subsection{Ruhepausen}
-\subsection{Fliehen vor Fressfeinden}
+Der bisherige Ansatz von Reynolds war bis zu diesem Zeitpunkt noch sehr einfach. Wie in der Natur kann ein Außenstehender die einzelnen Boids nicht unterscheiden. Auch das Modell von Reynolds behandelt sie wie anonyme, austauschbare Einheiten. Die Boids haben keine Identität, keine Eigenschaften, nur eine Position. Das Modell, welches in dieser Arbeit entwickelt wird, jedoch soll die Boids realistischer darstellen. Um eine komplexere Handlungskette darzustellen, werden Informationen zu vergangenen Handlungen und veränderbaren Zuständen zwingend erforderlich. Dazu gehören die jeweilige DNS, das aktuelle Bedürfnis, und daraufhin eben eine Identität. Die Boids in diesem System sind nicht austauschbar und deutlich komplexer.
+\subsection{Futtersuche und Ruhepausen}
+Alle Lebewesen dieser Welt benötigen zum Leben Energie, die sie durch die Aufnahme von Nahrung gewährleisten. Aufgenommene Energie wird vom Organismus aufgebraucht, so dass nach gewisser Zeit für Nachschub gesorgt werden muss. Ist nicht genug Nahrung vorhanden, reicht die gespeicherte Energie nicht aus, so verstirbt der Organismus. Zur Verwertung von Nahrung und Umwandlung dessen in Energie sind desweiteren Ruhepausen notwendig. Dieses grundlegende Prinzip des Lebens darf bei der Modellierung einer Population auf gar keinen Fall fehlen.
+
+Das neue Modell beinhaltet den aktuellen Status der Energie- bzw. Hungerlevel. Desweiteren wird die Information über die maximale Energiekapazität benötigt. Zur Laufzeit des Systems muss in regelmäßigen Abständen der aktuelle Hunger- und Müdigkeitslevel realitätsnah angepasst werden: bei energieverbrauchenden Aktivitäten wie Fliegen sinken die Energiewerte, bei Nahrungsaufnahme und Ruhepausen steigen sie. Damit die Boids dem Schwärmen-Futtersuche Zyklus folgen können, müssen sie Hunger und Müdigkeit erkennen können. Dies kann mithilfe von Schwellwerten ermittelt werden. Durch Überwachung der Energiewerte und der Schwellwerte, kann ein Boid erkennen, wenn die Energiewerte zu niedrig werden, und der Nachschub von Energie in Form von Nahrung wichtig wird. Ist das der Fall, wird es für einen Boid zunehmend wichtiger, eine Nahrungsquelle ausfindig zu machen, das Bedürfnis dicht bei den schwärmenden Artgenossen zu sein wird dabei momentan geringer.
+
+Ist ein Boid am Boden, frisst und ruht sich aus, so genügt es nicht zu warten bis die Energiewerte den Schwellwert wieder positiv überschreiten. Ein Boid kehrt erst wieder zum Schwärmen zurück, wenn seine Sättigung bzw. Erholung das Energiemaximum erreicht.
+Abschließend darf man nicht vergessen, sich zu fragen, was passiert, wenn die Energielevel auf null sinken, bevor der Boid die Chance hat, neue Nahrung zu finden. Genau wie für echte Organismen auch, bedeutet dies für die Boids der Tod durch Erschöpfung oder Verhungern.
+\subsection{Abwehr der Fressfeinde}\label{enemy}
+Eine weitere Gefahr für Schwarmtiere stellen Fressfeinde dar: Heringe können einem Hai zum Opfer fallen, Ameisen können von Amseln gefressen werden. Normalerweise haben Schwarmtiere keine guten Chancen sich aktiv zu verteidigen.
+
+Eine Strategie ist der dichte Zusammenhalt: Die Masse und das homogene Erscheinungsbild der Schwarmtiere macht es Angreifern schwer, einzelne Tiere zu erkennen und zu verfolgen. Diese Strategie wird von dem originalen Ansatz des Modells bereits sehr gut erfüllt.
+
+Die zweite Strategie zur Abwehr ist die Flucht. Wenn ein Angreifer erkannt und zu Nahe kommt, dann ist es dem Boid geraten, schnell darauf zu reagieren und so schnell wie möglich von dem Angreifer wegzukommen. Dies erfordert die Intelligenz Angreifer als solche zu erkennen. In einem digitalen Computer-Modell gibt es natürlich keine Angreifer, die nicht vorsätzlich modelliert wurden. Eine einfache Moglichkeit, die Erkennung von Angreifern zu modellieren, ist, den Boids eine Liste von Angreifern zugänglich zu machen. Dann kann ein Boid in jedem Update-Zyklus die aktuelle Position der Angreifer ermitteln und bei der Unterschreitung einer Minimal-Distanz die Entscheidung zur Flucht fällen.
+
+Sehr realistisch ist diese Variante aber nicht. Gerade in der Mitte des Schwarms hat ein Boid nur seine Artgenossen im Blickfeld. Und das Wissen um alle in der Welt vorkommenden Fressfeinde und deren Position ist echten Schwarmtieren auch nicht vergönnt.
+Eine bessere Variante wäre es, einen Angreifer erst zu erkennen, wenn er im Sichtfeld des Boids auftaucht. Dies wäre mithilfe von Rays, die vom einzelnen Boid ausgehen und eine festgelegte Länge aufweisen, machbar. Wenn ein Ray mit einem Angreifer kollidiert, dann ist offentsichtlich die Flucht vonnöten.
+
+Eine dritte und für die Boids wohl realistischste Variante wäre, für jeden Boid das Sichtfeld aus seiner Perspektive zu berechnen und mit Bildverarbeitung und intelligenten Methoden, wie z.B. Neuronalen Netzen, nach Angreifern zu durchsuchen.
+
+Bei der Auswahl der Varianten ist zwischen deren Komplexitäten, Performanz-Ansprüchen und Realitätsnähe abzuwägen. Für eine Simulation ändert sich augenscheinlich nichts, da nur die Erkennung der Angreifer unterschiedlich wäre, aber nicht die Handlung der Boids. Für diese Arbeit wurde die erste Variante als die beste empfunden, da sie die naheliegendste und einfachste ist.
 
 \section{Evolution}
+Eine Population, die nie neue Mitglieder erhält, stirbt früher oder später aus. Damit die Population überleben kann, muss also für Nachschub gesorgt werden. Das Erzeugen von Nachkommen ist in der Natur vielfältig und bei jeder Tierart anders. Bei Flamingos finden sich ein weibliches und ein männliches Tier und brüten Eier aus. Viele Vogelarten zeigen ein solches partnerschaftliches Verhalten. Dies ist auch der Ansatz, der für dieses Modell gewählt wurde und im folgenden näher beschrieben wird.
+
 \subsection{Genetik}
-\subsection{Lebenszyklus eines Boids}
+Die biologische Genetik ist ein sehr komplexes und faszinierendes Thema, wird in dieser Arbeit aber nur sehr oberflächlich abgehandelt. Ein tieferer Einstieg in diese Thematik würde den Rahmen sprengen, und das Modell unnötig verkomplizieren. Exakte genetische Vorgänge sind für eine Simulation zu komplex und bieten zu wenig Mehrwert. Im folgenden wird ein sehr vereinfachtes Modell entwickelt.
+
+Gene sind die genetischen Faktoren, die dafür verantwortlich sind, dass Merkmale ausgeprägt werden. Diese werden bei der Fortpflanzung an die Nachfahren vererbt. Bei der geschlechtlichen Vererbung wird zufällig entschieden, welche der genetischen Informationen vom Mutter- und Vatertier an das jeweilige Nachkommen weitergegeben wird. Das genetische Erbmaterial nennt sich Genotyp und repräsentiert seine exakte genetische Ausstattung. Die Informationen, die sich bei dem Individuum durchsetzen werden im Phänotyp beschrieben.
+
+Jeder Boid hat demnach einen Genotyp, in dem die vererbten Gene, wie z.B. die maximale Lebensdauer und maximale Fluggeschwindigkeit gespeichert werden. Zu jedem Gen sind zwei Optionen vorhanden, eine vom Vatertier, das andere vom Muttertier. Welche Information sich durchsetzt und damit im Phänotyp gelistet wird, ist zufällig. Z.B. weist das Erbgut die mögliche Lebensspanne des Vaters und die der Mutter auf, für den Phänotyp wird per Zufall die Lebensspanne der Mutter ausgewählt. Dies ist demnach die für den Kind-Boid geltende maximal zu erreichende Lebensspanne.
+
+Die initiale Generation wird per Zufall generiert. Ab dann werden neue Nachkommen durch Rekombination erzeugt. Dazu werden die Erbinformationen der Elterntiere, d.h. die Genotypen, neu kombiniert und an den Nachkommen vererbt. Daraus ergibt sich für den Nachkommen dann auch der neue Phänotyp.
+
 \subsection{Partnersuche und Brüten}
+Damit sich zwei Boids unterschiedlichen Geschlechts verpaaren können, müssen sie sich als solche erkennen und finden. Die Tiere in diesem Modell sind nicht monogam, sondern suchen sich in jeder Brutzeit neue Partner, in der Hoffnung, die genetische Varianz der Population zu erhalten.
+Viele Tiere, wie auch Flamingos, verpaaren sich nur zu bestimmten Zeiten: der Paarungszeit. Dazu muss das Modell in regelmäßigen Abständen eine solche verkünden, in der die Boids für den Fortbestand sorgen können.
+Eine Variante, den geeigneten Partner zu finden, ist es, in der Paarungszeit den Boden aufzusuchen und unter den dort verweilenden Artgenossen einen geeigneten Partner auszuwählen. Haben sich zwei gefunden, gibt es Nachwuchs. Der Nachwuchs ist sofort flügge und die Elterntiere sind frei, sich am Boden neue Partner zu suchen, solange die Paarungszeit anhält.
+Eine zweite, realistischere Variante wäre, Eier zu generieren, die abwechselnd von den Elterntieren bebrütet werden, während das andere Elterntier Futter sucht. Beide Elterntiere wären somit an das Nest gekoppelt, und müssten evtl. die ausgeschlüpften Küken versorgen. Diese Variante modelliert sich enger an das Verhalten von z.B Flamingos.
+
+Viele Tiere verpaaren sich erst, wenn sie alt genug sind bzw. die Geschlechtsreife erlangen. Das Modell muss demnach bei der Partnersuche streng überprüfen, wer an der Paarungszeit teilnimmt, und dass Jungtiere den adulten Tieren nicht als Partner zur Verfügung stehen.
 
 \section{Entscheidungsfindung}
+Die Entscheidung, welche Handlung der Boid als nächstes zu verfolgen hat, ergibt sich aus den aktuellen Werten (z.B. Hungerlevel) und dem aktuellen Status (Schwärmen, Partner suchen...). Im ersten Schritt wird die Population überprüft, alte, erschöpfte Tiere werden aussortiert, Nachkommen werden erzeugt.
+
+Im zweiten Schritt werden die Werte der einzelnen Tiere angepasst und überprüft. Ist der Boid in der Luft am Schwärmen werden die Energielevel gesenkt, ist der Boid am Boden, steigen sie.
+
+Danach wird entschieden, was ein der Boid als nächsten tut. Die Entscheidungssequenz dazu verdeutlicht die folgende Grafik.
 
 \chapter{Umsetzung}\label{umsetzung}
 In diesem Kapitel wird die Umsetzung eines Prototypen beschrieben, der versucht, das im vorherigen Kapitel entworfene Modell umzusetzen.
 \section{Architektur des Prototypen}
+Der Prototyp wurde mithilfe von Javascript 6 und der 3D-Bibliothek Three.js (rev. 75) entwickelt. Als leichtgewichtiger Server wurde lighttp 1.4 gewählt. Getestet wurde hauptsächlich auf einem handelsüblichen Notebook mit Ubuntu 15.10 64-bit und Firefox 47.0.
+Im Vordergrund für die Auswahl waren Verfügbarkeit, schnelle Installation und die Erreichbarkeit und somit Testbarkeit des Prototypen von anderen Computern. Auch bietet die Entwicklung mit Javascript einen schnellen Testzyklus mit dem Browser an. 
 \section{Datenstruktur des Schwarms}
-\subsection{Sichtbarkeit}
-\subsection{Performanz}
 \subsection{Dynamischer Octree}
-\section{Algorithmen}
+Als Datenstruktur bietet sich im 3-dimensionalen Raum ein Octree an. Ein Octree teilt den Raum rekursiv in 8 gleichgroße Würfel auf, wobei jeder Würfel wiederum durch in 8 Würfel geteilt werden kann. Ein Octree ahnelt einer Baumstruktur und speichert die Element anhand ihrer Position. Da sich die Boids bewegen, müssen die Elemente verschoben werden können. Es wird also eine struktur benötigt, die mit vielen beweglichen Elementen umgehen kann. Eine solche Struktur ist der dynamische Octree.
+\subsection{Sichtbarkeit}
+Aus Performanz-Gründen sollte die Sichtbarkeit der Boids beschränkt werden. Auch Beispiele aus der Natur legen dies nahe. Es ist bei der Anpassung der Ausrichtung und der Geschwindigkeit also die Auswahl auf die direkten Nachbarn zu beschränken. Ein Ansatz modelliert das Sichtfeld der Boids mithilfe von Rays. Dies findet auch weiter entfernte Tieren und ist somit realitätsnah. Allerdings ist dies auch sehr aufwändig. Eine andere Möglichkeit ist die Nutzung der Datenstruktur des Schwarms: Ein Octree kann üblicherweise auf Anfrage alle Elemente in einem gesuchten Radius finden. Da der Octree bereits als Datenstruktur gewählt wurde, wurde dies in der Umsetzung gewählt.
+\subsection{Performanz}
+So einfach der Schwärm-Algorithmus auch ist, gibt es jedoch ein Performanz-Problem bei einer größeren Anzahl von Boids: Nach dem ursprünglichen Algorithmus fragt jeder Boid jeden anderen nach Position, Geschwindigkeit, usw. Es liegt also eine Komplexität O(n²) vor. Bei einer kleinen Population von nur 20 Boids gibt es bei dem Algorithmus 4000 Abfragen. Bei realistischen Populationsgrößen wie in einigen Flamingoschwärmen zu finden, müsste man von 1 Million Tieren ausgehen. Trotz Verbesserungen der Prozessoren ist es noch nicht möglich, solche Schwärme in Echtzeit zu simulieren. Selbst bei kleineren Schwärmen von nur 4000 Tieren, ist die nötige Rechenleistung beträchtlich. Zur Verbesserung der Performanz muss deshalb der Algorithmus verbessert werden. Ein Ansatz ist die Beschränkung der Orientierung auf die direkten Nachbarn. Hier ist sogar die Natur das Vorbild: Flamingos orientieren sich in der Natur auch nicht an allen anderen Tiere im Schwarm, sondern nur an maximal sieben direkten Nachbarn.
+Dennoch sind in dem erweiterten Populationsmodell mehrere Iterationen über die gesamte Population nötig, um die Werte der Boids zu überwachen und anzupassen. Eine Möglichkeit, den Rechenaufwand zu verringern, ist es, solche Updates in langsamer getakteten Abständen durchzuführen.
+
+\section{Berechnung des Fluges}
+In diesem Abschnitt werden die mathematischen Berechnungen für das Schwärmen berechnet.
 \subsection{Berechnung des Schwärmens}
 \subsection{Fliehen und Verfolgen}
 \subsection{Partnersuche}
 \section{Parametrisierung der Genetik}
+Hier hübsche Diagramme, wie Klassendiagramme
 \subsection{Genotyp}
 \subsection{Phenotyp}
-\subsection{Mutation}
+
 \section{Visualisierung}
+Die Visualisierung zeigt eine Population von Boids. Die Visualisierung wurde beschränkt sich auf das Nötigste, da die Umsetzung der Funktionalitäten höhere Priorisierung hatten.
 \subsection{Szenario}
-\subsection{3D Modelle der Boids}
+Das Szenario der Visualisierung beinhaltet eine kleine Gruppe von Boids, die ohne Einfluss oder Skripte über den Bildschirm schwärmt und dabei in regelmäßigen Abständen Mitglieder verliert oder dazugewinnt, oder zur Nahrungsaufnahme den Boden aufsucht. Desweiteren erscheint ab und zu ein Fressfeind, dem die Boids entkommen müssen.
+\subsection{Visualisierung der Boids}
+Ein grundlegendes Merkmal von Schwarmtieren ist das homogene Erscheinungsbild. Eine Visualisierung, die Anspruch auf Realitätsnähe erhen möchte, muss die Boids demnach zwingend identischen Aussehens realisieren. In dem Prototypen wurden die Boids deshalb alle als Kugeln in derselben Größe und Farbe dargestellt. Der Einsatz eines komplexeren 3D-Modells wurde bewusst nicht gewählt, da so das Verhalten der Boids im Vordergrund bleiben kann.
 \subsection{Darstellung der Szene}
+Die Szene ist sehr einfach gehalten. Der Boden wird durch eine einfache Fläche modelliert. Er befindet sich am unteren Ende der Bounding Box \ref{box}. Andere Elemente wie z.B. Bäume hätten die Szene schöner dargestellt, wären aber Hindernisse, die die Boids hätten umgehen müssen. Da der Schwerpunkt dieser Arbeit auf dem Populationsgedanken liegt und nicht dem Navigieren eines komplexen Terrains, wurde davon Abstand genommen.
 \subsection{Animation des Fressfeindes}
-\subsection{Begrenzung der Szene}
-\subsection{Hindernisse}
+Damit die Boids das Verhalten eines Angreifers gegenüber zeigen können, wird ein solcher natürlich in der Szene benötigt. Da in erster Linie die Boids für dieses Modell interessant sind und nicht der Fressfeind, wurde dieser nur rudimentär umgesetzt. Der Fressfeind ist wie die Boids auch, eine einfache Kugel, die sich allerdings in Größe und Farbe unterscheidet, wie das ja auch in der Natur der Fall wäre. Der Fressfeind in dem Prototypen ist nicht mit eigener Intelligenz ausgestattet, er durchstreift lediglich in periodischen Abständen die Szene.
+
+Die Boids überprüfen in ihrem Update-Zyklen, ob und wo sich der Fressfeind befindet, um ihm bei zu geringer Distanz dann auszuweichen. Dieser Ansatz folgt der zweiten Strategie wie oben \ref{enemy} bereits beschrieben.
+\subsection{Begrenzung der Szene}\label{box}
+Damit die Boids nicht aus dem Sichtfeld der Szene entschwinden, wurde eine Bounding Box, also eine Begrenzung des Raumes eingesetzt. Die Modellierung der Bounding Box als Würfel erchien als die einfachste Möglichkeit, wobei der Mittelpunkt der Bounding Box der Mittelpunkt des Koordinatensystems der Szene entspricht. Dies ermöglicht die einfache Erkennung, wann ein Boid Gefahr läuft, die Bounding Box zu verlassen. Nach der Berechnung der neuen Position eines Boids werden alle Koordinaten dieser Position geprüft, ob der Absolutwert einer Koordinate größer als die halbe Seitenlänge der Bounding Box ist. Ist dies der Fall, so hat der Boid die Grenze erreicht. Um zu verhindern, dass der Boid diese Grenze tatsächlich überschreitet, wird der Wert der überschreitenden Koordinate auf den Grenzwert beschränkt.
 
 \chapter{Evaluation}\label{eval}
 In diesem Kapitel wird das in Kapitel \ref{modell} entworfene Modell und der nach diesem Modell entwickelte Prototyp (beschrieben in Kapitel \ref{umsetzung}) evaluiert.
@@ -234,7 +303,18 @@ In diesem Kapitel wird das in Kapitel \ref{modell} entworfene Modell und der nac
 
 \chapter{Fazit}\label{fazit}
 \section{Zusammenfassung}
-\section{Ausblick}
+In dieser Arbeit wurde ein Modell entwickelt, welches eine Simulation von Schwarmtieren als Population erweitert. Dazu wurde zunächst ein Einblick in die Vorbilder der Natur und andere Methoden der Schwarmsimulation, sowie die Grundlagen des Boids-Modells gegeben. Danach wurde ein Modell entwickelt, welches auf dem Boids-Modell beruht und zusätzlich um Populationseigenschaften erweitert wurde. Anhand dieses Modells wurde ein Prototyp entwickelt, welches versucht, das erweiterte Modell umzusetzen. Im Anschluss wurde die Evaluation des Prototypen beschrieben.
+\section{Weiterentwicklungsmöglichkeiten}
+Das in dieser Arbeit beschriebene Modell zeigt nur einen ersten Ansatz zu der Darstellung einer Schwarmpopulation. Möglichkeiten zur Weiterentwicklung gibt es viele.
+Zunächst gibt es Potential für die Visualisierung. Sei es in Form von ansprechenden 3D-Modellen für die Boids und die anderen Assets oder Animationsequenzen für wichtige Ereignisse. So könnte ein Boid, der in der Luft verstirbt, zunächst einmal in Richtung Boden fallen, bevor der Boid aus der Szene eliminiert wird.
+
+Außerdem kann das Modell erweitert werden. Die Natur liefert zahlreiche Beispiele. Die Boids könnten z.B. die Monogamie und damit einen Partner fürs Leben wählen. Alternativ könnte die Futtersuche komplexer gestaltet werden. In dem jetzigen Modell finden die Boids Nahrung auf dem Boden. Egal wo sie sich auf dem Boden finden. Hier könnet man das Szenario realitätsnäher gestalten und ausgewählte Futterstellen modellieren, die erst gefunden werden müssen.
+
+Schlussendlich bietet auch die Vererbung Weiterentwicklungsmöglichkeiten: Bei der Rekombination der Gene fehlt die Möglichkeit der Mutation.
+
+\section{Fazit}
+Das in dieser Arbeit entwickelte Modell zeigt auf, wie das einfache Boids-Modell in eine Population umgewandelt werden kann. Hierbei wurde deutlich, wie komplex eine Population ist, welche Faktoren wichtig sind und modelliert werden müssen. Außerdem zeigte sich, dass für eine gute Simulation auch noch andere Faktoren, wie z.B die Performanz, einen nicht unerheblichen Aufwand erfordert.
+Abschließend ist dieses Modell aber schon ein guter Einstieg, der alle wesentlichen Bereiche einer Population von Schwarmtieren beinhaltet, wenngleich es noch viel Potential für Weiterentwicklungen gibt.
 
 %%%%
 
@@ -267,4 +347,7 @@ In diesem Kapitel wird das in Kapitel \ref{modell} entworfene Modell und der nac
 \HAWasurency
 
 \end{document}
+\grid
+\grid
+\grid
 \grid
