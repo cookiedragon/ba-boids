@@ -110,7 +110,7 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
-    updateEnemy()
+    //updateEnemy()
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()

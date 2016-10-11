@@ -107,7 +107,7 @@ let updateWorld = () => {
         resetUpdateTimer()
         boids = updatePopulationStatus()
     }
-    swarming_init_counter -= 1
+    //swarming_init_counter -= 1
     let newBoids = []
     let i = -1
     boids.forEach(boid => {
@@ -221,7 +221,7 @@ let updateSwarmingSingle = (boid) => {
               let diff = other_pos.sub(position)
               diff.normalize()
               diff.divideScalar(d)
-              ssteer.add(diff)
+              ssteer.add(other_pos)
               scount++
           }
           if ((d > 0) && (d < neighbordist) && is_swarming(boid) && is_swarming(other)) {
@@ -271,7 +271,7 @@ let updateSwarmingSingle = (boid) => {
     if (ssteer.length() > 0) {
         ssteer.normalize()
         ssteer.multiplyScalar(maxspeed)
-        ssteer.sub(velocity)
+        //ssteer.sub(velocity)
         ssteer = velocity.sub(ssteer)
         ssteer.clampLength(0, maxforce)
     }
@@ -308,7 +308,7 @@ let updateSwarmingSingle = (boid) => {
     acceleration.add(coh)
 
     velocity.add(acceleration)
-    velocity.clampLength(0, 3)
+    velocity.clampLength(0, maxspeed)
 
     let velocities = boid.velocities.slice()
     velocities.pop()
