@@ -196,16 +196,4 @@ year = {2013}
   URL =  	"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.61.9858; http://www.geovista.psu.edu/publications/2005/Conley_boids.pdf",
 }
 
-@inproceedings{citeulike:8377514,
-    author = {Pham, D. T. and Ghanbarzadeh, A. and Koc, E. and Otri, S. and Rahim, S. and Zaidi, M.},
-    booktitle = {Proceedings of the 2nd International Virtual Conference on Intelligent Production Machines and Systems (IPROMS 2006)},
-    citeulike-article-id = {8377514},
-    location = {Oxford},
-    pages = {454--459},
-    posted-at = {2010-12-07 16:39:23},
-    priority = {2},
-    publisher = {Elsevier},
-    title = {The Bees Algorithm, A Novel Tool for Complex Optimisation Problems},
-    year = {2006}
-}
 
