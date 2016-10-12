@@ -110,11 +110,82 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
-    //updateEnemy()
+    test()
+        //updateEnemy()
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()
     octree.rebuild() // keep track of moving objects
     stats.end()
-    requestAnimationFrame(renderWorld)
+    if (dynTest.length < 20) {
+        requestAnimationFrame(renderWorld)
+    } else {
+        console.log("###################### dyn test #######################")
+        dynTest.forEach(entry => {
+            console.log(entry)
+        })
+        console.log("###################### gen test #######################")
+        genTest.forEach(entry => {
+            console.log(entry)
+        })
+    }
+}
+
+let dynTest = []
+let genTest = []
+let testCounter = 500
+
+let test = () => {
+    testCounter -= 1
+    if (testCounter < 0) {
+        let populationSize = boids.length
+        let femaleCounter = 0
+        let maleCounter = 0
+        let littleLifeCounter = 0
+        let bigLifeCounter = 0
+        let bothLifeCounter = 0
+        let littleMaxSpeedCounter = 0
+        let bigMaxSpeedCounter = 0
+        let bothMaxSpeedCounter = 0
+        boids.forEach(boid => {
+            is_female(boid) ? femaleCounter++ : maleCounter++
+                if (boid.boid.genotype.lifespan.includes(30000)) {
+                    if (boid.boid.genotype.lifespan.includes(60000)) {
+                        bothLifeCounter++
+                    } else {
+                        littleLifeCounter++
+                    }
+                } else {
+                    bigLifeCounter++
+                }
+                if (boid.boid.genotype.max_speed.includes(2)) {
+                    if (boid.boid.genotype.max_speed.includes(4)) {
+                        bothMaxSpeedCounter++
+                    } else {
+                        littleMaxSpeedCounter++
+                    }
+                } else {
+                    bigMaxSpeedCounter++
+                }
+        })
+        genTest.push({
+            littleLife: littleLifeCounter,
+            bigLife: bigLifeCounter,
+            bothLife: bothLifeCounter,
+            littleSpeed: littleMaxSpeedCounter,
+            bigSpeed: bigMaxSpeedCounter,
+            bothSpeed: bothMaxSpeedCounter,
+        })
+        dynTest.push({
+            populationSize: populationSize,
+            females: femaleCounter,
+            males: maleCounter,
+            birthrate: birthrate,
+            deathrate: deathrate
+        })
+        birthrate = 0
+        deathrate = 0
+        testCounter = 500
+        console.log("tick")
+    }
 }

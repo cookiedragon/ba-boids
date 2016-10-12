@@ -1,0 +1,85 @@
+###################### dyn test ####################### renderer.js:123:9
+Object { populationSize: 20, females: 7, males: 13, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 20, females: 7, males: 13, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 20, females: 7, males: 13, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 12, females: 4, males: 8, birthrate: 0, deathrate: 8 } renderer.js:125:13
+Object { populationSize: 12, females: 4, males: 8, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 14, females: 5, males: 9, birthrate: 2, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 16, females: 7, males: 9, birthrate: 2, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 4, females: 3, males: 1, birthrate: 0, deathrate: 12 } renderer.js:125:13
+Object { populationSize: 4, females: 3, males: 1, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 5, females: 3, males: 2, birthrate: 2, deathrate: 1 } renderer.js:125:13
+Object { populationSize: 10, females: 5, males: 5, birthrate: 5, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 10, females: 5, males: 5, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 10, females: 5, males: 5, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 8, females: 3, males: 5, birthrate: 2, deathrate: 4 } renderer.js:125:13
+Object { populationSize: 13, females: 4, males: 9, birthrate: 5, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 13, females: 4, males: 9, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 13, females: 4, males: 9, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 6, females: 2, males: 4, birthrate: 0, deathrate: 7 } renderer.js:125:13
+Object { populationSize: 8, females: 3, males: 5, birthrate: 2, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 8, females: 3, males: 5, birthrate: 0, deathrate: 0 } renderer.js:125:13
+###################### gen test ####################### renderer.js:127:9
+Object { littleLife: 0, bigLife: 0, bothLife: 20, littleSpeed: 0, bigSpeed: 0, bothSpeed: 20 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 0, bothLife: 20, littleSpeed: 0, bigSpeed: 0, bothSpeed: 20 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 0, bothLife: 20, littleSpeed: 0, bigSpeed: 0, bothSpeed: 20 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 0, bothLife: 12, littleSpeed: 0, bigSpeed: 0, bothSpeed: 12 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 0, bothLife: 12, littleSpeed: 0, bigSpeed: 0, bothSpeed: 12 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 1, bothLife: 13, littleSpeed: 1, bigSpeed: 0, bothSpeed: 13 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 2, bothLife: 14, littleSpeed: 1, bigSpeed: 1, bothSpeed: 14 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 2, bothLife: 2, littleSpeed: 1, bigSpeed: 1, bothSpeed: 2 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 2, bothLife: 2, littleSpeed: 1, bigSpeed: 1, bothSpeed: 2 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 3, bothLife: 2, littleSpeed: 1, bigSpeed: 1, bothSpeed: 3 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 7, bothLife: 3, littleSpeed: 1, bigSpeed: 4, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 7, bothLife: 3, littleSpeed: 1, bigSpeed: 4, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 7, bothLife: 3, littleSpeed: 1, bigSpeed: 4, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 6, bothLife: 2, littleSpeed: 0, bigSpeed: 4, bothSpeed: 4 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 8, bothLife: 5, littleSpeed: 1, bigSpeed: 5, bothSpeed: 7 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 8, bothLife: 5, littleSpeed: 1, bigSpeed: 5, bothSpeed: 7 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 8, bothLife: 5, littleSpeed: 1, bigSpeed: 5, bothSpeed: 7 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 3, bothLife: 3, littleSpeed: 0, bigSpeed: 2, bothSpeed: 4 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 3, bothLife: 5, littleSpeed: 0, bigSpeed: 3, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 3, bothLife: 5, littleSpeed: 0, bigSpeed: 3, bothSpeed: 5 } renderer.js:129:13
+###################### dyn test ####################### renderer.js:123:9
+Object { populationSize: 20, females: 9, males: 11, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 23, females: 10, males: 13, birthrate: 3, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 23, females: 10, males: 13, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 28, females: 12, males: 16, birthrate: 16, deathrate: 11 } renderer.js:125:13
+Object { populationSize: 28, females: 12, males: 16, birthrate: 0, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 30, females: 13, males: 17, birthrate: 4, deathrate: 2 } renderer.js:125:13
+Object { populationSize: 31, females: 14, males: 17, birthrate: 1, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 25, females: 15, males: 10, birthrate: 13, deathrate: 19 } renderer.js:125:13
+Object { populationSize: 30, females: 18, males: 12, birthrate: 5, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 29, females: 18, males: 11, birthrate: 3, deathrate: 4 } renderer.js:125:13
+Object { populationSize: 31, females: 18, males: 13, birthrate: 2, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 28, females: 14, males: 14, birthrate: 12, deathrate: 15 } renderer.js:125:13
+Object { populationSize: 37, females: 18, males: 19, birthrate: 9, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 37, females: 18, males: 19, birthrate: 2, deathrate: 2 } renderer.js:125:13
+Object { populationSize: 42, females: 21, males: 21, birthrate: 5, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 32, females: 13, males: 19, birthrate: 2, deathrate: 12 } renderer.js:125:13
+Object { populationSize: 37, females: 15, males: 22, birthrate: 5, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 35, females: 16, males: 19, birthrate: 3, deathrate: 5 } renderer.js:125:13
+Object { populationSize: 52, females: 27, males: 25, birthrate: 17, deathrate: 0 } renderer.js:125:13
+Object { populationSize: 38, females: 23, males: 15, birthrate: 4, deathrate: 18 } renderer.js:125:13
+###################### gen test ####################### renderer.js:127:9
+Object { littleLife: 0, bigLife: 0, bothLife: 20, littleSpeed: 0, bigSpeed: 0, bothSpeed: 20 } renderer.js:129:13
+Object { littleLife: 1, bigLife: 0, bothLife: 22, littleSpeed: 0, bigSpeed: 0, bothSpeed: 23 } renderer.js:129:13
+Object { littleLife: 1, bigLife: 0, bothLife: 22, littleSpeed: 0, bigSpeed: 0, bothSpeed: 23 } renderer.js:129:13
+Object { littleLife: 9, bigLife: 1, bothLife: 18, littleSpeed: 3, bigSpeed: 4, bothSpeed: 21 } renderer.js:129:13
+Object { littleLife: 9, bigLife: 1, bothLife: 18, littleSpeed: 3, bigSpeed: 4, bothSpeed: 21 } renderer.js:129:13
+Object { littleLife: 9, bigLife: 1, bothLife: 20, littleSpeed: 4, bigSpeed: 4, bothSpeed: 22 } renderer.js:129:13
+Object { littleLife: 9, bigLife: 2, bothLife: 20, littleSpeed: 4, bigSpeed: 5, bothSpeed: 22 } renderer.js:129:13
+Object { littleLife: 4, bigLife: 5, bothLife: 16, littleSpeed: 11, bigSpeed: 3, bothSpeed: 11 } renderer.js:129:13
+Object { littleLife: 6, bigLife: 7, bothLife: 17, littleSpeed: 14, bigSpeed: 3, bothSpeed: 13 } renderer.js:129:13
+Object { littleLife: 5, bigLife: 10, bothLife: 14, littleSpeed: 13, bigSpeed: 6, bothSpeed: 10 } renderer.js:129:13
+Object { littleLife: 5, bigLife: 12, bothLife: 14, littleSpeed: 13, bigSpeed: 8, bothSpeed: 10 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 17, bothLife: 11, littleSpeed: 16, bigSpeed: 6, bothSpeed: 6 } renderer.js:129:13
+Object { littleLife: 1, bigLife: 24, bothLife: 12, littleSpeed: 25, bigSpeed: 6, bothSpeed: 6 } renderer.js:129:13
+Object { littleLife: 1, bigLife: 25, bothLife: 11, littleSpeed: 27, bigSpeed: 5, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 1, bigLife: 30, bothLife: 11, littleSpeed: 32, bigSpeed: 5, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 27, bothLife: 5, littleSpeed: 25, bigSpeed: 5, bothSpeed: 2 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 32, bothLife: 5, littleSpeed: 30, bigSpeed: 5, bothSpeed: 2 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 29, bothLife: 6, littleSpeed: 32, bigSpeed: 0, bothSpeed: 3 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 46, bothLife: 6, littleSpeed: 47, bigSpeed: 0, bothSpeed: 5 } renderer.js:129:13
+Object { littleLife: 0, bigLife: 37, bothLife: 1, littleSpeed: 35, bigSpeed: 0, bothSpeed: 3 } renderer.js:129:13
+

@@ -37,11 +37,11 @@ let make_new_baby_boid = (mum, dad) => {
 
 let initGenotype = () => {
     return {
-        lifespan: [between(100, 200) * 10 * 60, between(100, 200) * 10 * 60],
+        lifespan: [50 * 10 * 60, 100 * 10 * 60],
         max_stamina: [between(100, 200), between(100, 200)],
         food_capacity: [between(30, 50), between(30, 50)],
         max_force: [0.4, 0.6],
-        max_speed: [2.5, 3.5],
+        max_speed: [2, 4],
         gender: rand_gender(),
         of_age_at: [between(3, 5) * 1 * 60, between(3, 5) * 1 * 60]
     }
@@ -101,8 +101,8 @@ let gen_splicer = (mum_gen, dad_gen) => {
 }
 
 let updateWorld = () => {
-    //countdown_update_timer()
-    //countdown_breeding_timer()
+    countdown_update_timer()
+    countdown_breeding_timer()
     if (is_update_timer_up()) {
         resetUpdateTimer()
         boids = updatePopulationStatus()
@@ -117,11 +117,16 @@ let updateWorld = () => {
     boids = newBoids
 }
 
+let deathrate = 0
+let birthrate = 0
+
 let updatePopulationStatus = () => {
     let newPopulation = []
+    let dr = 0
     boids.forEach(boid => {
         if (boid.boid.ready_to_die_of_old_age()) {
             removeBoidFromSzene(boid)
+            deathrate += 1
         } else {
             newPopulation.push(updateSingle(boid))
         }
@@ -133,6 +138,7 @@ let updatePopulationStatus = () => {
         females.forEach(female => {
             let randomMale = rand_male(eligible)
             let baby = make_new_baby_boid(female, randomMale)
+            birthrate += 1
             newPopulation.push(baby)
         })
     }

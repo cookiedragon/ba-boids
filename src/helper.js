@@ -62,7 +62,7 @@ let countdown_breeding_timer = () => {
 let is_breeding_time = () => {
     if (breedingTimer < 0) {
         resetBreedingTimer()
-    } else if (breedingTimer < 30) {
+    } else if (breedingTimer < 20) {
         return true
     }
     return false

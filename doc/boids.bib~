@@ -3,7 +3,7 @@
 #######################################
 
 @Article{reynolds87,
-  author =	"Craig Reynolds",
+  author =	"Craig W. Reynolds",
   title =	"Flocks, Herds, and Schools: {A} Distributed Behavioral Model",
   journal =	"Proceedings of ACM Computer Graphics",
   year = 	"1987",
@@ -77,6 +77,14 @@
   notes =	"a slightly earlier version was published in: From Animals to Animats 2: Proceedings of the Second International Conference on Simulation of Adaptive Behavior (SAB92), Meyer, Roitblat and Wilson editors, ISBN 0-262-63149-0, MIT Press, Cambridge, Massachusetts, pages 384-392. On the web at http://www.red3d.com/cwr/papers/1993/sab92.html",
 }
 
+@software{norns,
+  author = {{Creature Labs Ltd., Steve Grand}},
+  title = {Creatures 1},
+  url = {https://hadoop.apache.org},
+  version = {0.20.2},
+  date = {2010-02-19},
+}
+
 #######################################
 ### books
 #######################################
@@ -93,6 +101,30 @@
 	year = {2014},
 	isbn = {3527710345},
 	publisher = { Wiley-VCH Verlag GmbH Co. KGaA},
+}
+
+@Book{flamingo,
+	author = {Johnson, Alan und Cézilly, Frank},
+	title = {The Greater Flamingo},
+	year = {2008},
+	isbn = {978-0713665628},
+	publisher = {A and C Black},
+}
+
+@Book{norns,
+	author = {Steve Grand},
+	title = {Creation: Life and How to Make It},
+	year = {2003},
+	isbn = {978-0674011137},
+	publisher = {Harvard Univ Pr},
+}
+
+@Book{bees,
+	author = {Thomas D. Seeley},
+	title = {Bienendemokratie: Wie Bienen kollektiv entscheiden und was wir davon lernen können},
+	year = {2014},
+	isbn = {3100751388},
+	publisher = {S. FISCHER},
 }
 
 @book{Bourg:2004:AGD:1096109,
@@ -175,6 +207,23 @@
 	author = {Alessandro R. Silva and Wallace S. Lages and Luiz Chaimowicz}
 }
 
+@inproceedings{Funge:1999:CMK:311535.311538,
+ author = {Funge, John and Tu, Xiaoyuan and Terzopoulos, Demetri},
+ title = {Cognitive Modeling: Knowledge, Reasoning and Planning for Intelligent Characters},
+ booktitle = {Proceedings of the 26th Annual Conference on Computer Graphics and Interactive Techniques},
+ series = {SIGGRAPH '99},
+ year = {1999},
+ isbn = {0-201-48560-5},
+ pages = {29--38},
+ numpages = {10},
+ url = {http://dx.doi.org/10.1145/311535.311538},
+ doi = {10.1145/311535.311538},
+ acmid = {311538},
+ publisher = {ACM Press/Addison-Wesley Publishing Co.},
+ address = {New York, NY, USA},
+ keywords = {action, behavioral animation, character animation, cognitive modeling, computer animation, intelligent characters, knowledge, planning, reasoning, sensing},
+} 
+
 @inproceedings{GPGPUFlock13,
 author = {Mark Joselli and Esteban Clua and Jose Ricardo Silva Junior and Erick Passos and Marcelo Zamith and Eduardo Soluri},
 title = {A Flocking Boids Simulation and Optimization Structure for Mobile Multicore Architectures},
@@ -196,4 +245,35 @@ year = {2013}
   URL =  	"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.61.9858; http://www.geovista.psu.edu/publications/2005/Conley_boids.pdf",
 }
 
+@inproceedings{citeulike:8377514,
+    author = {Pham, D. T. and Ghanbarzadeh, A. and Koc, E. and Otri, S. and Rahim, S. and Zaidi, M.},
+    booktitle = {Proceedings of the 2nd International Virtual Conference on Intelligent Production Machines and Systems (IPROMS 2006)},
+    citeulike-article-id = {8377514},
+    location = {Oxford},
+    pages = {454--459},
+    posted-at = {2010-12-07 16:39:23},
+    priority = {2},
+    publisher = {Elsevier},
+    title = {The Bees Algorithm, A Novel Tool for Complex Optimisation Problems},
+    year = {2006}
+}
+
+@article{Reeves:1983:PST:357318.357320,
+ author = {Reeves, W. T.},
+ title = {Particle Systems\&Mdash;a Technique for Modeling a Class of Fuzzy Objects},
+ journal = {ACM Trans. Graph.},
+ issue_date = {April 1983},
+ volume = {2},
+ number = {2},
+ month = apr,
+ year = {1983},
+ issn = {0730-0301},
+ pages = {91--108},
+ numpages = {18},
+ url = {http://doi.acm.org/10.1145/357318.357320},
+ doi = {10.1145/357318.357320},
+ acmid = {357320},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
 
