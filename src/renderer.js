@@ -11,18 +11,18 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000)
-camera.position.set(50, 100, 300)
+camera.position.set(0, 0, 300)
 camera.lookAt({
     x: 0,
-    y: -100,
+    y: 0,
     z: 0
 })
 
 let ambient = new THREE.AmbientLight(0x444444)
 scene.add(ambient)
 
-let light = new THREE.DirectionalLight(0xaaaaaa, 2)
-light.position.set(1, -1, 1).normalize()
+let light = new THREE.DirectionalLight(0xffffff, 1.0)
+light.position.set(1, 1, 1).normalize()
 scene.add(light)
 
 let spotLight = new THREE.SpotLight(0xFFAA88)
@@ -34,11 +34,11 @@ scene.add(spotLight)
 
 // make pretty background
 let loader = new THREE.TextureLoader()
-let texture = loader.load('assets/palmtrees.jpg')
+let texture = loader.load('assets/tongariro.jpg')
 let backgroundMesh = new THREE.Mesh(
     new THREE.PlaneGeometry(1024, 1024),
     new THREE.MeshLambertMaterial({
-        color: 0x00ccff,
+        //color: 0x00ccff,
         map: texture
     }))
 backgroundMesh.receiveShadow = false
@@ -49,9 +49,9 @@ scene.add(backgroundMesh)
 
 // build the floor
 let ground_geometry = new THREE.CubeGeometry(400, 0.2, 400)
-let ground_texture = loader.load('assets/palmtrees.jpg')
+let ground_texture = loader.load('assets/rocks.jpg')
 let ground_material = new THREE.MeshPhongMaterial({
-    color: 0x00ff00,
+    //color: 0x00ff00,
     shininess: 0,
     specular: 0x888888,
     shading: THREE.SmoothShading,

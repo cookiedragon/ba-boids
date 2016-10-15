@@ -83,6 +83,7 @@
 \makeindex
 \makenomenclature
 
+\usepackage{graphicx}
 \begin{document}
 \selectlanguage{ngerman}
 
@@ -110,11 +111,11 @@
 %% note: this is one command on multiple lines
 \HAWAbstractPage
 %% German abstract
-{Schwarmverhalten, Boids, Künstliches Leben}%
-{Etwas Abstraktes ...}
+{Schwarmverhalten, Boids, Populationssimulation, Künstliches Leben, Three.js, Javascript}%
+{Das Thema dieser Arbeit ist die Simulation von Populationen von Schwarmtieren. Grundlage dafür ist das Boids-Modell, welches das lebensecht wirkende Schwärmen von digitalen Schwarmtieren ermöglicht. Dieses Modell wird in dieser Arbeit um einen Lebenszyklus, komplexe Verhaltensweisen und Genetik erweitert, um solche Schwärme als Populationen simulieren zu können. Ergebnis ist ein Prototyp, der mit Javascript und der 3D-Grafikbibliothek Three.js entwickelt wird und der das Populationsmodell implementiert und visualisiert.}
 %% English abstract
-{swarming behaviour, boids, artificial life}%
-{Something abstract}
+{swarming behaviour, boids, simulation of a population, artificial life, Three.js, Javascript}%
+{The topic of this thesis is the simulation of swarming populations. Basis for this is the boids model, which provides seemingly real swarming behaviour of digital swarm animals. In this thesis, the boids model is being extended with a life cycle, complex behaviour and genetics, in order to simulate swarms as populations. The result is a prototype, written in Javascript and the 3d graphics library Three.js, which implements and visualizes the population model.}
 
 \newpage
 \singlespacing
@@ -144,36 +145,39 @@ Wenn in solchen Situationen Populationen von Schwarmtieren simuliert werden soll
 \section{Zielsetzung}
 Ziel dieser Arbeit ist die Modellierung und Visualisierung einer Population von Boids.
 
-Dabei soll im ersten Schritt das Modell der Boids um typische weitere Verhaltensweisen von Schwarmtieren erweitert werden: Ausruhen, Partnersuche und Brüten, Futtersuche und Fliehen vor Fressfeinden.
-Des Weiteren beinhaltet die Modellierung der Population Genetik und Lebensphasen der Boids.
+Dabei soll im ersten Schritt das Modell der Boids von Craig Reynolds \cite{reynolds87} in seinen Grundzügen umgesetzt werden. 
 
-Im zweiten Schritt soll für das Modell ein Prototyp entworfen werden, der eine Population von Boids mit einigen Erweiterungen geeignet visualisiert.
-Dieser Prototyp beschränkt sich auf die korrekte Umsetzung des Modells und einer ansprechenden Visualisierung. Weder das Modell noch der Prototyp erheben Anspruch auf physikalische Korrektheit. Und obwohl das Modell sich stärker von der Natur inspirieren lässt, so haben die Boids nicht den Anspruch, eine wirklich existierende Tierart zu simulieren.
+Der Schwerpunkt dieser Arbeit setzt sich auf die Entwicklung eines Populationsmodells, d.h. dass das Modell den Lebenszyklus der Boids darstellen soll. Dazu gehören eine begrenzte Lebensspanne, Bedürfnisse wie Hunger und Erschöpfung, die Paarungszeit und Bedrohung durch Fressfeinde.
+Zu einer Population gehört außerdem Vererbung, so dass die Genetik der Boids zu modellieren ist.
 
-Letzlich soll das Modell anhand des Prototypen untersucht werden, wie geeignet es ist, um eine Schwarmpopulation mit populationstypischen Kriterien zu simulieren.
+Für das Modell soll ein Prototyp entwickelt werden, der eine Population von Boids mit einigen Erweiterungen geeignet visualisiert.
+Dieser Prototyp beschränkt sich auf die korrekte Umsetzung des Modells und einer ansprechenden Visualisierung. Weder das Modell noch der Prototyp erheben Anspruch auf physikalische Korrektheit. Und obwohl das Modell sich stärker von der Natur inspirieren lässt, so haben die Boids nicht den Anspruch, eine wirklich existierende Tierart oder exacte biologische Vorgänge zu simulieren.
+
+Letzlich soll das Modell anhand des Prototyps untersucht werden, wie geeignet es ist, um eine Schwarmpopulation mit populationstypischen Kriterien zu simulieren.
 
 \section{Aufbau der Arbeit}
 Ein Einstieg in die Thematik und die Aufgabenstellung befindet sich im Kapitel \ref{einleitung}.
-\newline
-Ein Überblick über das natürliche Schwarmverhalten von Tieren wird in Kapitel \ref{stand} beschrieben. Der Begriff Population wird erläutert sowie die wichtigsten Elemente einer Population. Außerdem werden hier die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren gegenübergestellt. Ein Überblick über das originale Modell der Boids findet sich ebenfalls hier, gefolgt von den mathematischen Grundlagen des Boids-Modells.
-\newline
+
+Ein Überblick über das natürliche Schwarmverhalten von Tieren wird in Kapitel \ref{natur} beschrieben. Der Begriff Population wird erläutert sowie die wichtigsten Elemente einer Population. Außerdem werden hier die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren gegenübergestellt. Ein Überblick über das originale Modell der Boids findet sich ebenfalls hier, gefolgt von den mathematischen Grundlagen des Boids-Modells.
+
+Die wichtigsten bzw. bekanntesten Modelle für die Simulation von Schwarmtieren werden in Kapitel \ref{stand} gegenübergestellt. Ein Überblick über das originale Modell der Boids findet sich ebenfalls hier, gefolgt von den mathematischen Grundlagen des Boids-Modells.
+
 In Kapitel \ref{modell} wird das Modell für die prototypische Umsetzung entworfen. Da das Boids-Modell bereits im vorherigen Kapitel beschrieben wurde, werden hier lediglich die Erweiterungen um Populationstypische Elemente erläutert. Dazu gehören die Verhaltensweisen der einzelnen Tiere und der genetische Ansatz.
-\newline
-Das Kapitel \ref{umsetzung} behandelt anschließend die Umsetzung eines Prototypen des Modells. Hier werden unter anderem die Architektur der Umsetzung, die Datenstrukturen und die Algorithmen der Umsetzung beschrieben.
-\newline
-Anschließend erfolgt in Kapitel \ref{eval} die Evaluation des Prototypen nach populationstypischen Kriterien.
-\newline
+
+Das Kapitel \ref{umsetzung} behandelt anschließend die Umsetzung eines Prototyps des Modells. Hier werden unter anderem die Architektur der Umsetzung, die Datenstrukturen und die Algorithmen der Umsetzung beschrieben.
+
+Anschließend erfolgt in Kapitel \ref{eval} die Evaluation des Prototyps nach populationstypischen Kriterien.
+
 Eine Zusammenfassung der Ergebnisse und ein Ausblick auf weitere Entwicklungsmöglichkeiten werden abschließend in Kapitel \ref{fazit} beschrieben.
 
-\chapter{Stand der Technik}\label{stand}
-In diesem Kapitel werden die Grundlagen und der Stand der Technik beschrieben. Der erste Abschnitt beschreibt verschiedene Beispiele von Schwarmverhalten in der Natur. Außerdem wird geklärt, was eine Population ist und welche Forschungsgebiete dazu gehören.
-Versuche, Schwarmverhalten mithilfe eines Computers darzustellen, gab es schon einige. Die wichtigsten davon werden zur Übersicht und zum Vergleich vorgestellt. Auch eine Übersicht des grundlegenden Modells der Boids und die mathematische Grundlagen befinden sich in diesem Kapitel.
-\section{Schwarmverhalten in der Natur}\label{natur}
+\chapter{Schwarmverhalten in der Natur und Populationsforschung}\label{natur}
+Dieses Kapitel beschreibt verschiedene Beispiele von Schwarmverhalten in der Natur. Außerdem wird geklärt, was eine Population ist und welche Forschungsgebiete dazu gehören.
+\section{Schwarmverhalten in der Natur}
 Schwarmverhalten wird in der Natur bei ganz unterschiedlichen Populationen beobachtet. Ob es nun Vögel, Bienen, Schafe, Heuschrecken oder Heringe sind, Schwarmverhalten scheint für viele Tierarten von lebenswichtigem Nutzen zu sein.
 Gemeinsam haben alle diese Populationen, dass sie in großen Zahlen auftreten, wie z.B. Flamingos, die mit bis zu 1 Millionen Tieren zusammen schwärmen \cite{flamingo}.
 In dieser großen Anzahl fliegen bzw. schwimmen bzw. bewegen sie sich fort, dicht an dicht, alle in einer gemeinsamen Geschwindigkeit und gleicher Richtung. Trotz der hohen Dichte sind Kollisionen dabei eher selten.
 
-Bei einigen Schwarmpopulationen ist kein Anführer erkennbar. Flamingos z.B. richten sich dabei nur nach ihren direkten Schwarmnachbarn. Sie können bis zu sieben unterschiedliche Artgenossen erkennen und unterscheiden.
+Bei einigen Schwarmpopulationen ist kein Anführer erkennbar. Stare z.B. richten sich dabei nur nach ihren dichtesten Schwarmnachbarn. Sie können bis zu sieben unterschiedliche Artgenossen erkennen und unterscheiden. Die Entfernung spielt dabei eine eher untergeordnete Rolle. Studien haben gezeigt, dass allein die topologische Dichte entscheidend ist, wobei Artgenossen, die seitlich eines Stares fliegen, eher zur Orientierung gewählt werden \cite{Camperi715}. Die Auswahl der dichtesten Nachbarn ist demnach anisotrop. So kann ein Star bis zu zwanzig Artgenossen in seinem Blickfeld haben, er orientiert sich aber nur an sieben von ihnen.
 
 Andere Schwarmtiere haben Anführer, wie z.B. die Ameisen und die Bienen. Durch die Pheromone, die z.B. die Bienenkönigin aussendet, wissen die anderen Bienen im Bienenstock, was sie als Nächstes zu tun haben und welche Rolle sie im Bienenschwarm übernehmen sollen. Wenn es Zeit zur Futtersuche ist, so ziehen ein paar Kundschafterbienen morgens aus, um die Gegend zu erkunden. Sie sollen dabei nicht selber Futter sammeln, sondern nur die nächstliegende bzw. beste Futterstelle ausfindig machen \cite{bees}. Wo diese Futterstelle liegt, vermitteln die Kundschafterbienen nach ihrer Rückkehr durch den sogenannten Schwänzeltanz den Arbeiterbienen, die sich dann auf den Weg machen und das Futter sammeln. Die Bienen agieren zwar individuell, d.h. sie finden alleine (mit der Beschreibung der Kundschafterbienen) den Weg, werden aber trotzdem kontrolliert durch die Pheromone der Bienenkönigin.
 Nur wenn es für die Königin Zeit wird auszuziehen, zeigen Bienenschärme ein echtes Schwarmverhalten, wie den Flug der Flamingos. Alle Bienen, die der Königin folgen, suchen die Nähe zu dieser und bilden so eine dichte Masse an Bienen. In großen Trauben hängen sie z.B. von Bäumen und warten, bis die Kundschafterbienen einen geeigneten Ort für das neue Zuhause gefunden haben. Sobald dies der Fall ist, fliegt der gesamte Schwarm dicht an dicht in einer Einheit zu dem neuen Platz.
@@ -182,7 +186,7 @@ Ein weiteres Merkmal von Schwarmtieren ist das homogene Erscheinungsbild. Hering
 
 Das gesamte Leben spielt sich im Schwarm gemeinsam ab. Heuschrecken ziehen gemeinsam von einem Futterplatz zum nächsten. Flamingos brüten zur selben Zeit an einem gemeinsamen Ort \cite{flamingo}. Besonders in einer so bedrohlichen Situation wie das Brüten am Boden, bietet das Auftreten im Schwarm die größten Überlebenschancen für den Schwarm. Durch die schier unendliche Anzahl der gleichzeitig brütenden Tiere bleiben trotz Fressfeinden noch genügend Tiere übrig, die die Population überleben lassen. Beobachtet wurde hierbei auch, dass Flamingos bis zu 140 km von ihrer Futterstelle entfernt brüten. Elterntiere ziehen dabei morgens zu der Futterstelle los, sammeln Futter und fliegen nicht selten erst am nächsten Tag wieder zu der Brutstelle zurück\cite{flamingo}. Dabei findet dieser Flug, wie alle anderen Tätigkeiten auch, in großer Anzahl als Schwarm statt.
 
-\section{Population}
+\section{Populationsforschung}
 Eine Population ist eine Gruppe von zusammenlebenden Individuen, die genetisch zu einer Art gehören und sich miteinander fortpflanzen \cite{genetik}.
 
 Zu der Populationsforschung gehören u.A. die Fachgebiete der Populationsgenetik und der Populationsdynamik.
@@ -195,6 +199,8 @@ Die Populationsdynamik beobachtet den Wachstum bzw. die Fluktuation einer Popula
 
 Faktoren, die die Population beeinflussen sind u.A. Krankheiten, Abwanderungen, Gefahren durch Fressfeinde, Menge und Vielfalt von Nahrung und Umweltkatastrophen.
 
+\chapter{Modelle der Schwarmsimulation}\label{stand}
+Versuche, Schwarmverhalten mithilfe eines Computers darzustellen, gab es schon einige. Die wichtigsten davon werden zur Übersicht und zum Vergleich vorgestellt. Auch eine Übersicht des grundlegenden Modells der Boids und die mathematischen Grundlagen befinden sich in diesem Kapitel.
 \section{Partikelsysteme}
 Als einer der frühesten Versuche, Schwarmtiere mit einem Computer darzustellen, wurde ein Partikelsystem bemüht. Partikelsysteme besitzen eine Punktquelle, von der die fuzzy Objekte, Partikel, ausgesendet werden \cite{Reeves:1983:PST:357318.357320}. Diese Partikelsysteme können sehr performant sein, haben aber den Nachteil, dass realistische Schwärme nicht möglich sind. Partikel haben nur eine begrenzte Lebensdauer und auch ein sehr begrenztes Flugverhalten. Sie eignen sich gut für Feuer oder Nebel, sind aber nicht für die Interaktion untereinander konzipiert \cite{reynolds87}. Partikelsysteme eignen sich somit lediglich für eine sehr reduzierte Darstellung von Schwärmen, die keinen Anspruch an naturnahe Realität erheben.
 \section{Schwarmbasierte Optimierungssysteme}
@@ -209,20 +215,30 @@ Der Bereich Behavioural Animation nutzt Ansätze des Artificial Life, um möglic
 Eine Simulation eines Schwarms in einem erweiterbaren Szenario im Hinsicht auf realitätsnahe Lebenszyklen im Populationsgedanken ist sicherlich hier denkbar.
 \section{Boids-Modell nach Reynolds}
 Der Erfinder der Boids, Craig Reynolds, hat sich intensiv mit Artificial Life und Behavioural Animation beschäftigt und dort auch seine Inspiration für die Boids geholt.
-Das von ihm in den 80ern entwickelte Modell der Boids \cite{reynolds87}\cite{oai:CiteSeerPSU:509294}\cite{Reynolds:1988:NBI} bezweckt die Simulation von einem Naturphänomen und folgt einer verhaltensbiologischen Theorie: Es wurde in der Natur beobachtet, dass und wie sich Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Einheiten mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel. Später wurde dieses Modell von Reynolds erweitert, um Hindernisse zu umgehen \cite{alife92*327}, eine Gruppe durch Korridore zu leiten \cite{reynolds:1994:ecfbnw} und die Parameter mithilfe von genetischen Algorithmen zu optimieren \cite{sab92:reynolds}. In dieser Arbeit wird aber nur die einfache Variante des Boids-Modells verwendet.
+Das von ihm in den 1980er-Jahren entwickelte Modell der Boids \cite{reynolds87}\cite{oai:CiteSeerPSU:509294}\cite{Reynolds:1988:NBI} bezweckt die Simulation von einem Naturphänomen und folgt einer verhaltensbiologischen Theorie: Es wurde in der Natur beobachtet, dass und wie sich Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Einheiten mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel. 
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.50]{project/swarming.png}
+\caption{Schwärmende Boids}
+\label{simple}
+\end{figure}
+
+Später wurde dieses Modell von Reynolds erweitert, um Hindernisse zu umgehen \cite{alife92*327}, eine Gruppe durch Korridore zu leiten \cite{reynolds:1994:ecfbnw} und die Parameter mithilfe von genetischen Algorithmen zu optimieren \cite{sab92:reynolds}. In dieser Arbeit wird aber nur die einfache Variante des Boids-Modells verwendet.
 
 Die Grundregeln des Boids-Modells sind die folgenden: Bleibe dicht bei deinen Artgenossen, passe dich in Geschwindigkeit und Ausrichtung an deine Artgenossen an und versuche, dich in den Mittelpunkt des Schwarms zu bewegen.
 Es beinhaltet auch die Regel, einen Mindestabstand zu den Artgenossen einzuhalten.
-Diese wenigen Regeln bestimmen ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen, in denen es genügt, den Schwarm endlos in der Luft fliegen zu lassen, völlig ausreicht. Dieses Grundregelwerk lässt sich sowohl im 2D- als auch im 3D-Raum durch einfache Vektorrechnung verwirklichen. Die bestimmenden Einflüsse auf die nächste Handlung eines Boids wird im Folgenden genauer beschrieben.
+
+Wie in der Abbildung \ref{simple} zu sehen ist, bestimmen diese wenigen Regeln ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen, in denen es genügt, den Schwarm endlos in der Luft fliegen zu lassen, völlig ausreicht. Dieses Grundregelwerk lässt sich sowohl im 2D- als auch im 3D-Raum durch einfache Vektorrechnung verwirklichen. Die bestimmenden Einflüsse auf die nächste Handlung eines Boids wird im Folgenden genauer beschrieben.
 \subsection{Kohäsion (cohesion)}
 Die Kohäsion ist die erste und wichtigste Regel, die für den Zusammenhalt eines Schwarms verantwortlich ist. Kohäsion bedeutet, dass alle Boids das Bedürfnis haben, dicht bei ihrem Schwarm zu bleiben. Der sicherste Platz in einem Schwarm ist dabei der Mittelpunkt, da Gefahren, wie z.B. ein Fressfeind, von den weiter außen fliegenden Boids abgeschirmt werden. Deshalb hat natürlich jeder Boid das Bedürfnis, möglichst in die Mitte des Schwarms zu gelangen.
 \subsection{Anpassen der Geschwindigkeit und Ausrichtung (alignment)}
-Damit der Schwarm den Zusammenhalt und gemeinsame Flugmanöver gewährleisten kann, müssen sich die Boids an Geschwindigkeit und Ausrichtung der Schwarmnachbarn anpassen. Je schneller die Boids auf Änderungen reagieren, desto besser ist der Zusammenhalt. Reagieren die einzelnen Tiere nicht schnell genug oder passen sich nicht an, würde der Schwarm aufbrechen und fragmentieren. Ein einzelner Boid behält dabei seine dichtesten Schwarmnachbarn im Blickfeld und passt sich an diese an . Ändern sich die Nachbarn, bzw. gibt es Verschiebungen, die dazu führen, dass Nachbarn sich zum Vorteil anderer entfernen, so erkennt der Boid nun diese neuen, dichteren Boids als die nächsten Nachbarn an.
+Damit der Schwarm den Zusammenhalt und gemeinsame Flugmanöver gewährleisten kann, müssen sich die Boids an Geschwindigkeit und Ausrichtung der Schwarmnachbarn anpassen. Je schneller die Boids auf Änderungen reagieren, desto besser ist der Zusammenhalt. Reagieren die einzelnen Tiere nicht schnell genug oder passen sich nicht an, würde der Schwarm aufbrechen und fragmentieren. Ein einzelner Boid behält dabei seine dichtesten Schwarmnachbarn im Blickfeld und passt sich an diese an. Ändern sich die Nachbarn, bzw. gibt es Verschiebungen, die dazu führen, dass Nachbarn sich zum Vorteil anderer entfernen, so erkennt der Boid nun diese neuen, dichteren Boids als die nächsten Nachbarn an.
 \subsection{Mindestabstand (separation)}
 Um nicht während des Schwärmens zu kollidieren und bei einer Richtungs- bzw. Geschwindigkeitsänderung der Schwarmnachbarn genügend Zeit und Raum zu haben, um auf die Änderungen zu reagieren, muss ein gewisser Mindestabstand gewährleistet werden. Dieser Mindestabstand darf aber nicht zu groß sein. Je dichter die Schwarmtiere zusammen fliegen, desto schwieriger ist es für einen Außenstehenden, wie z.B. einen Fressfeind, einzelne Boids zu erkennen und zu verfolgen.
 
 \section{Mathematische Grundlagen des Boids-Modells}\label{mathe}
-Für die Berechnung der Fortbewegung eines Boids kommt die Vektorrechnung zum Einsatz. Ein Grundverständnis für die Vektorrechnung wird vorausgesetzt und deshalb nicht weiter erläutert. Die Berechnungen sind die, die in dem Prototypen umgesetzt wurden, und basieren grob auf anderen Implementationen \cite{Bourg:2004:AGD:1096109}\cite{nature}.
+Für die Berechnung der Fortbewegung eines Boids kommt die Vektorrechnung zum Einsatz. Ein Grundverständnis für die Vektorrechnung wird vorausgesetzt und deshalb nicht weiter erläutert. Die Berechnungen sind die, die in dem Prototyp umgesetzt wurden, und basieren grob auf anderen Implementationen \cite{Bourg:2004:AGD:1096109}\cite{nature}.
 
 Ein Boid besitzt zum Zeitpunkt \(t_0\) die Position \(\vec{p}_0\) und die Velocity (den Bewegungsvektor) \(\vec{v}_0\). Die Position ist dabei ein Ortsvektor und die Velocity ein Richtungsvektor, der die Ausrichtung anzeigt. Die Länge der Velocity beschreibt die Geschwindigkeit.
 
@@ -267,7 +283,28 @@ Bei der Berechnung des Vektors \(\vec{sep}_1\) kann man sich die Berechnung des 
 Nachdem im vorherigen Kapitel eine Beschreibung des Boids-Modells zu finden war, wird in diesem Kapitel beschrieben, welche Anforderungen der Populationsgedanke an ein erweitertes Modell hat. Dazu gehören zusätzliche Bedürfnisse der einzelnen Boids, wie z.B. Hunger, aber auch eine Modellierung der Genetik und des Lebenszyklus der Boids. Da sich daraus für den Boid mehrere mögliche Handlungen zu einem jeden Zeitpunkt ergeben, wird im Nachhinein die Priorisierung und Entscheidungsfindung erläutert.
 \section{Das pure Schwärmen}
 Das Boids-Modell in seiner ursprünglichen Version wird in seinen Grundzügen für das reine Schwärmen übernommen. Die einzelnen Boids orientieren sich an ihren direkten Nachbarn und passen sich in Geschwindigkeit und Richtung an, wahren einen Mindestabstand und suchen die Mitte des Schwarms.
+\subsection{Performanz}\label{lahm}
+So einfach der Schwärmalgorithmus auch ist, so gibt es jedoch ein Performanzproblem bei einer größeren Anzahl von Boids: Nach dem ursprünglichen Algorithmus fragt jeder Boid jeden anderen nach Position, Geschwindigkeit usw. Es liegt also eine Komplexität O(n²) vor \cite{reynolds87}. Bei einer kleinen Population von nur 20 Boids, wie in diesem Prototyp gewählt, gibt es bei dem Algorithmus bereits 400 Abfragen. Bei realistischen Populationsgrößen, wie in einigen Flamingoschwärmen zu finden, müsste man von 1 Millionen Tieren ausgehen. Trotz Verbesserungen der Prozessoren ist es noch nicht möglich, solche Schwärme in Echtzeit zu simulieren. Selbst bei kleineren Schwärmen von nur 4000 Tieren ist die nötige Rechenleistung beträchtlich.
 
+Zur Verbesserung der Performanz muss deshalb der Algorithmus verbessert werden. Ein Ansatz ist die Beschränkung der Orientierung auf die direkten Nachbarn. Hier ist sogar die Natur das Vorbild: Wie bereits in Kapitel \ref{natur} erwähnt, orientieren Stare sich in der Natur auch nicht an allen anderen Tieren im Schwarm, sondern nur an bis zu sieben der dichtesten Nachbarn. Die Komplexität dieser Lösung wäre statt O(n²) nur noch O(7n). Bei kleineren Populationen wie in diesem Prototypen ist der Unterschied noch nicht sehr groß, aber wie die Tabelle \ref{komplexitaet} zeigt, profitieren Umsetzungen mit großen Populationen beträchtlich.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c}
+	Populationsgröße & Jeder fragt jeden & Reduzierung der dichtesten Nachbarn\\
+	\hline
+	20 & 400 & 140\\
+	100 & 10 000 & 700\\
+	4000 & 16 Millionen & 28 000\\
+	1 Million & 1 Billion & 7 Millionen\\
+\end{tabular}
+\caption{Komplexität des Schwarmalgorithmus gemessen anhand der Abfragen der Positionen der Artgenossen}
+\label{komplexitaet}
+\end{table}
+
+Dennoch sind in dem erweiterten Populationsmodell mehrere Iterationen über die gesamte Population nötig, um die Werte der Boids zu überwachen und anzupassen. Eine Möglichkeit, den Rechenaufwand zu verringern, ist es, solche Updates in langsamer getakteten Abständen durchzuführen.
+\subsection{Sichtbarkeit}
+Wie soeben beschrieben sollte aus Performanzgründen sollte die Sichtbarkeit der Boids beschränkt werden. Auch Beispiele aus der Natur legen nahe, die Sichtbarkeit zu beschränken, wie bereits in Kapitel \ref{natur} beschrieben. Es ist bei der Anpassung der Ausrichtung und der Geschwindigkeit also die Auswahl auf die direkten Nachbarn zu beschränken. Eine Möglichkeit ist die Nutzung der Datenstruktur des Schwarms: Ein Octree kann üblicherweise auf Anfrage alle Elemente in einem gesuchten Radius finden. Da der Octree bereits als Datenstruktur gewählt wurde, bestärkt dies den Einsatz des Octrees in diesem Prototyp.
 \section{Erweiterung der Verhaltensweisen}
 Der bisherige Ansatz von Reynolds war bis zu diesem Zeitpunkt noch sehr einfach. Wie in der Natur kann ein Außenstehender die einzelnen Boids nicht unterscheiden. Auch das Modell von Reynolds behandelt sie wie anonyme, austauschbare Einheiten. Die Boids haben keine Identität, keine Eigenschaften, nur eine Position. Das Modell jedoch, welches in dieser Arbeit entwickelt wird, soll die Boids realistischer darstellen. Um eine komplexere Handlungskette zu modellieren, werden Informationen zu vergangenen Handlungen und veränderbaren Zuständen zwingend erforderlich. Dazu gehören die jeweilige DNS, das aktuelle Bedürfnis und daraufhin eben eine Identität. Die Boids in diesem System sind nicht austauschbar und deutlich komplexer.
 \subsection{Futtersuche und Ruhepausen}
@@ -275,7 +312,15 @@ Alle Lebewesen dieser Welt benötigen zum Leben Energie, die sie durch die Aufna
 
 Das neue Modell beinhaltet den aktuellen Status der Energie- bzw. Hungerlevel. Desweiteren wird die Information über die maximale Energiekapazität benötigt. Zur Laufzeit des Systems muss in regelmäßigen Abständen der aktuelle Hunger- und Müdigkeitslevel realitätsnah angepasst werden: Bei energieverbrauchenden Aktivitäten wie Fliegen sinken die Energiewerte, bei Nahrungsaufnahme und Ruhepausen steigen sie. Damit die Boids dem Schwärmen-Futtersuche-Zyklus folgen können, müssen sie Hunger und Müdigkeit erkennen können. Dies kann mithilfe von Schwellwerten ermittelt werden. Durch Überwachung der Energiewerte und der Schwellwerte kann ein Boid erkennen, wenn die Energiewerte zu niedrig werden und der Nachschub von Energie in Form von Nahrung wichtig wird. Ist das der Fall, wird es für einen Boid zunehmend wichtiger, eine Nahrungsquelle ausfindig zu machen, das Bedürfnis, dicht bei den schwärmenden Artgenossen zu sein, wird dabei momentan geringer.
 
-Ist ein Boid am Boden, frisst und ruht sich aus, so genügt es nicht zu warten, bis die Energiewerte den Schwellwert wieder positiv überschreiten, sondern ein Boid kehrt erst wieder zum Schwärmen zurück, wenn seine Sättigung bzw. Erholung das Energiemaximum erreicht.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.50]{project/ground.png}
+\caption{Boids suchen nach Nahrung}
+\label{onground}
+\end{figure}
+
+Ist ein Boid am Boden so wie in der Abbildung \ref{onground}, frisst und ruht sich aus, so genügt es nicht zu warten, bis die Energiewerte den Schwellwert wieder positiv überschreiten, sondern ein Boid kehrt erst wieder zum Schwärmen zurück, wenn seine Sättigung bzw. Erholung das Energiemaximum erreicht.
 Abschließend darf man nicht vergessen, sich zu fragen, was passiert, wenn die Energielevel auf null sinken, bevor der Boid die Chance hat, neue Nahrung zu finden. Genau wie für echte Organismen auch bedeutet dies für die Boids den Tod durch Erschöpfung oder Verhungern.
 \subsection{Abwehr der Fressfeinde}\label{enemy}
 Eine weitere Gefahr für Schwarmtiere stellen Fressfeinde dar: Heringe können einem Hai zum Opfer fallen, Ameisen können von Amseln gefressen werden. Normalerweise haben Schwarmtiere keine guten Chancen, sich aktiv zu verteidigen.
@@ -316,10 +361,17 @@ Die Entscheidung, welche Handlung der Boid als Nächstes zu verfolgen hat, ergib
 
 Im zweiten Schritt werden die Werte der einzelnen Tiere überprüft und angepasst. Ist der Boid in der Luft am Schwärmen, werden die Energielevel gesenkt. Ist der Boid am Boden, steigen sie.
 
-Danach wird entschieden, was der Boid als Nächstes tut. Die Entscheidungssequenz dazu verdeutlicht die folgende Grafik.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.6]{code2flow/entscheidungsfindung.png}
+\caption{Entscheidungsfindung}
+\label{entscheidung}
+\end{figure}
+
+Danach wird entschieden, was der Boid als Nächstes tut. Die Entscheidungssequenz dazu verdeutlicht die Grafik \ref{entscheidung}.
 
 \chapter{Umsetzung}\label{umsetzung}
-In diesem Kapitel wird die Umsetzung eines Prototypen beschrieben, der das im vorherigen Kapitel entworfene Modell umzusetzt. Im ersten Abschnitt findet sich eine Beschreibung der eingesetzten technischen Mittel. Danach folgen die Beschreibung der Architektur, eine Übersicht der Quelldateien, der Ablauf des Prototypen und die Beschreibung der Datenstrukturen der Boids. Abschließend werden die Modellierung der Genetik und Aspekte der Visualisierung behandelt.
+In diesem Kapitel wird die Umsetzung eines Prototyps beschrieben, der das im vorherigen Kapitel entworfene Modell umzusetzt. Im ersten Abschnitt findet sich eine Beschreibung der eingesetzten technischen Mittel. Danach folgen die Beschreibung der Architektur, eine Übersicht der Quelldateien, der Ablauf des Prototyps und die Beschreibung der Datenstrukturen der Boids. Abschließend werden die Modellierung der Genetik und Aspekte der Visualisierung behandelt.
 \section{Technische Mittel}
 In diesem Abschnitt werden die zur Entwicklung eingesetzten technischen Mittel beschrieben.
 \subsection{Javascript}
@@ -334,11 +386,11 @@ Eine Implementierung von einem dynamischen Octree, threeoctree.js (r60), wurde v
 Für die live Messung der Performanz wurde stats.js gewählt. Diese zeigt sich oben links als kleine Box im Canvas-Bereich des Browsers und liefert aktuelle Messdaten in Form eines Live-Ticker-Balkendiagramms. Es lassen sich durch Mausklick alternativ die FPS (Frames per Second) oder Millisekunden pro Frame anzeigen.
 \subsection{Browser}
 Als Webbrowser wurde Firefox 47.0 gewählt. Dieser Browser hat eine Open Source Lizenz und ist auf einem aktuellen Ubuntu-System vorinstalliert.
-\section{Architektur des Prototypen}
+\section{Architektur des Prototyps}
 Die Quelldateien werden auf einem Webserver gehostet, die Ausführung der Javascript-Anteile erfolgt aber auf dem Client, der die Adresse des Servers ansteuert.
 Die einzelnen Quelldateien und deren Funktionalitäten werden im Folgenden grob erläutert.
 \subsection{boids.html}
-Dies ist die einzige HTML-Datei des Projektes. Sie stellt den Einstiegspunkt für den Prototypen dar. Hier wird das Browserfenster für den Prototypen vorbereitet: Der ganze Canvas des Browsers wird ausgenutzt, ohne Ränder. Alle anderen Bibliotheken und Quelldateien werden geladen.
+Dies ist die einzige HTML-Datei des Projektes. Sie stellt den Einstiegspunkt für den Prototyp dar. Hier wird das Browserfenster für den Prototyp vorbereitet: Der ganze Canvas des Browsers wird ausgenutzt, ohne Ränder. Alle anderen Bibliotheken und Quelldateien werden geladen.
 
 Die Live-Messung der Performanz mit stats.js wird gestartet und inital als FPS-Anzeige konfiguriert.
 Die Boids werden mit initBoids() initialisiert. Abschließend wird die Render Loop mit renderWorld() gestartet. Diese beiden Methoden befinden sich in den Dateien boids.js und renderer.js.
@@ -349,14 +401,14 @@ In dieser Quelldatei finden sich die Modellierung der Boids, die Status-Updates 
 \subsection{helper.js}
 Diese Datei beinhaltet Hilfsmethoden. Hier finden sich u.A. Methoden zur zufälligen Generierung von Geschwindigkeit und Geschlecht, sowie die Timer für die Update- und Paarungszeitzyklen.
 \subsection{enemy.js}
-In dieser Quelldatei wird der Fressfeind bzw. der Angreifer entwickelt. Hier finden sich der Update-Timer des Angreifers, die Details zum Rendering und die Funktionalitäten des Angreifers. Der Angreifer sollte ein getrenntes Modul des Prototypen sein und wurde deshalb in eine eigene Quelldatei ausgelagert. Genauere Details zur Implementierung finden sich im Abschnitt Visualisierung \ref{visual}.
+In dieser Quelldatei wird der Fressfeind bzw. der Angreifer entwickelt. Hier finden sich der Update-Timer des Angreifers, die Details zum Rendering und die Funktionalitäten des Angreifers. Der Angreifer sollte ein getrenntes Modul des Prototyps sein und wurde deshalb in eine eigene Quelldatei ausgelagert. Genauere Details zur Implementierung finden sich im Abschnitt Visualisierung \ref{visual}.
 
 \section{Die Render Loop und die Update-Zyklen}
-Die Ausführung des Prototypen geschieht in einer Schleife, der Render Loop. Diese Schleife heißt renderWorld() und findet sich in der Quelldatei renderer.js. Hier werden die Performanzmessung mit stats.js erneuert und der aktuelle Zustand der Welt mit den Methoden updateWorld() und updateEnemy() neu berechnet.
+Die Ausführung des Prototyps geschieht in einer Schleife, der Render Loop. Diese Schleife heißt renderWorld() und findet sich in der Quelldatei renderer.js. Hier werden die Performanzmessung mit stats.js erneuert und der aktuelle Zustand der Welt mit den Methoden updateWorld() und updateEnemy() neu berechnet.
 
 Die Methode updateWorld() findet sich in der Quelldatei boids.js. Die Methode updateEnemy() findet sich in der Quelldatei enemy.js.
 
-Danach zeichnet der Renderer die aktualisierte Szene, der Octree wird aktualisiert. Zum Schluss wird mit der Methode requestAnimationFrame(renderWorld) die Schleife wieder neu gestartet. Diese Schleife wird initial gestartet in der boids.html und läuft unendlich weiter, solange der Browser bzw. der Tab des Prototypen geöffnet ist.
+Danach zeichnet der Renderer die aktualisierte Szene, der Octree wird aktualisiert. Zum Schluss wird mit der Methode requestAnimationFrame(renderWorld) die Schleife wieder neu gestartet. Diese Schleife wird initial gestartet in der boids.html und läuft unendlich weiter, solange der Browser bzw. der Tab des Prototyps geöffnet ist.
 
 \subsection{updateWorld()}
 Um die Performanz zu erhöhen, wird die Population nicht in jedem Update-Zyklus aktualisiert, sondern nur in jedem dritten. Dies erschien bei der Entwicklung häufig genug, ohne schnelle Reaktionszeiten der Boids in der Simulation zu verlieren. Die Population wird in der Methode updatePopulationStatus() aktualisiert.
@@ -390,7 +442,7 @@ Die Berechnung des puren Schwärmens richtet sich nach dem mathematischen Modell
 \section{Datenstrukturen des Schwarms}
 Rein theoretisch lässt sich ein Schwarm in einem simplen Array speichern. Aus Performanzgründen ist dies aber nicht empfehlenswert. Auch die Visualisierung benötigt eine eigene Lösung.
 \subsection{Struktur des Boid-Objektes}
-Die Modellierung der Boids hat in dem Prototypen zwei verschiedene Einsatzzwecke: Einmal als purer, abstrakter Boid, der Teil einer Population ist und Eigenschaften und Bedürfnisse hat; ein anderes Mal als 3D-Objekt, welches von dem Renderer gezeichnet werden muss. Die Trennung von Population und Visualisierung ist zwar wünschenswert, aber leider nicht vollständig möglich, wie weiter unten beschrieben wird \ref{visualstruktur}.
+Die Modellierung der Boids hat in dem Prototyp zwei verschiedene Einsatzzwecke: Einmal als purer, abstrakter Boid, der Teil einer Population ist und Eigenschaften und Bedürfnisse hat; ein anderes Mal als 3D-Objekt, welches von dem Renderer gezeichnet werden muss. Die Trennung von Population und Visualisierung ist zwar wünschenswert, aber leider nicht vollständig möglich, wie weiter unten beschrieben wird \ref{visualstruktur}.
 
 Ein Boid in dem Populations-Array besitzt zunächst die Position, den aktuellen Bewegungsvektor und die Liste der letzten drei Bewegungsvektoren. Dieses sind die drei Informationen, die eine Minimalimplementierung nur für das pure Schwärmen benötigt. In der Methode updateSwarmingSingle(boid) \ref{swarmmethod}, die das Schwärmen der einzelnen Boids berechnet, wird von diesen Informationen Gebrauch gemacht.
 
@@ -398,16 +450,19 @@ Um die Population darzustellen, werden die Informationen über Status und aktuel
 
 Dieser innere Boid besitzt Methoden, die Auskunft geben über die aktuellen Zustände: Das Alter, ob der Boid Hunger hat oder müde ist oder aber gut gesättigt und erholt. Außerdem gibt es Methoden, die Auskunft geben, ob der Boid erwachsen ist oder seine maximale Lebenszeit erreicht hat. Die Energielevel Nahrungsvorrat und Leistungsfähigkeit sowie der aktuelle Status, initial mit "{}SWARMING"{} belegt, sind als Attribute des inneren Boids implementiert.
 \subsection{Dynamischer Octree}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{project/octree.png}
+\caption{Boids in einem dynamischen Octree}
+\label{octree}
+\end{figure}
+
 Eine beliebte Variante ist es, eine Datenstruktur zur räumlichen Aufteilung zu wählen \cite{journals/cie/SilvaLC09}\cite{GPGPUFlock13}\cite{214}.
 Als Datenstruktur bietet sich im dreidimensionalen Raum ein Octree an. Ein Octree teilt den Raum rekursiv in acht gleichgroße Würfel auf, wobei jeder Würfel wiederum in acht Würfel geteilt werden kann. Ein Octree ähnelt einer Baumstruktur und speichert die Elemente anhand ihrer Position. Da sich die Boids bewegen, müssen die Elemente verschoben werden können. Es wird also eine Struktur benötigt, die mit vielen beweglichen Elementen umgehen kann. Eine solche Struktur ist der dynamische Octree. Die Bibliothek threeoctree.js ist eine Implementierung eines dynamischen Octrees und wurde für den Einsatz mit Three.js entwickelt.
-\subsection{Sichtbarkeit}
-Aus Performanzgründen sollte die Sichtbarkeit der Boids beschränkt werden \cite{reynolds87}. Auch Beispiele aus der Natur legen nahe, die Sichtbarkeit zu beschränken. Es ist bei der Anpassung der Ausrichtung und der Geschwindigkeit also die Auswahl auf die direkten Nachbarn zu beschränken. Ein Ansatz modelliert das Sichtfeld der Boids mithilfe von Visibility Culling \cite{journals/cie/SilvaLC09}. Diese Methode findet auch weiter entfernte Tiere und somit ist dieser Ansatz realitätsnah. Allerdings ist dieses Verfahren auch sehr aufwändig. Eine andere Möglichkeit ist die Nutzung der Datenstruktur des Schwarms: Ein Octree kann üblicherweise auf Anfrage alle Elemente in einem gesuchten Radius finden. Da der Octree bereits als Datenstruktur gewählt wurde, bestärkt dies den Einsatz des Octrees in diesem Prototypen.
-\subsection{Performanz}\label{lahm}
-So einfach der Schwärmalgorithmus auch ist, so gibt es jedoch ein Performanzproblem bei einer größeren Anzahl von Boids: Nach dem ursprünglichen Algorithmus fragt jeder Boid jeden anderen nach Position, Geschwindigkeit usw. Es liegt also eine Komplexität O(n²) vor \cite{reynolds87}. Bei einer kleinen Population von nur 20 Boids, wie in diesem Prototypen gewählt, gibt es bei dem Algorithmus bereits 400 Abfragen. Bei realistischen Populationsgrößen, wie in einigen Flamingoschwärmen zu finden, müsste man von 1 Millionen Tieren ausgehen. Trotz Verbesserungen der Prozessoren ist es noch nicht möglich, solche Schwärme in Echtzeit zu simulieren. Selbst bei kleineren Schwärmen von nur 1000 Tieren ist die nötige Rechenleistung beträchtlich.
 
-Zur Verbesserung der Performanz muss deshalb der Algorithmus verbessert werden. Ein Ansatz ist die Beschränkung der Orientierung auf die direkten Nachbarn. Hier ist sogar die Natur das Vorbild: Wie bereits in Kapitel \ref{natur} erwähnt, orientieren Flamingos sich in der Natur auch nicht an allen anderen Tieren im Schwarm, sondern nur an maximal sieben direkten Nachbarn.
+Die Abbildung \ref{octree} visualisiert die Boids in einem Octree, der sich ständig neu aufbaut, um die Positionen der Boids aktuell zu halten.
 
-Dennoch sind in dem erweiterten Populationsmodell mehrere Iterationen über die gesamte Population nötig, um die Werte der Boids zu überwachen und anzupassen. Eine Möglichkeit, den Rechenaufwand zu verringern, ist es, solche Updates in langsamer getakteten Abständen durchzuführen.
 \subsection{Datenstruktur für die Visualisierung}\label{visualstruktur}
 Die Szene speichert sich alle Szenenobjekte intern. Wäre der Schwarm statisch, wäre es genug, alle Mesh-Objekte der Boids der Szene zu übergeben. Nun sind die Boids aber ständig in Bewegung, was die Speicherung des Schwarms in einem eigenen Array erforderlich macht.
 
@@ -419,13 +474,13 @@ Um ein Boid wieder aus der Szene zu entfernen, muss zunächst der richtige Boid 
 Die Modellierung der Boids und deren Erbgut findet sich in der Quelldatei boids.js. In diesem Abschnitt werden die Einzelheiten zu der Genetik, dem initialen Generieren der Ursprungspopulation und der Vererbung des Erbguts an Nachkommen beschrieben.
 
 \subsection{Genotyp}
-Der Genotyp beinhaltet das Erbgut. Jede Eigenschaft bzw. jedes Gen hat zwei Optionen: eine von dem Vatertier und eine von dem Muttertier. Der Genotyp der Boids in diesem Prototypen speichert die folgenden Eigenschaften: die Lebensspanne, die maximale Ausdauerkapazität, die maximale Beschleunigungskraft, die Höchstgeschwindigkeit, das Geschlecht und die Zeit der Geschlechtsreife.
+Der Genotyp beinhaltet das Erbgut. Jede Eigenschaft bzw. jedes Gen hat zwei Optionen: eine von dem Vatertier und eine von dem Muttertier. Der Genotyp der Boids in diesem Prototyp speichert die folgenden Eigenschaften: die Lebensspanne, die maximale Ausdauerkapazität, die maximale Beschleunigungskraft, die Höchstgeschwindigkeit, das Geschlecht und die Zeit der Geschlechtsreife.
 
 \subsection{Phänotyp}
-Der Phänotyp beinhaltet die tatsächliche Ausprägung des Genotyps und wird in der Methode calcPhenotype(genotype) anhand des vererbten Genotyps erstellt. Hier wird für jedes Gen bzw. jede Eigenschaft zufällig eine von beiden vorhandenen Optionen ausgewählt. Zusätzlich enthält der Phänotyp den Geburtstag des Boids, welcher bei diesem Prototypen einfach der Timestamp der Erzeugung des Boids ist. Alle Handlungen und Berechnungen finden auf Basis des Phänotyps statt.
+Der Phänotyp beinhaltet die tatsächliche Ausprägung des Genotyps und wird in der Methode calcPhenotype(genotype) anhand des vererbten Genotyps erstellt. Hier wird für jedes Gen bzw. jede Eigenschaft zufällig eine von beiden vorhandenen Optionen ausgewählt. Zusätzlich enthält der Phänotyp den Geburtstag des Boids, welcher bei diesem Prototyp einfach der Timestamp der Erzeugung des Boids ist. Alle Handlungen und Berechnungen finden auf Basis des Phänotyps statt.
 
 \subsection{Initiale Generierung der Boids}
-Beim Starten des Prototypen muss zuerst ein neuer Schwarm generiert werden. Dies erfolgt in der Methode initBoids(anzahl). Die Hilfsmethode addRandomBoid() erzeugt einen zufälligen neuen Boid. Der Genotyp wird dabei in der Methode initGenotype() zufällig erzeugt. Hier werden die für die Simulation benötigten Parameter mit fast zufälligen Werten belegt. Fast bedeutet, dass Bereiche für die Werte vorprogrammiert werden.
+Beim Starten des Prototyps muss zuerst ein neuer Schwarm generiert werden. Dies erfolgt in der Methode initBoids(anzahl). Die Hilfsmethode addRandomBoid() erzeugt einen zufälligen neuen Boid. Der Genotyp wird dabei in der Methode initGenotype() zufällig erzeugt. Hier werden die für die Simulation benötigten Parameter mit fast zufälligen Werten belegt. Fast bedeutet, dass Bereiche für die Werte vorprogrammiert werden.
 
 \subsection{makeNewBabyBoid(muttertier, vatertier)}\label{babies}
 Die Erzeugung eines neuen Boidkindes verläuft ähnlich wie die Erzeugung eines initial, zufällig generierten Boids. Der Unterschied liegt in der Erzeugung des Genotyps. Wenn ein Nachkomme erzeugt wird von bereits existierenden Eltern, dann muss der Genotyp von den Elterntieren abhängen. Die Methode genSplicer(mum.boid.genotype, dad.boid.genotype) erzeugt einen neuen Genotyp, indem für jedes Gen zufällig eine Option des gleichen Genes von dem Muttertier und eine Option von dem Vatertier ausgewählt wird.
@@ -435,11 +490,20 @@ Die Visualisierung zeigt eine Population von Boids. Die Visualisierung beschrän
 Die Entitäten, die sich mit dem Rendering beschäftigen, sind, sofern nicht anders angegeben, Teil der Three.js-Bibliothek.
 
 \subsection{Szenario}
-Das Szenario der Visualisierung beinhaltet eine kleine Gruppe von 20 Boids, die ohne Einfluss oder Skripte über den Bildschirm schwärmt und dabei in regelmäßigen Abständen Mitglieder verliert oder dazugewinnt oder deren Mitglieder zur Nahrungsaufnahme den Boden aufsuchen. Des Weiteren erscheint ab und zu ein Fressfeind, dem die Boids entkommen müssen.
+Das Szenario der Visualisierung beinhaltet eine kleine Gruppe von 20 Boids, die ohne Einfluss oder Skripte über den Bildschirm schwärmt und dabei in regelmäßigen Abständen Mitglieder verliert oder dazugewinnt oder deren Mitglieder wie in der Abbildung \ref{swarming} zur Nahrungsaufnahme den Boden aufsuchen. Des Weiteren erscheint ab und zu ein Fressfeind, dem die Boids entkommen müssen.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{project/upheaval.png}
+\caption{Ein Schwarm von Boids mit unterschiedlichen Bestrebungen}
+\label{swarming}
+\end{figure}
+
 \subsection{Visualisierung der Boids}
-Ein grundlegendes Merkmal von Schwarmtieren ist das homogene Erscheinungsbild. Eine Visualisierung, die Anspruch auf Realitätsnähe erheben möchte, muss die Boids demnach zwingend identischen Aussehens realisieren. In dem Prototypen wurden die Boids deshalb alle als Kugeln in derselben Größe und Farbe dargestellt. Der Einsatz eines komplexeren 3D-Modells wurde bewusst nicht gewählt, da so das Verhalten der Boids im Vordergrund bleiben kann. In der Quelldatei renderer.js werden die 3D-Modelle der Boids angelegt. Jeder Boid ist eine einfache Kugel, eine SphereGeometry, und kann mit dem Attribute castShadow auf true gesetzt Schatten werfen.
+Ein grundlegendes Merkmal von Schwarmtieren ist das homogene Erscheinungsbild. Eine Visualisierung, die Anspruch auf Realitätsnähe erheben möchte, muss die Boids demnach zwingend identischen Aussehens realisieren. In dem Prototyp wurden die Boids deshalb alle als Kugeln in derselben Größe und Farbe dargestellt. Der Einsatz eines komplexeren 3D-Modells wurde bewusst nicht gewählt, da so das Verhalten der Boids im Vordergrund bleiben kann. In der Quelldatei renderer.js werden die 3D-Modelle der Boids angelegt. Jeder Boid ist eine einfache Kugel, eine SphereGeometry, und kann mit dem Attribute castShadow auf true gesetzt Schatten werfen.
+
 \subsection{Darstellung der Szene}
-Die Szene ist sehr einfach gehalten. Optisch ansprechende Details, wie z.B. Bäume, hätten die Szene zwar schöner dargestellt, wären aber Hindernisse, die die Boids hätten umgehen müssen. Da der Schwerpunkt dieser Arbeit auf dem Populationsgedanken liegt und nicht auf dem Navigieren in einem komplexen Terrain, wurde davon Abstand genommen. Alle Anteile der Szenendarstellung finden sich in der Quelldatei renderer.js.
+Die Szene ist sehr einfach gehalten. Optisch ansprechende Details, wie z.B. Bäume, hätten die Szene zwar schöner dargestellt, wären aber Hindernisse, die die Boids hätten umgehen müssen. Da der Schwerpunkt dieser Arbeit auf dem Populationsgedanken liegt und nicht auf dem Navigieren auf einem komplexen Terrain, wurde davon Abstand genommen. Alle Anteile der Szenendarstellung finden sich in der Quelldatei renderer.js.
 
 Zunächst wird der WebGLRenderer geladen. Im Gegensatz zu anderen ist dieser Renderer in der Lage, direkt auf die Grafikkarte zuzugreifen. Es handelt sich bei WebGL um eine Implementierung des sehr populären OpenGLs. Der Renderer wird auf die gesamte Größe des Browserfensters skaliert und die Shadow Map des Renderers wird auf enabled gesetzt, damit die Szene durch das Rendering von Licht und Schatten plastischer wirken kann.
 
@@ -447,76 +511,183 @@ Die Szene wird gestartet und eine PerspectiveCamera auf die Position (x: 50, y: 
 
 Als Nächstes werden zur angenehmen Beleuchtung eine ambiente Lichtquelle sowie ein Spotlight initialisiert. Letzteres sorgt durch das Setzen des Attributes castShadow auf true dafür, dass die Boids in der Szene Schatten werfen können. Die Position des Spotlights (x: 20, y: 200, z: 20) wird oberhalb der Szene gesetzt. Das Ziel seiner Ausrichtung ist ebenfalls, wie das der Kamera, der Mittelpunkt des Bodens.
 
-Auch ein einfacher Hintergrund wird geladen. Als Asset dient hier eine Photografie von Palmen und Himmel. Der einzige Zweck ist die optische Abgrenzung der Szene. Geladen wird das Asset mit dem TextureLoader und als Textur auf eine Ebene projiziert.
+Auch ein einfacher Hintergrund wird geladen. Als Asset dient hier eine Photografie einer Landschaft. Der einzige Zweck ist die optische Abgrenzung der Szene. Geladen wird das Asset mit dem TextureLoader und als Textur auf eine Ebene projiziert.
 
 Der Boden wird durch einen sehr flachen Quader modelliert. Er befindet sich am unteren Ende der Bounding Box \ref{box}. Mit dem Setzen des Attributes receiveShadow auf true ist der Boden in der Lage, Schatten, die durch die Boids geworfen werden, zu zeigen.
 
 \subsection{Animation des Fressfeindes}
-Damit die Boids das Verhalten einem Angreifer gegenüber zeigen können, wird ein solcher selbstverständlich in der Szene benötigt. Da in erster Linie die Boids für dieses Modell interessant sind und nicht der Fressfeind, wurde dieser nur rudimentär umgesetzt. Der Fressfeind ist, wie die Boids auch, eine einfache Kugel, die sich allerdings in Größe und Farbe unterscheidet, wie das ja auch in der Natur der Fall wäre. Der Fressfeind in dem Prototypen ist nicht mit eigener Intelligenz ausgestattet, er durchstreift lediglich in periodischen Abständen die Szene.
+Damit die Boids das Verhalten einem Angreifer gegenüber zeigen können, wird ein solcher selbstverständlich in der Szene benötigt. Da in erster Linie die Boids für dieses Modell interessant sind und nicht der Fressfeind, wurde dieser nur rudimentär umgesetzt. Der Fressfeind ist, wie die Boids auch, eine einfache Kugel, die sich allerdings in Größe und Farbe unterscheidet, wie das ja auch in der Natur der Fall wäre. Der Fressfeind in dem Prototyp ist nicht mit eigener Intelligenz ausgestattet, er durchstreift lediglich in periodischen Abständen die Szene.
 
 Die Boids überprüfen in ihren Update-Zyklen, wie bereits \ref{swarmmethod} beschrieben, ob und wo sich der Fressfeind befindet, um ihm dann bei zu geringer Distanz auszuweichen. Dieser Ansatz folgt der zweiten Strategie wie oben \ref{enemy} bereits beschrieben.
 \subsection{Begrenzung der Szene}\label{box}
-Damit die Boids nicht aus dem Sichtfeld der Szene entschwinden, wurde eine Bounding Box, also eine Begrenzung des Raumes, eingesetzt. Die Modellierung der Bounding Box als Würfel erschien als die einfachste Möglichkeit, wobei der Mittelpunkt der Bounding Box dem Mittelpunkt des Koordinatensystems der Szene entspricht. Dies ermöglicht die einfache Erkennung, wann ein Boid Gefahr läuft, die Bounding Box zu verlassen. Nach der Berechnung der neuen Position eines Boids werden alle Koordinaten dieser Position daraufhin geprüft, ob der Absolutwert einer Koordinate größer als die halbe Seitenlänge der Bounding Box ist. Ist dies der Fall, so hat der Boid die Grenze erreicht. Um zu verhindern, dass der Boid diese Grenze tatsächlich überschreitet, wird der Wert der überschreitenden Koordinate auf den Grenzwert beschränkt. Die Vektoren der Three.js Bibliothek bieten dazu die Methode clamp(vector1, vector2), mit vector1 = (-r,-r,-r) und vector2 = (r,r,r), wobei r die halbe Seitenlänge der Bounding Box ist. In diesem Prototypen wurde r = 100 festgelegt.
+Damit die Boids nicht aus dem Sichtfeld der Szene entschwinden, wurde eine Bounding Box, also eine Begrenzung des Raumes, eingesetzt. Die Modellierung der Bounding Box als Würfel erschien als die einfachste Möglichkeit, wobei der Mittelpunkt der Bounding Box dem Mittelpunkt des Koordinatensystems der Szene entspricht. Dies ermöglicht die einfache Erkennung, wann ein Boid Gefahr läuft, die Bounding Box zu verlassen. Nach der Berechnung der neuen Position eines Boids werden alle Koordinaten dieser Position daraufhin geprüft, ob der Absolutwert einer Koordinate größer als die halbe Seitenlänge der Bounding Box ist. Ist dies der Fall, so hat der Boid die Grenze erreicht. Um zu verhindern, dass der Boid diese Grenze tatsächlich überschreitet, wird der Wert der überschreitenden Koordinate auf den Grenzwert beschränkt. Die Vektoren der Three.js Bibliothek bieten dazu die Methode clamp(vector1, vector2), mit vector1 = (-r,-r,-r) und vector2 = (r,r,r), wobei r die halbe Seitenlänge der Bounding Box ist. In diesem Prototyp wurde r = 100 festgelegt.
 
 \chapter{Evaluation}\label{eval}
-In diesem Kapitel wird das in Kapitel \ref{modell} entworfene Modell und der nach diesem Modell entwickelte Prototyp, der in Kapitel \ref{umsetzung} beschrieben wurde, evaluiert. Da der Ansatz dieser Arbeit sich auf populationstypische Kriterien fokussiert, wird als Erstes untersucht, wie stabil die Boids-Population ist, wie sich der Genpool verändert und welche Ursachen das haben könnte. Im Anschluss daran werden kurz Eindrücke zur Performanz der Simulation beschrieben, die während der Umsetzung des Prototypens aufgefallen und Schwierigkeiten bereitet haben.
+In diesem Kapitel werden das in Kapitel \ref{modell} entworfene Modell und der nach diesem Modell entwickelte Prototyp, der in Kapitel \ref{umsetzung} beschrieben wird, evaluiert. Da der Ansatz dieser Arbeit sich auf populationstypische Kriterien fokussiert, wird als Erstes untersucht, wie stabil die Boids-Population ist, wie sich der Genpool verändert und welche Ursachen das haben könnte. Im Anschluss daran werden kurz Eindrücke zur Performanz der Simulation beschrieben, die während der Umsetzung des Prototyps aufgefallen und Schwierigkeiten bereitet haben.
 
 \section{Populationsdynamik}
-Die Stabilität einer Population erkennt man anhand der Geburten- und Sterberate. Dazu wurde die Population des Prototypen gestartet und beobachtet, indem alle 500 Zyklen die Populationsgröße gemessen wurde. Um die Stabilität genauer untersuchen zu können, wurden außerdem die Geburten- und Sterberaten getrennt ermittelt. Um die Population isoliert zu testen, wurde auf den Einfluss von Fressfeinden verzichtet. Auch das Angebot von Nahrung wurde ausreichend gestaltet.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{project/Test1-Populationen.png}
+\caption{Verlauf der Populationsfluktuation}
+\label{populationsgrafik}
+\end{figure}
 
-Insgesamt wurden 20 Zyklen mit 20 Boids zum Start gemessen und der Test dreimal durchgeführt.
+Die Stabilität einer Population erkennt man anhand der Geburten- und Sterberate. Dazu wird die Population des Prototyps gestartet und beobachtet, indem alle 500 Zyklen die Populationsgröße gemessen wird. Um die Stabilität genauer untersuchen zu können, werden außerdem die Anzahl der Geburten und die Anzahl der Todesfälle getrennt ermittelt. Um die Population isoliert zu testen, wird auf den Einfluss von Fressfeinden verzichtet. Auch das Angebot von Nahrung wird ausreichend gestaltet.
 
-Wie in der Grafik, die die Populationsgrößen zeigt, zu erkennen ist, weichen die drei Testläufe stark voneinander ab. Der dritte Testlauf verliert dabei bereits nach dem siebten Zyklus alle Mitglieder. Der erste Testlauf unterlag großen Schwankungen und hatte nie mehr Boids als die anfänglichen 20. Die Population im zweiten Testlauf hingegen ist teilweise auf mehr als das doppelte angewachsen.
+Insgesamt werden zum Start 20 Zyklen mit 20 Boids gemessen und der Test dreimal durchgeführt.
 
-Auffiel, dass in jedem Test die Sterberate so große Schwankungen aufzeigte. Große Teile der Population sind gleichzeitig verstorben. Die Geburtenrate zeigte kein erkennbares Muster.
+Wie in der Grafik \ref{populationsgrafik}, die die Populationsgrößen zeigt, zu erkennen ist, weichen die drei Testläufe stark voneinander ab. Der erste Testlauf unterliegt großen Schwankungen und hat nie mehr Boids als die anfänglichen 20. Die Population im zweiten Testlauf hingegen ist teilweise auf mehr als das Doppelte angewachsen. Der dritte Testlauf verliert bereits nach dem siebten Zyklus alle Schwarmtiere.
 
-Interessanterweise waren die Verhältnisse zwischen den Geschlechtern relativ ausgewogen.
+Die einzelnen Details zeigen die folgenden Tabellen. Die Tabellen zeigen nur die Zyklen, in denen es eine Veränderung gab.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+	Zyklus & Populationsgröße & Weibchen & Männchen & Anz. d. Geburten & Anz. d. Todesfälle\\
+	\hline
+	1 & 20 & 7 & 13 & 0 & 0\\
+	4 & 12 & 4 & 8 & 0 & 8\\
+	6 & 14 & 5 & 9 & 2 & 0\\
+	7 & 16 & 7 & 9 & 2 & 0\\
+	8 & 4 & 3 & 1 & 0 & 12\\
+	10 & 5 & 3 & 2 & 2 & 1\\
+	11 & 10 & 5 & 5 & 5 & 0\\
+	14 & 8 & 3 & 5 & 2 & 4\\
+	15 & 13 & 4 & 9 & 5 & 0\\
+	18 & 6 & 2 & 4 & 0 & 7\\
+	19 & 8 & 3 & 5 & 2 & 0\\
+\end{tabular}
+\caption{Test 1 der Populationsdynamik}
+\label{dynamik1}
+\end{table}
+
+Den ersten Testverlauf visualisiert die Tabelle \ref{dynamik1}. 
+Auffällig ist das Verhältnis zwischen den Geschlechtern, meistens sind die Männchen deutlich in der Überzahl. Nur im achten Zyklus ist dies nicht so. Dort ist die Population mit nur vier Boids und einem einzelnen Männchen kurz vor dem Aussterben. Trotzdem erholt sich die Population in den nachfolgenden Zyklen. 
+
+Ist die Anzahl der Geburten relativ stabil, so zeigt sich bei der Anzahl der Todesfälle doch ein ganz anderes Muster: entweder sterben keine Boids oder ganz viele gleichzeig. Im achten Zyklus beträgt die Sterberate sogar 75 \%. Außerdem findet dieses Massensterben in regelmäßigen Abständen statt.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+	Zyklus & Populationsgröße & Weibchen & Männchen & Geburtenrate & Sterberate\\
+	\hline
+	1 & 20 & 9 & 11 & 0 & 0\\
+	2 & 23 & 10 & 13 & 3 & 0\\
+	4 & 28 & 12 & 16 & 16 & 11\\
+	6 & 30 & 13 & 17 & 4 & 2\\
+	7 & 31 & 14 & 17 & 1 & 0\\
+	8 & 25 & 15 & 10 & 13 & 19\\
+	9 & 30 & 18 & 12 & 5 & 0\\
+	10 & 29 & 18 & 11 & 3 & 0\\
+	11 & 31 & 18 & 13 & 2 & 0\\
+	12 & 28 & 14 & 14 & 12 & 15\\
+	13 & 37 & 18 & 19 & 9 & 0\\
+	14 & 37 & 18 & 19 & 2 & 2\\
+	15 & 42 & 21 & 21 & 5 & 0\\
+	16 & 32 & 13 & 19 & 2 & 12\\
+	17 & 37 & 15 & 22 & 5 & 0\\
+	18 & 35 & 16 & 19 & 3 & 5\\
+	19 & 52 & 27 & 25 & 17 & 0\\
+	20 & 38 & 23 & 15 & 4 & 18\\
+\end{tabular}
+\caption{Test 2 der Populationsdynamik}
+\label{dynamik2}
+\end{table}
+
+Den zweiten Testverlauf visualisiert die Grafik \ref{dynamik2}. Auch hier zeigt sich ein getaktetes Massensterben. Aber auch die Geburtenrate schwankt gewaltig. Dafür ist im Gegensatz zu dem ersten Testverlauf das Verhältnis zwischen den Geschlechtern ausgewogen.
+
+Die Tabelle des dritten Testlaufes \ref{dynamik3} wird auf die ersten acht Zyklen beschränkt, da die Population im siebten Zyklus verstirbt. Da die Population nur so kurze Zeit existierte, können hier keinerlei bedeutsame Beobachtungen gemacht werden.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+	Zyklus & Populationsgröße & Weibchen & Männchen & Geburtenrate & Sterberate\\
+	\hline
+	1 & 20 & 7 & 13 & 0 & 0\\
+	4 & 16 & 6 & 10 & 3 & 7\\
+	8 & 0 & 0 & 0 & 0 & 16\\
+\end{tabular}
+\caption{Test 3 der Populationsdynamik}
+\label{dynamik3}
+\end{table}
 
 \section{Populationsgenetik}
-Zur Untersuchung der Genetik wurden beispielhaft zwei Gene ausgesucht, die beobachtet wurden: die Lebensspanne und die maximale Geschwindigkeit.
-Es wurde beim Starten der Population ermittelt, welche Werte im Erbgut der Boids vorhanden sind. Dieser Test wurde alle 500 Zklen wiederholt. Um diesen Test etwas kompakter zu gestalten, wurden der Ursprungspopulation feste Werte zum Start übergeben. Wie bei dem  Testen der Populationsdynamik wurde die Population isoliert betrachtet.
+Zur Untersuchung der Genetik werden beispielhaft zwei Gene ausgesucht, die beobachtet werden: die Lebensspanne und die maximale Geschwindigkeit.
+Es wird beim Starten der Population ermittelt, welche Werte im Erbgut der Boids vorhanden sind. Dieser Test wird alle 500 Zyklen wiederholt. Um diesen Test etwas kompakter zu gestalten, werden der Ursprungspopulation feste Werte zum Start übergeben. Wie bei dem Testen der Populationsdynamik wird die Population isoliert betrachtet.
 
-Als Anfangswerte wurde 30 000 ms und 60 000 ms für die Lebensspanne und 2.5 und 3.5 als Werte der maximalen Geschwindigkeit gegeben. Insgesamt wurden 20 Zyklen mit 20 Boids zum Start gemessen und der Test dreimal durchgeführt.
+Als Anfangswerte werden 30 000 ms bzw. 60 000 ms für die Lebensspanne sowie 2.5 bzw. 3.5 als Werte der maximalen Geschwindigkeit gegeben. Insgesamt werden 20 Zyklen mit 20 Boids zum Start gemessen und der Test dreimal durchgeführt.
 
-Da diese Testläufe zur gleichen Zeit entstanden sind, kann man dadurch Rückschlüsse ziehen auf die Wechselwirkungen zwischen Populationsbestand und genetischer Vielfalt.
+Da es sich um die gleichen Testläufe handelt wie bei der Populationsdynamik, kann man dadurch Rückschlüsse auf die Wechselwirkungen zwischen Populationsbestand und genetischer Vielfalt ziehen.
 
-Umso erstaunlicher ist das Ergebnis des ersten Testlaufes. In der Grafik wird die Anzahl der Boids, die beide Optionen in dem jeweiligen Gen besitzen, angezeigt. Obwohl die Population so niedrige Zahlen hatte und zwischendurch fast vor dem Aussterben war, gibt es am Ende des Tests noch sehr viele Boids, die beide Optionen im Erbgut tragen.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.80]{project/Test1-Genetik.png}
+\caption{Test 1 der Distribution der genetischen Varianz}
+\label{test1genetik}
+\end{figure}
 
-Die Population des dritten Testlaufes ist bereits früh ausgestorben, ohne dass sich in dem Erbgut Muster zeigen konnten.
+Umso erstaunlicher ist das Ergebnis des ersten Testlaufes. In der Grafik \ref{test1genetik} wird gezeigt, wieviele Boids die jeweilige Option des jeweiligen Gens in ihrem Erbgut tragen. Ob ein Boid dabei nur eine Option doppelt oder beide in seinem Erbgut besitzt, wird hier nicht explizit gezeigt.
 
-In dem zweiten Testlauf hingegen zeigte sich ein sehr interessantes Muster. In dieser Grafik werden auch die Messungen für die Anzahl der Boids gezeigt, die nur eine Option in ihrem Erbgut tragen, gezeigt. Hier ist deutlich ersichtlich, dass sich die längere Lebensspanne und die maximale Geschwindigkeit anfangen, sich durchzusetzen. Zum Ende des Tests sind die anderen Optionen fast verschwunden. Die genetische Vielfalt ist trotz der größeren Populationsgröße sehr gering.
+Obwohl die Population im gesamten Verlauf des Testes so wenige Boids hat und zwischendurch im achten Zyklus fast vor dem Aussterben ist, gibt es am Ende des Tests noch sehr viele Boids, die beide Optionen im Erbgut tragen und so die genetische Varianz sicherstellen.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.80]{project/Test2-Genetik.png}
+\caption{Test 2 der Distribution der genetischen Varianz}
+\label{test2genetik}
+\end{figure}
+
+Im zweiten Testlauf hingegen zeigt sich jedoch ein ganz anderes Muster, wie in der Grafik \ref{test2genetik} zu sehen ist. Hier ist deutlich ersichtlich, dass die längere Lebensspanne und die maximale Geschwindigkeit anfangen, sich im Erbgut der Population durchzusetzen. Zum Ende des Tests sind die anderen Optionen fast verschwunden. Die genetische Vielfalt ist trotz der großen Anzahl der Boids sehr gering.
+
+Die Population des dritten Testlaufes, zu sehen in Grafik \ref{test3genetik}, stirbt aus, bevor sich in dem Erbgut Muster zeigen können.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.80]{project/Test3-Genetik.png}
+\caption{Test 3 der Distribution der genetischen Varianz}
+\label{test3genetik}
+\end{figure}
 
 \section{Ursachenforschung}
-Eine große Schwierigkeit bei der Entwicklung des Prototypen war die Ausbalancierung der Parameter. Dauert eine Paarungszeit zu lange, so explodiert die Population, ist die Paarungszeit zu kurz, so bleibt den Boids nicht genügend Zeit, den Boden aufzusuchen und dort einen Paarungspartner zu finden. Werden die Boids zu alt, ist die Sterberate zu gering. Ist der Schwellwert der Energiewerte zu gering, so bleibt den Boids nicht genügend Zeit, den Boden zu erreichen, besonders wenn die maximale Geschwindigkeit zu gering dafür ist. Gleichzeitig sollen alle Phasen der Simulation für den Beobachter erkennbar sein. Zwischendurch muss der Schwarm auch wieder Gelegenheit haben, zu schwärmen. Auch dies benötigt Zeit, da sich die einzelnen Boids nach Aktivitäten wie Nahrung aufnehmen und Paaren erst wieder finden müssen.
+Eine große Schwierigkeit bei der Entwicklung des Prototyps ist die Ausbalancierung der Parameter. Dauert eine Paarungszeit zu lange, so explodiert die Population, ist die Paarungszeit zu kurz, so bleibt den Boids nicht genügend Zeit, den Boden aufzusuchen und dort einen Paarungspartner zu finden. Werden die Boids zu alt, ist die Sterberate zu gering. Ist der Schwellwert der Energiewerte zu niedrig, so bleibt den Boids nicht genügend Zeit, den Boden zu erreichen, besonders wenn die maximale Geschwindigkeit zu gering dafür ist. Gleichzeitig sollen alle Phasen der Simulation für den Beobachter erkennbar sein. Zwischendurch muss der Schwarm auch wieder Gelegenheit haben zu schwärmen. Auch dies benötigt Zeit, da sich die einzelnen Boids nach Aktivitäten wie Nahrungsaufnahme und Paaren erst wieder finden müssen.
 
-Diese Schwierigkeit, eine Population stabil zu halten, war in den Testläufen mehr als deutlich. Das Muster in der Sterberate erklärt sich, wenn man bedenkt, dass die Tiere ja alle gleichzeitig geboren werden und in dem Test nur zwei mögliche Lebensspannen hatten. Würde man den Test mit zufälligen Lebensspannen starten, hätte man weniger Massensterben.
+Diese Schwierigkeit, eine Population stabil zu halten, ist in den Testläufen mehr als deutlich zu erkennen. Dies ist aber nicht unbedingt etwas Negatives. Denn auch in der Natur finden sich vielfältige Populationsverläufe, die von deutlich mehr Faktoren abhängen, als die Boids in diesem Prototyp.
 
-Abgesehen von den beiden Tests zur Populationsdynamik und Populationsgenetik zeigten sich auch immer wieder zwischendurch einzelne Boids, die den Anschluss an den Schwarm verloren haben, weil sie zwischendurch den Boden aufgesucht haben und der Rest des Schwarmes sich aus seiner Reichweite entfernt hatten. Dieser Boids hat dann so lange gewartet, bis der Schwarm zufällig wieder in Reichweite vorbei geflogen ist. Solche verlassenen Tiere hätten in der Natur geringe Lebenschancen. In der Umsetzung müsste ein Boid also besser eine variablere Reichweite haben.
-\section{Performanz der Simulation}
-Die Performanz hat großen Einfluss auf die Representativität und Ästhetik einer Schwarmsimulation. Je größer die Anzahl der Schwarmtiere, desto imposanter wirkt die Simulation. Gleichzeitig gilt aber auch, dass je größer die Anzahl der Schwarmtiere ist, desto mehr sinkt die Performanz. Der originale Algorithmus hat dabei die geringste Performanz, wie bereits in Kapitel \ref{lahm} beschrieben wurde. Die Wahl einer Datenstruktur kann hier Verbesserungen bringen. Die räumliche Aufteilung mithilfe eines Octrees erscheint logisch, besonders wenn der Octree mit bewegten Objekten umgehen kann. Dennoch bringt der Octree nur geringe Leistungsverbesserungen. Denn der Algortihmus des Schwärmens beinhaltet nicht nur die Berechnung des Schwärmens, sondern auch noch andere Update-Zyklen, in denen wiederholt Iterationen über die gesamte Population nötig sind.
+Das Muster in der Sterberate erklärt sich, wenn man bedenkt, dass die Tiere ja alle gleichzeitig geboren werden und in dem Test nur zwei mögliche Lebensspannen haben. Würde man den Test mit zufälligen Lebensspannen starten, hätte man weniger Massensterben.
 
-Es wird einmal über die Population iteriert, um die alten Boids auszusortieren. Bei der Aussortierung muss im schlimmsten Fall der ganze Schwarm zur Identikation des zu entfernenden Boids gefiltert werden. Dann wird ein zweites Mal über die Population iteriert, um die Energielevel der übrig gebliebenen Boids und deren Status zu aktualisieren. Wenn Paarungszeit ist, wird die Population nach Boids gefiltert, die auf Partnersuche sind. Abschließend wird die Population ein weiteres Mal durchlaufen, diesmal ist es die Neuberechnung des Schwärmens. Nur im letzten Durchlauf kann eine Änderung der räumlichen Datenstruktur greifen. Zumindest die ersten beiden Iterationen können, wie in der Umsetzung bereits geschehen, zusammengefasst werden.
+\section{Performanz}
+Die Performanz hat großen Einfluss auf die Ästhetik einer Schwarmsimulation. Je größer die Anzahl der Schwarmtiere, desto imposanter wirkt die Simulation. Gleichzeitig gilt aber auch, dass die Performanz sinkt, wenn die Anzahl der Schwarmtiere größer wird. Der originale Algorithmus hat dabei die geringste Performanz, wie bereits in Kapitel \ref{lahm} beschrieben wird. Die Wahl einer Datenstruktur kann hier Verbesserungen bringen. Die räumliche Aufteilung mithilfe eines Octrees erscheint logisch, besonders wenn der Octree mit bewegten Objekten umgehen kann. Dennoch bringt der Octree nur geringe Leistungsverbesserungen, denn der Algorithmus des Schwärmens beinhaltet nicht nur die Berechnung des Schwärmens, sondern auch noch die anderen Update-Zyklen, in denen wiederholt Iterationen über die gesamte Population nötig sind.
 
-Abgesehen von den Algorithmen gibt es noch andere langsame Vorgänge. So muss der Octree häufig aktualisiert werden, um die bewegten Objekte aktuell zu halten. Die jedoch langsamste Aktivität ist das Rendering. Auch wenn in dem Prototypen WebGL verwendet wird, bleibt dies ein Bottleneck. Eine Reduzierung der Update-Zyklen reduziert das ständige Neuberechnen und lässt die Simulation weniger stottern. Trotzdem dauert die Berechnung noch sehr lange und führt zu sehr niedrigen Framerates.
+Zuerst wird über die Population iteriert, um die alten Boids auszusortieren. Bei der Aussortierung muss im schlimmsten Fall der ganze Schwarm zur Identifikation der zu entfernenden Boids gefiltert werden. Dann wird ein zweites Mal über die Population iteriert, um die Energielevel der übrig gebliebenen Boids und deren Status zu aktualisieren. Wenn Paarungszeit ist, wird die Population nach Boids gefiltert, die auf Partnersuche sind. Abschließend wird die Population ein weiteres Mal durchlaufen, diesmal zur Neuberechnung des Schwärmens. Nur im letzten Durchlauf kann eine Änderung der räumlichen Datenstruktur greifen. Zumindest die ersten beiden Iterationen können, wie in der Umsetzung bereits geschehen, zusammengefasst werden und gemeinsam ablaufen.
 
-Dennoch ist hier noch viel Potential zur Verbesserung.
+Abgesehen von den Algorithmen gibt es noch andere langsame Vorgänge. So muss der Octree häufig aktualisiert werden, um die bewegten Objekte aktuell zu halten. Die jedoch langsamste Aktivität ist das Rendering. Auch wenn in dem Prototyp WebGL verwendet wird, bleibt dies ein Bottleneck. Eine Verringerung der Update-Zyklen reduziert das ständige Neuberechnen und lässt die Simulation weniger stottern. Trotzdem dauert die Berechnung noch sehr lange und führt zu sehr niedrigen Framerates.
+
+\section{Sichtbarkeit}
+Die Auswahl der dichtesten Nachbarn erfolgt in dem Prototypen über einen Octree, der diese Nachbarn in einem gegebenen Radius sucht. Je nachdem, wieviele Boids sich gerade in diesem Radius befinden, werden mal mehr und mal weniger Nachbarn gefunden.
+
+Dies bedeutet, dass sich auch immer wieder zwischendurch einzelne Boids zeigen, die den Anschluss an den Schwarm verlieren, weil sie zwischendurch den Boden aufsuchen und der Rest des Schwarmes sich aus ihrer Reichweite entfernt. Diese Boids warten dann so lange, bis der Schwarm zufällig wieder in Reichweite vorbeifliegt. Solche verlassenen Tiere hätten in der Natur geringe Lebenschancen.
+
+Wie bereits in Kapitel \ref{natur} beschrieben, erfolgt die Auswahl in echten Schwärmen aus topologischer Sicht, die zudem noch anisotrop ist. In einer erneuten Umsetzung sollte ein Boid also besser eine variablere Reichweite haben. Dazu könnte man den Octree nutzen, indem man in immer größer werdenden Radii sucht, bis man die gewünschte Anzahl an Nachbarn hat.
+
+Ein anderer Ansatz modelliert das Sichtfeld der Boids mithilfe von Visibility Culling \cite{journals/cie/SilvaLC09}. Diese Methode findet auch weiter entfernte Tiere und kann anisotrop umgesetzt werden. 
 
 \chapter{Ausblick und Fazit}\label{fazit}
 In diesem Kapitel wird die Arbeit zusammengefasst und einige Weiterentwicklungsmöglichkeiten angesprochen. Den Abschluss bildet ein kurzes Fazit.
 \section{Zusammenfassung}
-In dieser Arbeit wird ein Modell entwickelt, welches eine Simulation von Schwarmtieren um populationstypische Eigenschaften erweitert. Dazu wird zunächst ein Einblick in die Vorbilder der Natur, verschiedene Methoden der Schwarmsimulation sowie die Grundlagen des Boids-Modells gegeben. Danach wird ein Modell entwickelt, welches auf dem Boids-Modell beruht und zusätzlich um populationstypische Elemente erweitert wird. Anhand dieses Modells wird ein Prototyp entwickelt, welcher das erweiterte Populationsmodell umsetzt. Im Anschluss wird die Evaluation des Prototypen beschrieben.
+In dieser Arbeit wird ein Modell entwickelt, welches eine Simulation von Schwarmtieren um populationstypische Eigenschaften erweitert. Dazu wird zunächst ein Einblick in die Vorbilder der Natur, verschiedene Methoden der Schwarmsimulation sowie die Grundlagen des Boids-Modells gegeben. Danach wird ein Modell entwickelt, welches auf dem Boids-Modell beruht und zusätzlich um populationstypische Elemente erweitert wird. Anhand dieses Modells wird ein Prototyp entwickelt, welcher das erweiterte Populationsmodell umsetzt. Im Anschluss wird die Evaluation des Prototyps beschrieben.
 \section{Weiterentwicklungsmöglichkeiten}
-Das in dieser Arbeit beschriebene Modell zeigt einen ersten Ansatz zur Darstellung einer Schwarmpopulation. Möglichkeiten zur Weiterentwicklung gibt es viele.
+Das in dieser Arbeit beschriebene Modell zeigt einen ersten Ansatz zur Darstellung einer Schwarmpopulation. Möglichkeiten zur Weiterentwicklung bieten sich an.
 \subsection{Visualisierung}
 Zunächst gibt es Potential für die Visualisierung, sei es in Form von ansprechenden 3D-Modellen für die Boids und der anderen Assets oder Animationsequenzen für wichtige Ereignisse. So könnte ein Boid, der in der Luft verstirbt, zunächst einmal in Richtung Boden fallen, bevor der Boid aus der Szene eliminiert wird.
 
 \subsection{Performanz}
-Wie im Kapitel \ref{eval} beschrieben, lässt die Performanz des Prototypen noch deutlich Verbesserungen zu. Eine Optimierung der Datenstrukturen kann hier angestrebt werden.
+Wie im Kapitel \ref{eval} beschrieben, lässt die Performanz des Prototyps noch deutlich Verbesserungen zu. Eine Optimierung der Datenstrukturen kann hier angestrebt werden.
 
 Da das Rendering durch das Aktualisieren und Neuberechnen des Schwarms stark verlangsamt wird und schnell ins Stocken gerät, d.h. die Framerate stark sinken lässt, wäre eine Umsetzung auf Delta Time Rendering zu untersuchen.
 
 \subsection{Populationsdynamik}
-Außerdem kann das Modell um populationstypische Elemente erweitert werden. Die Natur liefert zahlreiche Beispiele. Eine Möglichkeit wäre es, die Futtersuche komplexer zu gestalten. In dem jetzigen Modell finden die Boids immer ausreichend Nahrung auf dem Boden, egal wo sie sich gerade befinden. Hier könnte man das Szenario realitätsnäher gestalten und ausgewählte Futterstellen modellieren, die erst gefunden werden müssen.
+Das Modell kann noch um populationstypische Elemente erweitert werden. Die Natur liefert zahlreiche Beispiele. Eine Möglichkeit wäre es, die Futtersuche komplexer zu gestalten. In dem jetzigen Modell finden die Boids immer ausreichend Nahrung auf dem Boden, egal wo sie sich gerade befinden. Hier könnte man das Szenario realitätsnäher gestalten und ausgewählte Futterstellen modellieren, die erst gefunden werden müssen.
 
 Auch intelligentere Fressfeinde, Verdrängen durch andere Populationen oder Naturkatastrophen bieten noch viel Potential.
 
@@ -525,10 +696,13 @@ Des Weiteren können die Parameter, die die Phasen der Abläufe oder der Eigensc
 \subsection{Populationsgenetik}
 Schlussendlich bietet auch die Vererbung Weiterentwicklungsmöglichkeiten: Bei der Rekombination der Gene fehlt z.B. noch die Möglichkeit der Mutation. Außerdem könnten die Boids z.B. die Monogamie und damit einen festen Partner fürs Leben wählen.
 
-Die Partnersuche insgesamt ist noch sehr rudimentär in dem Prototypen entwickelt worden. Das Brüten findet praktisch noch gar nicht statt, die Boidkinder sind sofort flügge und unabhängig von den Elterntieren.
+Die Partnersuche insgesamt ist noch sehr rudimentär in dem Prototyp entwickelt worden. Das Brüten findet praktisch noch gar nicht statt, die Boidkinder sind sofort flügge und unabhängig von den Elterntieren. Ein längeres Verweilen neben dem Nest, wobei sich die Partner bei der Futtersuche abwechseln, und die Versorgung der Jungtiere sind nur einige mögliche Szenarien, die weiter ausgestaltet werden können.
 
 \section{Fazit}
-Das in dieser Arbeit entwickelte Modell zeigt, wie das einfache Boids-Modell in eine Population umgewandelt werden kann. Hierbei wird deutlich, wie komplex eine Population ist, welche Faktoren wichtig sind und modelliert werden müssen. Außerdem zeigt sich, dass für eine gute Simulation auch noch andere Faktoren, wie z.B die Performanz, einen nicht unerheblichen Aufwand erfordern.
+Das in dieser Arbeit entwickelte Modell zeigt, wie das einfache Boids-Modell in eine Population umgewandelt werden kann. Die Populationsforschung im Kapitel \ref{eval} hat gezeigt, wie komplex und unberechenbar und damit abwechslungsreich eine Simulation mit den Boids sein kann. 
+
+Außerdem zeigt sich, dass für eine ansprechende Simulation auch noch andere Faktoren, wie z.B die Performanz, einen nicht unerheblichen Aufwand erfordern.
+
 Abschließend ist dieses Modell ein Einstieg, der wesentliche Bereiche einer Population von Schwarmtieren beinhaltet, wenngleich es noch viel Potential für Weiterentwicklungen gibt.
 
 %%%%
