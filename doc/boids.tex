@@ -139,13 +139,13 @@
 \chapter{Einleitung}\label{einleitung}
 \section{Motivation}
 In der Computergrafik können bereits viele Naturphänomene simuliert werden, so auch das Schwarmverhalten von Schwarmtieren, wie Vögel und Fische.
-Solche Simulationen wurden schon vielfach in Filmen und Animationen verwendet. Es gibt mittlerweile so einige Modelle, einige performanter, andere dafür realistischer, die für solche Animationen eingesetzt werden. Eines der bekanntesten ist das Boids-Modell \cite{reynolds87}. In diesem Modell entscheidet jedes Tier anhand von festgelegten Regeln, wohin es sich bewegt. Doch dieses Modell, obwohl so einfach und naturnah, simuliert nur das pure Schwärmen. Eine ganzheitliche Sicht auf die Schwarmpopulation und den Lebenszyklus der Tiere ist bis jetzt nicht beachtet worden. In kurzen Filmsequenzen mag dies nicht weiter auffallen. Aber werden Schwarmsimulationen nach dem Boids-Modell in offenen Welten eingesetzt, in denen man nicht nur Zeit zum Erkunden, sondern auch zum Verweilen und Beobachten hat, so fällt schnell auf, dass die Tiere nur ein sehr limitiertes Verhaltensmuster zeigen.
+Solche Simulationen wurden schon vielfach in Filmen und Animationen verwendet, wie z.B. in Batman Returns und Der König der Löwen \cite{movies}. Es gibt mittlerweile so einige Modelle, einige performanter, andere dafür realistischer, die für solche Animationen eingesetzt werden. Eines der bekanntesten ist das Boids-Modell \cite{reynolds87}. In diesem Modell entscheidet jedes Tier anhand von festgelegten Regeln, wohin es sich bewegt. Doch dieses Modell, obwohl so einfach und naturnah, simuliert nur das pure Schwärmen. Eine ganzheitliche Sicht auf die Schwarmpopulation und den Lebenszyklus der Tiere ist bis jetzt nicht beachtet worden. In kurzen Filmsequenzen mag dies nicht weiter auffallen. Aber werden Schwarmsimulationen nach dem Boids-Modell in offenen Welten eingesetzt, in denen man nicht nur Zeit zum Erkunden, sondern auch zum Verweilen und Beobachten hat, so fällt schnell auf, dass die Tiere nur ein sehr limitiertes Verhaltensmuster zeigen.
 Wenn in solchen Situationen Populationen von Schwarmtieren simuliert werden sollen, so ist ein ganzheitlicheres Modell vonnöten.
 
 \section{Zielsetzung}
 Ziel dieser Arbeit ist die Modellierung und Visualisierung einer Population von Boids.
 
-Dabei soll im ersten Schritt das Modell der Boids von Craig Reynolds \cite{reynolds87} in seinen Grundzügen umgesetzt werden. 
+Dabei soll im ersten Schritt das Modell der Boids von Craig Reynolds \cite{reynolds87} in seinen Grundzügen umgesetzt werden.
 
 Der Schwerpunkt dieser Arbeit setzt sich auf die Entwicklung eines Populationsmodells, d.h. dass das Modell den Lebenszyklus der Boids darstellen soll. Dazu gehören eine begrenzte Lebensspanne, Bedürfnisse wie Hunger und Erschöpfung, die Paarungszeit und Bedrohung durch Fressfeinde.
 Zu einer Population gehört außerdem Vererbung, so dass die Genetik der Boids zu modellieren ist.
@@ -215,11 +215,11 @@ Der Bereich Behavioural Animation nutzt Ansätze des Artificial Life, um möglic
 Eine Simulation eines Schwarms in einem erweiterbaren Szenario im Hinsicht auf realitätsnahe Lebenszyklen im Populationsgedanken ist sicherlich hier denkbar.
 \section{Boids-Modell nach Reynolds}
 Der Erfinder der Boids, Craig Reynolds, hat sich intensiv mit Artificial Life und Behavioural Animation beschäftigt und dort auch seine Inspiration für die Boids geholt.
-Das von ihm in den 1980er-Jahren entwickelte Modell der Boids \cite{reynolds87}\cite{oai:CiteSeerPSU:509294}\cite{Reynolds:1988:NBI} bezweckt die Simulation von einem Naturphänomen und folgt einer verhaltensbiologischen Theorie: Es wurde in der Natur beobachtet, dass und wie sich Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Einheiten mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel. 
+Das von ihm in den 1980er-Jahren entwickelte Modell der Boids \cite{reynolds87}\cite{oai:CiteSeerPSU:509294}\cite{Reynolds:1988:NBI} bezweckt die Simulation von einem Naturphänomen und folgt einer verhaltensbiologischen Theorie: Es wurde in der Natur beobachtet, dass und wie sich Schwärme verhalten. Man hat gemutmaßt, dass das Verhalten auf einem einfachen Satz von Verhaltensregeln beruht. Da dieses Modell digitale künstliche Einheiten mit genau diesen Regeln dazu veranlassen kann, realitätsnahes Schwarmverhalten zu simulieren, wird die Theorie plausibel.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.50]{project/swarming.png}
+\includegraphics[scale=0.4]{project/bigswarm.png}
 \caption{Schwärmende Boids}
 \label{simple}
 \end{figure}
@@ -231,14 +231,37 @@ Es beinhaltet auch die Regel, einen Mindestabstand zu den Artgenossen einzuhalte
 
 Wie in der Abbildung \ref{simple} zu sehen ist, bestimmen diese wenigen Regeln ein erstaunlich realitätsnahes Verhalten, welches für viele Simulationen, in denen es genügt, den Schwarm endlos in der Luft fliegen zu lassen, völlig ausreicht. Dieses Grundregelwerk lässt sich sowohl im 2D- als auch im 3D-Raum durch einfache Vektorrechnung verwirklichen. Die bestimmenden Einflüsse auf die nächste Handlung eines Boids wird im Folgenden genauer beschrieben.
 \subsection{Kohäsion (cohesion)}
-Die Kohäsion ist die erste und wichtigste Regel, die für den Zusammenhalt eines Schwarms verantwortlich ist. Kohäsion bedeutet, dass alle Boids das Bedürfnis haben, dicht bei ihrem Schwarm zu bleiben. Der sicherste Platz in einem Schwarm ist dabei der Mittelpunkt, da Gefahren, wie z.B. ein Fressfeind, von den weiter außen fliegenden Boids abgeschirmt werden. Deshalb hat natürlich jeder Boid das Bedürfnis, möglichst in die Mitte des Schwarms zu gelangen.
+Die Kohäsion ist die erste und wichtigste Regel, die für den Zusammenhalt eines Schwarms verantwortlich ist. Kohäsion bedeutet, dass alle Boids das Bedürfnis haben, dicht bei ihrem Schwarm zu bleiben. Der sicherste Platz in einem Schwarm ist dabei der Mittelpunkt, da Gefahren, wie z.B. ein Fressfeind, von den weiter außen fliegenden Boids abgeschirmt werden. Abbildung \ref{cohesion} zeigt das Bedürfnis eines Boids, möglichst in die Mitte des Schwarms zu gelangen.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{project/cohesion.png}
+\caption{Kohäsion nach Reynolds \cite{reynolds87}}
+\label{cohesion}
+\end{figure}
+
 \subsection{Anpassen der Geschwindigkeit und Ausrichtung (alignment)}
-Damit der Schwarm den Zusammenhalt und gemeinsame Flugmanöver gewährleisten kann, müssen sich die Boids an Geschwindigkeit und Ausrichtung der Schwarmnachbarn anpassen. Je schneller die Boids auf Änderungen reagieren, desto besser ist der Zusammenhalt. Reagieren die einzelnen Tiere nicht schnell genug oder passen sich nicht an, würde der Schwarm aufbrechen und fragmentieren. Ein einzelner Boid behält dabei seine dichtesten Schwarmnachbarn im Blickfeld und passt sich an diese an. Ändern sich die Nachbarn, bzw. gibt es Verschiebungen, die dazu führen, dass Nachbarn sich zum Vorteil anderer entfernen, so erkennt der Boid nun diese neuen, dichteren Boids als die nächsten Nachbarn an.
+Damit der Schwarm den Zusammenhalt und gemeinsame Flugmanöver gewährleisten kann, müssen sich die Boids an Geschwindigkeit und Ausrichtung der Schwarmnachbarn anpassen. Je schneller die Boids auf Änderungen reagieren, desto besser ist der Zusammenhalt. Reagieren die einzelnen Tiere nicht schnell genug oder passen sich nicht an, würde der Schwarm aufbrechen und fragmentieren. Ein einzelner Boid behält dabei seine dichtesten Schwarmnachbarn im Blickfeld und passt sich an diese an wie in Abbildung \ref{alignment} zu sehen. Ändern sich die Nachbarn, bzw. gibt es Verschiebungen, die dazu führen, dass Nachbarn sich zum Vorteil anderer entfernen, so erkennt der Boid nun diese neuen, dichteren Boids als die nächsten Nachbarn an.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{project/alignment.png}
+\caption{Anpassen in Geschwindigkeit und Ausrichtung nach Reynolds \cite{reynolds87}}
+\label{alignment}
+\end{figure}
+
 \subsection{Mindestabstand (separation)}
-Um nicht während des Schwärmens zu kollidieren und bei einer Richtungs- bzw. Geschwindigkeitsänderung der Schwarmnachbarn genügend Zeit und Raum zu haben, um auf die Änderungen zu reagieren, muss ein gewisser Mindestabstand gewährleistet werden. Dieser Mindestabstand darf aber nicht zu groß sein. Je dichter die Schwarmtiere zusammen fliegen, desto schwieriger ist es für einen Außenstehenden, wie z.B. einen Fressfeind, einzelne Boids zu erkennen und zu verfolgen.
+Um nicht während des Schwärmens zu kollidieren und bei einer Richtungs- bzw. Geschwindigkeitsänderung der Schwarmnachbarn genügend Zeit und Raum zu haben, um auf die Änderungen zu reagieren, muss ein gewisser Mindestabstand gewährleistet werden. Dieser Mindestabstand darf aber nicht zu groß sein. Je dichter die Schwarmtiere zusammen fliegen, desto schwieriger ist es für einen Außenstehenden, wie z.B. einen Fressfeind, einzelne Boids zu erkennen und zu verfolgen. Die Abbildung \ref{separation} zeigt einen Boid, der zu dicht zu einem seiner Nachbarn gekommen ist und deshalb wieder ein wenig zurück steuern muss.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{project/separation.png}
+\caption{Mindestabstand nach Reynolds \cite{reynolds87}}
+\label{separation}
+\end{figure}
 
 \section{Mathematische Grundlagen des Boids-Modells}\label{mathe}
-Für die Berechnung der Fortbewegung eines Boids kommt die Vektorrechnung zum Einsatz. Ein Grundverständnis für die Vektorrechnung wird vorausgesetzt und deshalb nicht weiter erläutert. Die Berechnungen sind die, die in dem Prototyp umgesetzt wurden, und basieren grob auf anderen Implementationen \cite{Bourg:2004:AGD:1096109}\cite{nature}.
+Für die Berechnung der Fortbewegung eines Boids kommt die Vektorrechnung zum Einsatz. Ein Grundverständnis für die Vektorrechnung wird vorausgesetzt und deshalb nicht weiter erläutert. Die Berechnungen sind die, die in dem Prototyp umgesetzt werden, und basieren grob auf anderen Implementationen \cite{Bourg:2004:AGD:1096109}\cite{nature}.
 
 Ein Boid besitzt zum Zeitpunkt \(t_0\) die Position \(\vec{p}_0\) und die Velocity (den Bewegungsvektor) \(\vec{v}_0\). Die Position ist dabei ein Ortsvektor und die Velocity ein Richtungsvektor, der die Ausrichtung anzeigt. Die Länge der Velocity beschreibt die Geschwindigkeit.
 
@@ -340,11 +363,18 @@ Bei der Auswahl der Varianten ist zwischen deren Komplexität, Performanzansprü
 Eine Population, die nie neue Mitglieder erhält, stirbt früher oder später aus. Damit die Population überleben kann, muss also für Nachschub gesorgt werden. Das Erzeugen von Nachkommen ist in der Natur vielfältig und bei jeder Tierart anders. Bei Flamingos finden sich ein weibliches und ein männliches Tier und brüten Eier aus. Viele Vogelarten zeigen ein solches partnerschaftliches Verhalten. Dies ist auch der Ansatz, der für dieses Modell gewählt wurde und im Folgenden näher beschrieben wird.
 
 \subsection{Genetik}
-Die biologische Genetik ist ein sehr komplexes und faszinierendes Thema, wird in dieser Arbeit aber nur sehr oberflächlich abgehandelt. Ein tieferer Einstieg in diese Thematik würde den Rahmen sprengen und das Modell unnötig verkomplizieren. Exakte genetische Vorgänge sind für eine Simulation zu komplex und bieten zu wenig Mehrwert. Im Folgenden wird ein sehr vereinfachtes Modell entwickelt \cite{genetik}.
+Die biologische Genetik ist ein sehr komplexes und faszinierendes Thema, wird in dieser Arbeit aber nur sehr oberflächlich abgehandelt. Ein tieferer Einstieg in diese Thematik würde den Rahmen sprengen und das Modell unnötig verkomplizieren. Exakte genetische Vorgänge \cite{genetik} sind für eine Simulation zu komplex und bieten zu wenig Mehrwert. Im Folgenden wird ein sehr vereinfachtes Modell entwickelt.
 
-Gene sind die genetischen Faktoren, die dafür verantwortlich sind, dass Merkmale ausgeprägt werden. Diese werden bei der Fortpflanzung an die Nachfahren vererbt. Bei der geschlechtlichen Vererbung wird zufällig entschieden, welche der genetischen Informationen vom Mutter- und Vatertier an den jeweiligen Nachkommen weitergegeben wird. Das genetische Erbmaterial nennt sich Genotyp und repräsentiert seine exakte genetische Ausstattung. Die Informationen, die sich bei dem Individuum durchsetzen, werden im Phänotyp beschrieben.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.30]{project/rekombination.png}
+\caption{Rekombination am Beispiel der Lebensspanne}
+\label{rekombination}
+\end{figure}
 
-Jeder Boid hat demnach einen Genotyp, in dem die vererbten Gene, wie z.B. die maximale Lebensdauer und maximale Fluggeschwindigkeit, gespeichert werden. Zu jedem Gen sind zwei Optionen vorhanden, eine vom Vatertier, die andere vom Muttertier. Welche Information sich durchsetzt und damit im Phänotyp gelistet wird, ist zufällig. Z.B. weist das Erbgut die mögliche Lebensspanne des Vaters und die der Mutter auf, für den Phänotyp wird per Zufall die Lebensspanne der Mutter ausgewählt. Dies ist demnach die für den Boidkind geltende maximal zu erreichende Lebensspanne.
+Gene sind die genetischen Faktoren, die dafür verantwortlich sind, dass Merkmale ausgeprägt werden. Diese werden bei der Fortpflanzung an die Nachfahren vererbt. Bei der geschlechtlichen Vererbung wird zufällig entschieden, welche der genetischen Informationen vom Mutter- und Vatertier an den jeweiligen Nachkommen weitergegeben wird. Dieser Vorgang nennt sich Rekombination und wird in Abbildung \ref{rekombination} visualisiert. Das genetische Erbmaterial nennt sich Genotyp und repräsentiert seine exakte genetische Ausstattung. Die Informationen, die sich bei dem Individuum durchsetzen, werden im Phänotyp beschrieben.
+
+Jeder Boid hat demnach einen Genotyp, in dem die vererbten Gene, wie z.B. die maximale Lebensdauer und maximale Fluggeschwindigkeit, gespeichert werden. Zu jedem Gen sind zwei Optionen vorhanden, eine vom Vatertier, die andere vom Muttertier. Welche Information sich durchsetzt und damit im Phänotyp gelistet wird, ist zufällig. Z.B. weist das Erbgut die mögliche Lebensspanne des Vaters und die der Mutter auf, für den Phänotyp wird per Zufall die Lebensspanne des Vaters ausgewählt. Dies ist demnach die für den Boidkind geltende maximal zu erreichende Lebensspanne wie in Abbildung \ref{rekombination} zu sehen ist.
 
 Die initiale Generation wird per Zufall generiert. Ab dann werden neue Nachkommen durch Rekombination erzeugt. Dazu werden die Erbinformationen der Elterntiere, d.h. die Genotypen, neu kombiniert und an den Nachkommen vererbt. Daraus ergibt sich für den Nachkommen dann auch der neue Phänotyp.
 
@@ -474,7 +504,24 @@ Um ein Boid wieder aus der Szene zu entfernen, muss zunächst der richtige Boid 
 Die Modellierung der Boids und deren Erbgut findet sich in der Quelldatei boids.js. In diesem Abschnitt werden die Einzelheiten zu der Genetik, dem initialen Generieren der Ursprungspopulation und der Vererbung des Erbguts an Nachkommen beschrieben.
 
 \subsection{Genotyp}
-Der Genotyp beinhaltet das Erbgut. Jede Eigenschaft bzw. jedes Gen hat zwei Optionen: eine von dem Vatertier und eine von dem Muttertier. Der Genotyp der Boids in diesem Prototyp speichert die folgenden Eigenschaften: die Lebensspanne, die maximale Ausdauerkapazität, die maximale Beschleunigungskraft, die Höchstgeschwindigkeit, das Geschlecht und die Zeit der Geschlechtsreife.
+Der Genotyp beinhaltet das Erbgut. Jede Eigenschaft bzw. jedes Gen hat zwei Optionen: eine von dem Vatertier und eine von dem Muttertier. Der Genotyp der Boids in diesem Prototyp speichert die folgenden Eigenschaften: die Lebensspanne, die maximale Ausdauerkapazität, die maximale Beschleunigungskraft, die Höchstgeschwindigkeit, das Geschlecht und die Zeit der Geschlechtsreife. Die initialen Werte, die die Boids in dem Prototypen erhalten, sind in der Tabelle \ref{genotyp} aufgelistet.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{l|c|c}
+	Gen & Option 1 & Option 2\\
+	\hline
+	Lebensspanne & 30 000 & 60 000\\
+	Maximale Ausdauer & 100 & 200\\
+	Nahrungskapazität & 30 & 50\\
+  Maximale Beschleunigungskraft & 0.4 & 0.6\\
+  Maximale Geschwindigkeit & 2 & 4\\
+  Geschlecht & m & w\\
+  Geschlechtsreife & 180 & 300\\
+\end{tabular}
+\caption{Initiale Werte des Genotyps}
+\label{genotyp}
+\end{table}
 
 \subsection{Phänotyp}
 Der Phänotyp beinhaltet die tatsächliche Ausprägung des Genotyps und wird in der Methode calcPhenotype(genotype) anhand des vererbten Genotyps erstellt. Hier wird für jedes Gen bzw. jede Eigenschaft zufällig eine von beiden vorhandenen Optionen ausgewählt. Zusätzlich enthält der Phänotyp den Geburtstag des Boids, welcher bei diesem Prototyp einfach der Timestamp der Erzeugung des Boids ist. Alle Handlungen und Berechnungen finden auf Basis des Phänotyps statt.
@@ -516,7 +563,14 @@ Auch ein einfacher Hintergrund wird geladen. Als Asset dient hier eine Photograf
 Der Boden wird durch einen sehr flachen Quader modelliert. Er befindet sich am unteren Ende der Bounding Box \ref{box}. Mit dem Setzen des Attributes receiveShadow auf true ist der Boden in der Lage, Schatten, die durch die Boids geworfen werden, zu zeigen.
 
 \subsection{Animation des Fressfeindes}
-Damit die Boids das Verhalten einem Angreifer gegenüber zeigen können, wird ein solcher selbstverständlich in der Szene benötigt. Da in erster Linie die Boids für dieses Modell interessant sind und nicht der Fressfeind, wurde dieser nur rudimentär umgesetzt. Der Fressfeind ist, wie die Boids auch, eine einfache Kugel, die sich allerdings in Größe und Farbe unterscheidet, wie das ja auch in der Natur der Fall wäre. Der Fressfeind in dem Prototyp ist nicht mit eigener Intelligenz ausgestattet, er durchstreift lediglich in periodischen Abständen die Szene.
+Damit die Boids das Verhalten einem Angreifer gegenüber zeigen können, wird ein solcher selbstverständlich in der Szene benötigt. Da in erster Linie die Boids für dieses Modell interessant sind und nicht der Fressfeind, wurde dieser nur rudimentär umgesetzt. Der Fressfeind ist, wie die Boids auch, eine einfache Kugel, die sich allerdings in Größe und Farbe unterscheidet, wie das ja auch in der Natur der Fall wäre. Der Fressfeind in dem Prototyp ist nicht mit eigener Intelligenz ausgestattet, er durchstreift lediglich in periodischen Abständen die Szene. Abbildung \ref{enemy} zeigt den Fressfeind in Aktion.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.8]{project/enemy.png}
+\caption{Ein Schwarm Boids wird angegriffen}
+\label{enemy}
+\end{figure}
 
 Die Boids überprüfen in ihren Update-Zyklen, wie bereits \ref{swarmmethod} beschrieben, ob und wo sich der Fressfeind befindet, um ihm dann bei zu geringer Distanz auszuweichen. Dieser Ansatz folgt der zweiten Strategie wie oben \ref{enemy} bereits beschrieben.
 \subsection{Begrenzung der Szene}\label{box}
@@ -562,8 +616,8 @@ Die einzelnen Details zeigen die folgenden Tabellen. Die Tabellen zeigen nur die
 \label{dynamik1}
 \end{table}
 
-Den ersten Testverlauf visualisiert die Tabelle \ref{dynamik1}. 
-Auffällig ist das Verhältnis zwischen den Geschlechtern, meistens sind die Männchen deutlich in der Überzahl. Nur im achten Zyklus ist dies nicht so. Dort ist die Population mit nur vier Boids und einem einzelnen Männchen kurz vor dem Aussterben. Trotzdem erholt sich die Population in den nachfolgenden Zyklen. 
+Den ersten Testverlauf visualisiert die Tabelle \ref{dynamik1}.
+Auffällig ist das Verhältnis zwischen den Geschlechtern, meistens sind die Männchen deutlich in der Überzahl. Nur im achten Zyklus ist dies nicht so. Dort ist die Population mit nur vier Boids und einem einzelnen Männchen kurz vor dem Aussterben. Trotzdem erholt sich die Population in den nachfolgenden Zyklen.
 
 Ist die Anzahl der Geburten relativ stabil, so zeigt sich bei der Anzahl der Todesfälle doch ein ganz anderes Muster: entweder sterben keine Boids oder ganz viele gleichzeig. Im achten Zyklus beträgt die Sterberate sogar 75 \%. Außerdem findet dieses Massensterben in regelmäßigen Abständen statt.
 
@@ -670,7 +724,7 @@ Dies bedeutet, dass sich auch immer wieder zwischendurch einzelne Boids zeigen, 
 
 Wie bereits in Kapitel \ref{natur} beschrieben, erfolgt die Auswahl in echten Schwärmen aus topologischer Sicht, die zudem noch anisotrop ist. In einer erneuten Umsetzung sollte ein Boid also besser eine variablere Reichweite haben. Dazu könnte man den Octree nutzen, indem man in immer größer werdenden Radii sucht, bis man die gewünschte Anzahl an Nachbarn hat.
 
-Ein anderer Ansatz modelliert das Sichtfeld der Boids mithilfe von Visibility Culling \cite{journals/cie/SilvaLC09}. Diese Methode findet auch weiter entfernte Tiere und kann anisotrop umgesetzt werden. 
+Ein anderer Ansatz modelliert das Sichtfeld der Boids mithilfe von Visibility Culling \cite{journals/cie/SilvaLC09}. Diese Methode findet auch weiter entfernte Tiere und kann anisotrop umgesetzt werden.
 
 \chapter{Ausblick und Fazit}\label{fazit}
 In diesem Kapitel wird die Arbeit zusammengefasst und einige Weiterentwicklungsmöglichkeiten angesprochen. Den Abschluss bildet ein kurzes Fazit.
@@ -699,7 +753,7 @@ Schlussendlich bietet auch die Vererbung Weiterentwicklungsmöglichkeiten: Bei d
 Die Partnersuche insgesamt ist noch sehr rudimentär in dem Prototyp entwickelt worden. Das Brüten findet praktisch noch gar nicht statt, die Boidkinder sind sofort flügge und unabhängig von den Elterntieren. Ein längeres Verweilen neben dem Nest, wobei sich die Partner bei der Futtersuche abwechseln, und die Versorgung der Jungtiere sind nur einige mögliche Szenarien, die weiter ausgestaltet werden können.
 
 \section{Fazit}
-Das in dieser Arbeit entwickelte Modell zeigt, wie das einfache Boids-Modell in eine Population umgewandelt werden kann. Die Populationsforschung im Kapitel \ref{eval} hat gezeigt, wie komplex und unberechenbar und damit abwechslungsreich eine Simulation mit den Boids sein kann. 
+Das in dieser Arbeit entwickelte Modell zeigt, wie das einfache Boids-Modell in eine Population umgewandelt werden kann. Die Populationsforschung im Kapitel \ref{eval} hat gezeigt, wie komplex und unberechenbar und damit abwechslungsreich eine Simulation mit den Boids sein kann.
 
 Außerdem zeigt sich, dass für eine ansprechende Simulation auch noch andere Faktoren, wie z.B die Performanz, einen nicht unerheblichen Aufwand erfordern.
 

@@ -78,6 +78,14 @@ let boid_material = new THREE.MeshPhongMaterial({
     shading: THREE.SmoothShading
 })
 
+let enemy_geometry = new THREE.SphereGeometry(1, 32, 32)
+let enemy_material = new THREE.MeshPhongMaterial({
+    color: 0x4b0082,
+    shininess: 300,
+    specular: 0x33AA33,
+    shading: THREE.SmoothShading
+})
+
 let octree = new THREE.Octree()
 let balls = []
 let id = 0
@@ -111,7 +119,7 @@ let renderWorld = () => {
     stats.begin()
     updateWorld()
     test()
-        //updateEnemy()
+        updateEnemy()
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()

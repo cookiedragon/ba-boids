@@ -129,6 +129,14 @@
 	publisher = {S. FISCHER},
 }
 
+@Book{movies,
+	author = {Thomas D. Seeley},
+	title = {Bienendemokratie: Wie Bienen kollektiv entscheiden und was wir davon lernen können},
+	year = {2014},
+	isbn = {3100751388},
+	publisher = {S. FISCHER},
+}
+
 @book{Bourg:2004:AGD:1096109,
  author = {Bourg, David M. and Seemann, Glenn},
  title = {AI for Game Developers},
@@ -278,7 +286,7 @@ year = {2013}
 
 @article{Reeves:1983:PST:357318.357320,
  author = {Reeves, W. T.},
- title = {Particle Systems;a Technique for Modeling a Class of Fuzzy Objects},
+ title = {Particle Systems; a Technique for Modeling a Class of Fuzzy Objects},
  journal = {ACM Trans. Graph.},
  issue_date = {April 1983},
  volume = {2},

@@ -124,7 +124,7 @@ let updatePopulationStatus = () => {
     let newPopulation = []
     let dr = 0
     boids.forEach(boid => {
-        if (boid.boid.ready_to_die_of_old_age()) {
+        if (boid.boid.ready_to_die_of_old_age() || (is_in_danger() && caughtByEnemy(boid))) {
             removeBoidFromSzene(boid)
             deathrate += 1
         } else {
@@ -174,6 +174,11 @@ let is_searching_the_ground = (boid) => {
 
 let is_in_danger = () => {
   return (enemy === 0 ? false : true)
+}
+
+let caughtByEnemy = (boid) => {
+  let d = boid.position.distanceTo(enemy.position)
+  return (d < 10 ? true : false)
 }
 
 let updateSingle = (boid) => {
