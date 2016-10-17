@@ -8,9 +8,9 @@ if(Gefahr?) {
 } else {
   if (Hunger?) {
     suche Futter;
-  } else if (müde?) {
+  } else if (Müde?) {
     suche Ruheplatz;
-  } else if (erwachsen?) {
+  } else if (Erwachsen?) {
     if (Paarungszeit?) {
       if (Partner gefunden?) {
         brüte;
