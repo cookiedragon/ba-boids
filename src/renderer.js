@@ -48,16 +48,16 @@ backgroundMesh.material.depthWrite = false
 scene.add(backgroundMesh)
 
 // build the floor
-let ground_geometry = new THREE.CubeGeometry(400, 0.2, 400)
-let ground_texture = loader.load('assets/rocks.jpg')
-let ground_material = new THREE.MeshPhongMaterial({
+let groundGeometry = new THREE.CubeGeometry(400, 0.2, 400)
+let groundTexture = loader.load('assets/rocks.jpg')
+let groundMaterial = new THREE.MeshPhongMaterial({
     //color: 0x00ff00,
     shininess: 0,
     specular: 0x888888,
     shading: THREE.SmoothShading,
-    map: ground_texture
+    map: groundTexture
 })
-var ground = new THREE.Mesh(ground_geometry, ground_material)
+var ground = new THREE.Mesh(groundGeometry, groundMaterial)
 ground.position.y = -101
 scene.add(ground)
 
@@ -70,16 +70,16 @@ window.addEventListener('resize', function() {
     renderer.setSize(window.innerWidth, window.innerHeight)
 }, false)
 
-let boid_geometry = new THREE.SphereGeometry(1, 32, 32)
-let boid_material = new THREE.MeshPhongMaterial({
+let boidGeometry = new THREE.SphereGeometry(1, 32, 32)
+let boidMaterial = new THREE.MeshPhongMaterial({
     color: 0xdc143c,
     shininess: 300,
     specular: 0x33AA33,
     shading: THREE.SmoothShading
 })
 
-let enemy_geometry = new THREE.SphereGeometry(1, 32, 32)
-let enemy_material = new THREE.MeshPhongMaterial({
+let enemyGeometry = new THREE.SphereGeometry(1, 32, 32)
+let enemyMaterial = new THREE.MeshPhongMaterial({
     color: 0x4b0082,
     shininess: 300,
     specular: 0x33AA33,
@@ -91,15 +91,15 @@ let balls = []
 let id = 0
 
 let addBoidToSzene = (boid) => {
-    let mesh = new THREE.Mesh(boid_geometry, boid_material)
+    let mesh = new THREE.Mesh(boidGeometry, boidMaterial)
     mesh.castShadow = true
     mesh.receiveShadow = false
     mesh.position.set(...boid.position.toArray())
     mesh.velocity = boid.velocity
     mesh.birthday = boid.boid.phenotype.birthday
     mesh.boid = boid
-    let scale_factor = 3
-    mesh.scale.set(scale_factor, scale_factor, scale_factor)
+    let scaleFactor = 3
+    mesh.scale.set(scaleFactor, scaleFactor, scaleFactor)
     balls.push(mesh)
     scene.add(mesh)
     octree.add(mesh)
@@ -118,12 +118,24 @@ let removeBoidFromSzene = (boid) => {
 let renderWorld = () => {
     stats.begin()
     updateWorld()
-    test()
-        updateEnemy()
+    updateEnemy()
     renderer.clear()
     renderer.render(scene, camera)
     octree.update()
     octree.rebuild() // keep track of moving objects
+    stats.end()
+    requestAnimationFrame(renderWorld)
+}
+
+// Evaluation der Population
+let testRenderWorld = () => {
+    stats.begin()
+    updateWorld()
+    test()
+    renderer.clear()
+    renderer.render(scene, camera)
+    octree.update()
+    octree.rebuild()
     stats.end()
     if (dynTest.length < 20) {
         requestAnimationFrame(renderWorld)
@@ -156,7 +168,7 @@ let test = () => {
         let bigMaxSpeedCounter = 0
         let bothMaxSpeedCounter = 0
         boids.forEach(boid => {
-            is_female(boid) ? femaleCounter++ : maleCounter++
+            isFemale(boid) ? femaleCounter++ : maleCounter++
                 if (boid.boid.genotype.lifespan.includes(30000)) {
                     if (boid.boid.genotype.lifespan.includes(60000)) {
                         bothLifeCounter++
@@ -166,15 +178,15 @@ let test = () => {
                 } else {
                     bigLifeCounter++
                 }
-                if (boid.boid.genotype.max_speed.includes(2)) {
-                    if (boid.boid.genotype.max_speed.includes(4)) {
-                        bothMaxSpeedCounter++
-                    } else {
-                        littleMaxSpeedCounter++
-                    }
+            if (boid.boid.genotype.maxSpeed.includes(2)) {
+                if (boid.boid.genotype.maxSpeed.includes(4)) {
+                    bothMaxSpeedCounter++
                 } else {
-                    bigMaxSpeedCounter++
+                    littleMaxSpeedCounter++
                 }
+            } else {
+                bigMaxSpeedCounter++
+            }
         })
         genTest.push({
             littleLife: littleLifeCounter,
@@ -194,6 +206,5 @@ let test = () => {
         birthrate = 0
         deathrate = 0
         testCounter = 500
-        console.log("tick")
     }
 }

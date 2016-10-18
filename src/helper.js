@@ -10,28 +10,28 @@ let between = (lower, upper) => {
     return (Number.isInteger(lower) && Number.isInteger(upper)) ? Math.floor(rand) : rand
 }
 
-let rand_velocity = () => {
+let randVelocity = () => {
     return new THREE.Vector3(between(-1, 1), between(-1, 1), between(-1, 1))
 }
 
-let rand_gender = () => {
+let randGender = () => {
     let gender = ["MALE", "FEMALE"]
     return gender[between(0, 1)]
 }
 
-let rand_male = (males) => {
+let randMale = (males) => {
     return males[between(0, males.length - 1)]
 }
 
-let is_male = (boid) => {
+let isMale = (boid) => {
     return boid.boid.genotype.gender == "MALE"
 }
 
-let is_female = (boid) => {
+let isFemale = (boid) => {
     return boid.boid.genotype.gender == "FEMALE"
 }
 
-let baby_position = (mum, dad) => {
+let babyPosition = (mum, dad) => {
     return new THREE.Vector3(between(mum.position.x, dad.position.x), between(mum.position.y, dad.position.y), between(mum.position.z, dad.position.z))
 }
 
@@ -41,11 +41,11 @@ let resetUpdateTimer = () => {
     updateTimer = 3
 }
 
-let countdown_update_timer = () => {
+let countdownUpdateTimer = () => {
     updateTimer -= 1
 }
 
-let is_update_timer_up = () => {
+let isUpdateTimerUp = () => {
     return (updateTimer < 0) ? true : false
 }
 
@@ -55,11 +55,11 @@ let resetBreedingTimer = () => {
     breedingTimer = 1000
 }
 
-let countdown_breeding_timer = () => {
+let countdownBreedingTimer = () => {
     breedingTimer -= 1
 }
 
-let is_breeding_time = () => {
+let isBreedingTime = () => {
     if (breedingTimer < 0) {
         resetBreedingTimer()
     } else if (breedingTimer < 20) {
