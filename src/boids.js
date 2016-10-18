@@ -36,13 +36,13 @@ let makeNewBabyBoid = (mum, dad) => {
 
 let initGenotype = () => {
     return {
-        lifespan: [50 * 10 * 60, 100 * 10 * 60],
-        maxStamina: [between(100, 200), between(100, 200)],
-        foodCapacity: [between(30, 50), between(30, 50)],
+        lifespan: [30000, 60000],
+        maxStamina: [100, 200],
+        foodCapacity: [30, 50],
         maxForce: [0.4, 0.6],
         maxSpeed: [2, 4],
         gender: randGender(),
-        ofAgeAt: [between(3, 5) * 1 * 60, between(3, 5) * 1 * 60]
+        ofAgeAt: [180, 300]
     }
 }
 
@@ -54,7 +54,7 @@ let calcPhenotype = (genotype) => {
         foodCapacity: genotype.foodCapacity[rand(2)],
         maxForce: genotype.maxForce[rand(2)],
         maxSpeed: genotype.maxSpeed[rand(2)],
-        gender: genotype.gender,
+        gender: genotype.gender[between(0, 1)],
         ofAgeAt: genotype.ofAgeAt[rand(2)]
     }
 }

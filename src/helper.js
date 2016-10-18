@@ -15,7 +15,7 @@ let randVelocity = () => {
 }
 
 let randGender = () => {
-    let gender = ["MALE", "FEMALE"]
+    let gender = ["m", "f"]
     return gender[between(0, 1)]
 }
 
@@ -24,11 +24,11 @@ let randMale = (males) => {
 }
 
 let isMale = (boid) => {
-    return boid.boid.genotype.gender == "MALE"
+    return boid.boid.genotype.gender == "m"
 }
 
 let isFemale = (boid) => {
-    return boid.boid.genotype.gender == "FEMALE"
+    return boid.boid.genotype.gender == "f"
 }
 
 let babyPosition = (mum, dad) => {
