@@ -24,11 +24,11 @@ let randMale = (males) => {
 }
 
 let isMale = (boid) => {
-    return boid.boid.genotype.gender == "m"
+    return boid.innerboid.genotype.gender == "m"
 }
 
 let isFemale = (boid) => {
-    return boid.boid.genotype.gender == "f"
+    return boid.innerboid.genotype.gender == "f"
 }
 
 let babyPosition = (mum, dad) => {

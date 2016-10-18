@@ -96,7 +96,7 @@ let addBoidToSzene = (boid) => {
     mesh.receiveShadow = false
     mesh.position.set(...boid.position.toArray())
     mesh.velocity = boid.velocity
-    mesh.birthday = boid.boid.phenotype.birthday
+    mesh.birthday = boid.innerboid.phenotype.birthday
     mesh.boid = boid
     let scaleFactor = 3
     mesh.scale.set(scaleFactor, scaleFactor, scaleFactor)
@@ -106,7 +106,7 @@ let addBoidToSzene = (boid) => {
 }
 
 let removeBoidFromSzene = (boid) => {
-    let toBeRemoved = balls.filter(ball => ball.birthday == boid.boid.phenotype.birthday)[0]
+    let toBeRemoved = balls.filter(ball => ball.birthday == boid.innerboid.phenotype.birthday)[0]
     let index = balls.indexOf(toBeRemoved);
     if (index > -1) {
         balls.splice(index, 1);
@@ -169,8 +169,8 @@ let test = () => {
         let bothMaxSpeedCounter = 0
         boids.forEach(boid => {
             isFemale(boid) ? femaleCounter++ : maleCounter++
-                if (boid.boid.genotype.lifespan.includes(30000)) {
-                    if (boid.boid.genotype.lifespan.includes(60000)) {
+                if (boid.innerboid.genotype.lifespan.includes(30000)) {
+                    if (boid.innerboid.genotype.lifespan.includes(60000)) {
                         bothLifeCounter++
                     } else {
                         littleLifeCounter++
@@ -178,8 +178,8 @@ let test = () => {
                 } else {
                     bigLifeCounter++
                 }
-            if (boid.boid.genotype.maxSpeed.includes(2)) {
-                if (boid.boid.genotype.maxSpeed.includes(4)) {
+            if (boid.innerboid.genotype.maxSpeed.includes(2)) {
+                if (boid.innerboid.genotype.maxSpeed.includes(4)) {
                     bothMaxSpeedCounter++
                 } else {
                     littleMaxSpeedCounter++

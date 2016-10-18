@@ -12,7 +12,7 @@ let addRandomBoid = () => {
     const genotype = initGenotype()
     const phenotype = calcPhenotype(genotype)
     let boid = {
-        boid: makeBoid(genotype, phenotype),
+        innerboid: makeInnerBoid(genotype, phenotype),
         position: new THREE.Vector3(between(-50, 50), between(-50, 50), between(-50, 50)),
         velocity: randVelocity(),
         velocities: [randVelocity(), randVelocity(), randVelocity()]
@@ -22,10 +22,10 @@ let addRandomBoid = () => {
 }
 
 let makeNewBabyBoid = (mum, dad) => {
-    const genotype = genSplicer(mum.boid.genotype, dad.boid.genotype)
+    const genotype = genSplicer(mum.innerboid.genotype, dad.innerboid.genotype)
     const phenotype = calcPhenotype(genotype)
     let boid = {
-        boid: makeBoid(genotype, phenotype),
+        innerboid: makeInnerBoid(genotype, phenotype),
         position: babyPosition(mum, dad),
         velocity: randVelocity(),
         velocities: [randVelocity(), randVelocity(), randVelocity()]
@@ -59,7 +59,7 @@ let calcPhenotype = (genotype) => {
     }
 }
 
-let makeBoid = (genotype, phenotype) => {
+let makeInnerBoid = (genotype, phenotype) => {
     return {
         genotype: genotype,
         phenotype: phenotype,
@@ -71,6 +71,9 @@ let makeBoid = (genotype, phenotype) => {
         },
         readyToDieOfOldAge() {
             return ((this.phenotype.lifespan - this.age()) < 0) ? true : false
+        },
+        readyToDieOfEnergyDeficit() {
+            return ((this.foodLevel < 0) || (this.stamina < 0) ? true : false)
         },
         isAdult() {
             return (this.age() > this.phenotype.ofAgeAt ? true : false)
@@ -129,7 +132,7 @@ let updatePopulationStatus = () => {
     let newPopulation = []
     let dr = 0
     boids.forEach(boid => {
-        if (boid.boid.readyToDieOfOldAge() || (isInDanger() && caughtByEnemy(boid))) {
+        if (boid.innerboid.readyToDieOfOldAge() || boid.innerboid.readyToDieOfEnergyDeficit() || (isInDanger() && caughtByEnemy(boid))) {
             removeBoidFromSzene(boid)
             deathrate += 1
         } else {
@@ -137,7 +140,7 @@ let updatePopulationStatus = () => {
         }
     })
     if (isBreedingTime()) {
-        let eligible = boids.filter((boid) => (onGround(boid) && boid.boid.isAdult()))
+        let eligible = boids.filter((boid) => (onGround(boid) && boid.innerboid.isAdult()))
         let females = eligible.filter(isFemale)
         let males = eligible.filter(isMale)
         females.forEach(female => {
@@ -163,10 +166,10 @@ let findClosest = (position) => {
 
 let onGround = (boid) => {
     if (boid.position.y < -99) {
-        boid.boid.status = 'ONGROUND'
+        boid.innerboid.status = 'ONGROUND'
         boid.velocity = new THREE.Vector3()
     }
-    return (boid.boid.status === 'ONGROUND')
+    return (boid.innerboid.status === 'ONGROUND')
 }
 
 let isInDanger = () => {
@@ -180,18 +183,18 @@ let caughtByEnemy = (boid) => {
 
 let updateSingle = (boid) => {
     if (onGround(boid)) {
-        if (boid.boid.isFullyRecovered() && !isBreedingTime()) {
-            boid.boid.status = 'SWARMING'
+        if (boid.innerboid.isFullyRecovered() && !isBreedingTime()) {
+            boid.innerboid.status = 'SWARMING'
             boid.velocity = randVelocity()
         } else {
-            boid.boid.stamina += 10
+            boid.innerboid.stamina += 10
         }
     } else {
-        boid.boid.stamina -= 1
-        if (boid.boid.isTired() || boid.boid.isHungry()) {
-            boid.boid.status = 'SEARCHINGGROUND'
-        } else if (isBreedingTime() && boid.boid.isAdult()) {
-            boid.boid.status = 'SEARCHINGGROUND'
+        boid.innerboid.stamina -= 1
+        if (boid.innerboid.isTired() || boid.innerboid.isHungry()) {
+            boid.innerboid.status = 'SEARCHINGGROUND'
+        } else if (isBreedingTime() && boid.innerboid.isAdult()) {
+            boid.innerboid.status = 'SEARCHINGGROUND'
         }
     }
     return boid
@@ -201,8 +204,8 @@ let swarmingInitCounter = 3
 
 let updateSwarmingSingle = (boid) => {
     let acceleration = new THREE.Vector3()
-    const maxspeed = boid.boid.phenotype.maxSpeed
-    const maxforce = boid.boid.phenotype.maxForce
+    const maxspeed = boid.innerboid.phenotype.maxSpeed
+    const maxforce = boid.innerboid.phenotype.maxForce
     const r = 100
 
     let sep = new THREE.Vector3()
@@ -232,7 +235,7 @@ let updateSwarmingSingle = (boid) => {
                 ssteer.add(otherPos)
                 scount++
             }
-            if ((d > 0) && (d < neighbordist) && boid.boid.isSwarming() && other.boid.isSwarming()) {
+            if ((d > 0) && (d < neighbordist) && boid.innerboid.isSwarming() && other.innerboid.isSwarming()) {
                 asum.add(other.velocity)
                 acount++
                 csum.add(otherPos)
@@ -254,7 +257,7 @@ let updateSwarmingSingle = (boid) => {
                 ssteer.add(otherPos)
                 scount++
             }
-            if ((d > 0) && (d < neighbordist) && boid.boid.isSwarming() && other.boid.isSwarming()) {
+            if ((d > 0) && (d < neighbordist) && boid.innerboid.isSwarming() && other.innerboid.isSwarming()) {
                 asum.add(other.velocity)
                 acount++
                 csum.add(otherPos)
@@ -284,7 +287,7 @@ let updateSwarmingSingle = (boid) => {
     }
     sep = ssteer
 
-    if (boid.boid.isSwarming()) {
+    if (boid.innerboid.isSwarming()) {
         if (acount > 0) {
             asum.divideScalar(acount)
             asum.normalize()
@@ -303,7 +306,7 @@ let updateSwarmingSingle = (boid) => {
             steer.clampLength(0, maxforce)
             coh = steer
         }
-    } else if (boid.boid.isSearchingTheGround()) {
+    } else if (boid.innerboid.isSearchingTheGround()) {
         coh = new THREE.Vector3(0, -1, 0)
     }
 
@@ -326,7 +329,7 @@ let updateSwarmingSingle = (boid) => {
     position.clamp(new THREE.Vector3(-r, -r, -r), new THREE.Vector3(r, r, r))
 
     return {
-        boid: boid.boid,
+        innerboid: boid.innerboid,
         position: position,
         velocity: velocity,
         velocities: velocities
