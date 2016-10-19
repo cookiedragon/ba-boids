@@ -1,11 +1,9 @@
 "use strict"
 
 let initBoids = (num) => {
-    var swarm = []
     for (var i = 0; i < num; i++) {
-        swarm.push(addRandomBoid())
+        boids.push(addRandomBoid())
     }
-    return swarm
 }
 
 let addRandomBoid = () => {
@@ -82,10 +80,10 @@ let makeInnerBoid = (genotype, phenotype) => {
             return ((this.foodLevel / this.phenotype.foodCapacity * 100) < 10 ? true : false)
         },
         isTired() {
-            return ((this.stamina / this.phenotype.maxStamina * 100) < 2 ? true : false)
+            return ((this.stamina / this.phenotype.maxStamina * 100) < 10 ? true : false)
         },
         isFullyRecovered() {
-            return ((this.stamina / this.phenotype.maxStamina * 100) > 99 ? true : false)
+            return ((this.stamina / this.phenotype.maxStamina * 100) > 99 && (this.foodLevel / this.phenotype.foodCapacity * 100) > 99 ? true : false)
         },
         isSwarming() {
             return (this.status === 'SWARMING')
@@ -143,6 +141,7 @@ let updatePopulationStatus = () => {
         let eligible = boids.filter((boid) => (onGround(boid) && boid.innerboid.isAdult()))
         let females = eligible.filter(isFemale)
         let males = eligible.filter(isMale)
+        console.log(eligible.length)
         females.forEach(female => {
             let randomMale = randMale(eligible)
             let baby = makeNewBabyBoid(female, randomMale)
@@ -187,10 +186,12 @@ let updateSingle = (boid) => {
             boid.innerboid.status = 'SWARMING'
             boid.velocity = randVelocity()
         } else {
-            boid.innerboid.stamina += 10
+            boid.innerboid.stamina += 3
+            boid.innerboid.foodLevel += 1
         }
     } else {
-        boid.innerboid.stamina -= 1
+        boid.innerboid.stamina -= 0.3
+        boid.innerboid.foodLevel -= 0.1
         if (boid.innerboid.isTired() || boid.innerboid.isHungry()) {
             boid.innerboid.status = 'SEARCHINGGROUND'
         } else if (isBreedingTime() && boid.innerboid.isAdult()) {
@@ -220,6 +221,8 @@ let updateSwarmingSingle = (boid) => {
     let acount = 0
     let csum = new THREE.Vector3()
     let ccount = 0
+
+    const enemydist = 100
 
     let position = boid.position.clone()
     let velocity = boid.velocity.clone()
@@ -268,12 +271,15 @@ let updateSwarmingSingle = (boid) => {
 
     if (isInDanger()) {
         let enemyPos = enemy.position.clone()
-        let diff = enemyPos.sub(position)
-        diff.normalize()
-        ssteer.add(diff)
-        ssteer.add(diff)
-        ssteer.add(diff)
-        scount += 3
+        let d = position.distanceTo(enemyPos)
+        if (d < enemydist) {
+            let diff = enemyPos.sub(position)
+            diff.normalize()
+            ssteer.add(diff)
+            ssteer.add(diff)
+            ssteer.add(diff)
+            scount += 3
+        }
     }
 
     if (scount > 0) {

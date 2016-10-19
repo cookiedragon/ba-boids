@@ -1,22 +1,23 @@
 "use strict"
 
 // enemy update clock
-let enemyClock = 500
+let enemyTime = 2000
+let enemyClock = enemyTime
 let enemySwooping = false
     // update the enemy
 let updateEnemy = () => {
     enemyClock -= 1
     if (enemySwooping) {
-        if (enemyClock < 0) {
+        if (enemyClock < (enemyTime / 2)) {
             removeEnemy()
             enemySwooping = false
-            enemyClock = 500
+            enemyClock = enemyTime
         } else {
             if (boids.length > 0) {
                 let pos = enemy.position.clone()
-                let diff = pos.sub(boids[0].position)
+                let preyPos = boids[0].position.clone()
+                let diff = preyPos.sub(pos)
                 diff.normalize()
-                diff.multiplyScalar(-1.5)
                 enemy.position.add(diff)
             }
         }
@@ -24,7 +25,7 @@ let updateEnemy = () => {
         if (enemyClock < 0) {
             startEnemy()
             enemySwooping = true
-            enemyClock = 500
+            enemyClock = enemyTime
         }
     }
 }

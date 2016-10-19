@@ -49,10 +49,11 @@ let isUpdateTimerUp = () => {
     return (updateTimer < 0) ? true : false
 }
 
-let breedingTimer = 1000
+let breedingTime = 800
+let breedingTimer = breedingTime
 
 let resetBreedingTimer = () => {
-    breedingTimer = 1000
+    breedingTimer = breedingTime
 }
 
 let countdownBreedingTimer = () => {
@@ -62,7 +63,7 @@ let countdownBreedingTimer = () => {
 let isBreedingTime = () => {
     if (breedingTimer < 0) {
         resetBreedingTimer()
-    } else if (breedingTimer < 20) {
+    } else if (breedingTimer < 30) {
         return true
     }
     return false

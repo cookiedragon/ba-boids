@@ -29,6 +29,8 @@ let spotLight = new THREE.SpotLight(0xFFAA88)
 spotLight.target.position.set(0, -100, 0)
 spotLight.position.set(20, 200, 20)
 spotLight.shadow.camera.near = 0.01
+spotLight.shadow.camera.far = 4000;
+spotLight.shadow.camera.fov = 100;
 spotLight.castShadow = true
 scene.add(spotLight)
 
