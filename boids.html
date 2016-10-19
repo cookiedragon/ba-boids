@@ -5,7 +5,8 @@
 	<meta charset=utf-8>
 	<title>BA BOIDS</title>
 	<style>
-		html,body {
+		html,
+		body {
 			width: 100%;
 			height: 100%;
 			margin: 0px;
@@ -21,9 +22,12 @@
 </head>
 
 <body>
+	<!-- loading all the dependencies -->
 	<script src="lib/three.min.js"></script>
 	<script src="lib/threeoctree.min.js"></script>
 	<script src="lib/stats.min.js"></script>
+
+	<!-- loading all the scripts -->
 	<script src="src/helper.js"></script>
 	<script src="src/boids.js"></script>
 	<script src="src/enemy.js"></script>
@@ -31,11 +35,16 @@
 	<script>
 		"use strict"
 
+		// init performance monitoring tool
 		let stats = new Stats()
 		stats.showPanel(0) // 0: fps, 1: ms
 		document.body.appendChild(stats.dom)
+
+		// start population of boids
 		let boids = []
-		initBoids(20)
+		startBoids(20)
+
+		// start rendering the simulation
 		renderWorld()
 	</script>
 </body>
