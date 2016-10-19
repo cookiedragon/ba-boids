@@ -146,21 +146,27 @@ let updateWorld = () => {
     // countdown the timers
     countdownUpdateTimer()
     countdownBreedingTimer()
-        // if update timer is up...
+    // if update timer is up...
     if (isUpdateTimerUp()) {
         // ...reset...
         resetUpdateTimer()
             // ...and update the population
         boids = updatePopulationStatus()
     }
-    //swarmingInitCounter -= 1
-    // update the boids for rendering
+    // countdown the start time counter
+    swarmingInitCounter -= 1
+        // update the boids for rendering
     let newBoids = []
     let i = -1
     boids.forEach(boid => {
         // ...while updating the new individual boids swarming
         newBoids.push(updateSwarmingSingle(boid))
-        balls[i += 1].position.set(...boid.position.toArray())
+        let b = balls[i += 1]
+        b.position.set(...boid.position.toArray())
+        // update velocity
+        b.velocity = boid.velocity
+        // update entire boid
+        b.boid = boid
     })
     boids = newBoids
 }
@@ -208,14 +214,9 @@ let updatePopulationStatus = () => {
 }
 
 // find the closest neighbours in the octree
-let findClosest = (position) => {
-    let radius = 0.1
+let findClosest = (position, radius) => {
     let closest = []
     closest = octree.search(position, radius)
-    if (closest.length < 7) {
-        radius += 5
-        closest = octree.search(position, radius, true)
-    }
     return closest
 }
 
@@ -274,6 +275,7 @@ let updateSingle = (boid) => {
     return boid
 }
 
+// counter needed to account for undefined state at init time
 let swarmingInitCounter = 3
 
 // update the swarming data of a single boid
@@ -312,6 +314,7 @@ let updateSwarmingSingle = (boid) => {
     let position = boid.position.clone()
     let velocity = boid.velocity.clone()
 
+    // check entire population for neighbours at init time
     if (swarmingInitCounter > 0) {
         // we need to scan the entire population
         boids.forEach(other => {
@@ -338,14 +341,14 @@ let updateSwarmingSingle = (boid) => {
         })
     } else {
         // find the closest neighbours by asking the octree
-        let closest = findClosest(boid)
+        let closest = findClosest(position, neighbordist)
         if (closest[0] == undefined) {
             return boid
         }
         // we need to scan the entire list of neighbours
         closest.forEach(other => {
             // get the others position
-            let otherPos = other.object.position.clone()
+            let otherPos = other.object.boid.position.clone()
             let d = position.distanceTo(otherPos)
                 // if it is too close
             if ((d > 0) && (d < desiredseparation)) {
@@ -355,8 +358,10 @@ let updateSwarmingSingle = (boid) => {
                 diff.divideScalar(d)
                 ssteer.add(otherPos)
                 scount++
-            } else {
-                // otherwise let it influence the current boid
+            }
+            // recheck if it is just close enough to be a neighbour
+            if ((d > 0) && (d < neighbordist) && boid.innerboid.isSwarming() && other.object.boid.innerboid.isSwarming()) {
+                // let it influence the current boid
                 asum.add(other.object.boid.velocity)
                 acount++
                 csum.add(otherPos)
@@ -416,7 +421,7 @@ let updateSwarmingSingle = (boid) => {
             coh = steer
         }
     } else if (boid.innerboid.isSearchingTheGround()) {
-      // if seeking the ground, just lower the boid to the ground
+        // if seeking the ground, just lower the boid to the ground
         coh = new THREE.Vector3(0, -1, 0)
     }
 
